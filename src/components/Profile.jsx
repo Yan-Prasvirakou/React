@@ -1,17 +1,18 @@
 import React from 'react';
+import './Profile.module.css';
 
 const Profile = () => {
 	return (
 		<div className='content'>
-			<div><img src='https://www.aeroflot.ru/media/aflfiles/by/msq/msq_2.jpg' height='100' /></div>
+			<div><img src='https://www.aeroflot.ru/media/aflfiles/by/msq/msq_2.jpg'/></div>
 			<div>Ava + discription</div>
 			<div>
 				my posts
 					<div>new post</div>
 			</div>
-			<div>posts
-					<div>post1</div>
-				<div>post2</div>
+			<div className='posts'>posts
+				<div className='item'>post1</div>
+				<div className='item'>post2</div>
 			</div>
 		</div>
 	)

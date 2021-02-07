@@ -10,21 +10,7 @@
 	"nav cont"
 	/* "footer footer" */
 } 
-.header {
-	grid-area: header;
-	background: #aaa;
-} 
-.nav {
-	grid-area: nav;
-	background: #aaa;
-	list-style-type: none;
-}
 
-.nav ul {
-	list-style-type: none;
-}
 
-.content {
-	grid-area: cont;
-}
+
 
