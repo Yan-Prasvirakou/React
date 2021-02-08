@@ -2,3 +2,7 @@
 	grid-area: cont;
 	background: tomato;
 }
+
+.content img {
+	width: 200px;
+}
