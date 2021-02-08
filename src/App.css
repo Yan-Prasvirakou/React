@@ -11,6 +11,17 @@
 	/* "footer footer" */
 } 
 
+.content-wrapper {
+	color: green;
+	font-weight: 600;
+	grid-area: cont;
+	background: tomato;
+}
+
+.content-wrapper img {
+	width: 200px;
+}
+
 
 
 
