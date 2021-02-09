@@ -1,0 +1,22 @@
+.wrapper {
+	display: block;
+	text-align: center;
+	/* width: 100%; */
+}
+.title {
+	/* text-align: center; */
+	color: silver;
+	background: #000;
+	display: inline-block;
+	margin: 10px auto;
+}
+
+.songs {
+	color: blueviolet;
+	list-style-type: none;
+	text-align: left;
+}
+
+.song {
+	margin: 8px 0;
+}
