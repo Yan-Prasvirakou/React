@@ -1,0 +1,59 @@
+.commonWrap {
+	display: grid;
+	grid-template-columns: 3fr 7fr;
+	height: 100%;
+}
+
+.dialogsWrap {
+	background: #fff;
+	border-radius: 12px;
+	grid-row: 1 / 4;
+	position: relative;
+	margin: 10px 5px;
+}
+
+.dialogs {
+	list-style-type: none;
+	padding: 0 8px;
+}
+
+.dialog {
+	border: 2px solid #fff;
+	cursor: pointer;
+	transition: .5s;
+	border-radius: 12px;
+}
+
+.dialog a {
+	background: #050f3b;
+	color: #fff;
+	text-decoration: none;
+	transition: margin-left .5s;
+	display: block;
+	padding: 4px 16px 2px;
+	height: 30px;
+	border-radius: 12px;
+}
+
+a.active {
+	color: #050f3b;
+	background: #ddd;
+	margin-left: 20px;
+	border: 2px solid #050f3b;
+}
+
+.dialog:hover a:not(.active) {
+	background: #ddd;
+	color: #050f3b;
+	margin-left: 20px;
+}
+
+.messagesWrap {
+	background: #050f3b;
+	border-radius: 12px;
+	grid-row: 1 / 4;
+	padding: 8px;
+	position: relative;
+	margin: 10px 5px;
+}
+

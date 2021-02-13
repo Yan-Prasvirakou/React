@@ -4,6 +4,10 @@
 	border: 2px solid #000;
 	border-radius: 10px;
 	list-style-type: none;
+	height: 88vh;
+	/* position: fixed; */
+	/* потом с позицией разюберусь */
+
 }
 
 .nav ul{
@@ -11,15 +15,12 @@
 	
 }
 
-.nav ul li a {
+.item a {
 	text-decoration: none;
 	color: #fff;
 	/* margin: 8px 0; */
 }
 
-.nav ul li .visited {
-	color: orange;
+.item a.active{
+	color: red;
 }
-/* .item {
-	color: #fff;
-} */

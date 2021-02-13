@@ -1,6 +1,7 @@
 .header {
 	grid-area: header;
 	background: #aaa;
+	/* height: 111px; */
 }
 
 /* .header__img {

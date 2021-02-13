@@ -16,6 +16,8 @@
 	font-weight: 600;
 	grid-area: cont;
 	background: tomato;
+	/* position: relative; */
+	/* height: 100%; */
 }
 
 .content-wrapper img {
