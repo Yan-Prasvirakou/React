@@ -9,50 +9,59 @@ import TanyaMessages from './Messages/TanyaMessages';
 import { NavLink } from 'react-router-dom';
 import { BrowserRouter, Route } from 'react-router-dom';
 
+// такие массивы объектов и прочее подобное обычно приходит с сервака
+
+let dialogs = [
+	{ id: 1, name: 'Sasha', msgs: <SashaMessages/> },
+	{ id: 2, name: 'Lera', msgs: <LeraMessages/> },
+	{ id: 3, name: 'Nastya', msgs: <NastyaMessages/> },
+	{ id: 4, name: 'Lena', msgs: <LenaMessages/> },
+	{ id: 5, name: 'Kristina', msgs: <KristinaMessages/> },
+	{ id: 6, name: 'Tanya', msgs: <TanyaMessages/> }
+]
+
+const DialogItem = (props) => {
+	let path = `/dialogs/${props.id}`;
+
+	return (
+		<div className={classes.dialog}>
+			<NavLink to={path} activeClassName={classes.active}>
+				{props.name}
+			</NavLink>
+		</div>
+	)
+}
+
+let dialogsElements = dialogs
+	.map(dialog => <DialogItem name={dialog.name} id={dialog.id} />)
+
+
+
+let MessageItem = (props) => {
+	let path = `/dialogs/${props.path}`;
+	let component = () => props.component;
+
+	return (
+		<Route path={path} render={component}/>
+	)
+}
+
+// вынести логику для диалогов и сообщений в index.js
+
+let messagesElements = dialogs
+	.map(dialog => <MessageItem path={dialog.id} component={dialog.msgs}/>)
+
+
 const Dialogs = () => {
 	return (
 		<div className={classes.commonWrap}>
 			<div className={classes.dialogsWrap}>
-				<ul  className={classes.dialogs}>
-					<li className={classes.dialog}>
-						<NavLink to='/dialogs/sasha' activeClassName={classes.active}>
-							Sasha
-						</NavLink>
-					</li>
-					<li className={classes.dialog}>
-						<NavLink to='/dialogs/lera' activeClassName={classes.active}>
-							Lera
-						</NavLink>
-					</li>
-					<li className={classes.dialog}>
-						<NavLink to='/dialogs/nastya' activeClassName={classes.active}>
-							Nastya
-						</NavLink>
-					</li>
-					<li className={classes.dialog}>
-						<NavLink to='/dialogs/lena' activeClassName={classes.active}>
-							Lena
-						</NavLink>
-					</li>
-					<li className={classes.dialog}>
-						<NavLink to='/dialogs/kristina' activeClassName={classes.active}>
-							Kristina
-						</NavLink>
-					</li>
-					<li className={classes.dialog}>
-						<NavLink to='/dialogs/tanya' activeClassName={classes.active}>
-							Tanya
-						</NavLink>
-					</li>
+				<ul className={classes.dialogs}>
+					{dialogsElements}
 				</ul>
 			</div>
 			<div className={classes.messagesWrap}>
-				<Route path='/dialogs/sasha' component={SashaMessages}/>
-				<Route path='/dialogs/lera' component={LeraMessages}/>
-				<Route path='/dialogs/nastya' component={NastyaMessages}/>
-				<Route path='/dialogs/lena' component={LenaMessages}/>
-				<Route path='/dialogs/kristina' component={KristinaMessages}/>
-				<Route path='/dialogs/tanya' component={TanyaMessages}/>
+				{messagesElements}
 			</div>
 		</div>
 	)
