@@ -1,6 +1,8 @@
 .header {
 	grid-area: header;
 	background: #aaa;
+	/* position: sticky; */
+	/* width: 100%; */
 	/* height: 111px; */
 }
 

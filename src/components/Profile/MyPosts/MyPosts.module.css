@@ -1,0 +1,41 @@
+.addPost {
+	/* border: 2px solid blue; */
+}
+
+.addNP, .newPost {
+	/* border: 1px solid #000; */
+	text-align: center;
+	padding: 10px 5px 0;
+	font-weight: bold;
+	color: #050f3b;
+}
+
+.textarea {
+	display: block;
+	width: 350px;
+	height: 100px;
+	resize: none;
+	margin: 10px auto;
+	padding: 5px;
+	border: 2px solid #050f3b;
+	border-radius: 5px;
+}
+
+.addBtn {
+	padding: 8px;
+	background: #050f3b;
+	border: none;
+	color: #fff;
+	border-radius: 5px;
+	margin: 5px auto;
+	display: block;
+	cursor: pointer;
+}
+
+.addBtn:hover {
+	background: #383f6e;
+}
+
+.newPost {
+
+}

@@ -1,8 +1,46 @@
 .item {
-	color: gold;
+	color: #000;
+	margin: 30px 20px;
+	border: 2px solid #050f3b;
+	display: flex;
+	flex-wrap: wrap;
+	border-radius: 5px;
+	justify-content: flex-end;
+	/* justify-content: space-between; */
+	/* сделать навбар фиксированным */
+}
+
+.item__imgAndText {
+	/* border: 1px solid red; */
+	width: 100%;
+	display: flex;
+	flex-wrap: nowrap;
 }
 
 .item img {
 	width: 40px;
+	height: 40px;
 	border-radius: 50%;
+	margin: 10px 15px;
+	display: block;
+}
+
+.item__msg {
+	/* border: 1px solid green; */
+	width: 70%;
+	padding: 12px 5px;
+}
+
+.likeSymbol {
+	color: #050f3b;
+	font-size: 24px;
+	/* padding-top: 8px; */
+	position: relative;
+	top: 3px;
+}
+
+.item__likes {
+	/* border: 1px solid #000; */
+	padding-right: 8px;
+	cursor: pointer
 }

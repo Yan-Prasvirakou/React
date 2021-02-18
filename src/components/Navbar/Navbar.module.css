@@ -5,7 +5,9 @@
 	border-radius: 10px;
 	list-style-type: none;
 	height: 88vh;
-	/* position: fixed; */
+	/* position: fixed;
+	top: 10vh;
+	width: 200px; */
 	/* потом с позицией разюберусь */
 
 }

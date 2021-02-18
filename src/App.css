@@ -15,13 +15,17 @@
 	color: green;
 	font-weight: 600;
 	grid-area: cont;
-	background: tomato;
+	background: #ccc;
+	border-radius: 10px;
+	overflow: hidden;
 	/* position: relative; */
 	/* height: 100%; */
 }
 
 .content-wrapper img {
-	width: 200px;
+	width: 100%;
+	/* position: relative; */
+	margin-top: -100px;
 }
 
 
