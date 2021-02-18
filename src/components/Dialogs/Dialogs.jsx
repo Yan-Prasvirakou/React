@@ -11,8 +11,6 @@ import { BrowserRouter, Route } from 'react-router-dom';
 
 
 
-
-
 const Dialogs = (props) => {
 
 	const DialogItem = (props) => {
