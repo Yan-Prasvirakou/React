@@ -5,10 +5,10 @@ import classes from './Messages.module.css';
 const LeraMessages = () => {
 	return (
 		<div className={classes.messages}>
-			<div className={classes.message}>Hi, I want you</div>
-			<div className={classes.message}>I wanna be tohether with you</div>
-			<div className={classes.message}>One more message</div>
-			<div className={classes.message}>Can we meet one another tomorrow?</div>
+			<div className={classes.incoming}>Hi, I want you</div>
+			<div className={classes.incoming}>I wanna be tohether with you</div>
+			<div className={classes.incoming}>One more message</div>
+			<div className={classes.incoming}>Can we meet one another tomorrow?</div>
 		</div>
 	)
 }

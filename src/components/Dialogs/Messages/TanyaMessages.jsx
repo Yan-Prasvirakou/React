@@ -5,9 +5,9 @@ import classes from './Messages.module.css';
 const NastyaMessages = () => {
 	return (
 		<div className={classes.messages}>
-			<div className={classes.message}>Hi, I have waited for you so long</div>
-			<div className={classes.message}>I wanna see u</div>
-			<div className={classes.message}>I miss you</div>
+			<div className={classes.incoming}>Hi, I have waited for you so long</div>
+			<div className={classes.incoming}>I wanna see u</div>
+			<div className={classes.incoming}>I miss you</div>
 		</div>
 	)
 }

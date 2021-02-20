@@ -9,6 +9,10 @@ import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
 import { BrowserRouter, Route } from 'react-router-dom';
 
+// залить на тигхаб коммит с добавленный стейт
+// добавить в навбар блок с друзьями
+
+
 const App = (props) => {
 
 	return (
@@ -19,8 +23,8 @@ const App = (props) => {
 				<Navbar />
 
 				<div className='content-wrapper'>
-					<Route path='/profile' render={ () => <Profile posts={props.posts}/>}/>	
-					<Route path='/dialogs' render={() => <Dialogs dialogs={props.dialogs}/>}/>
+					<Route path='/profile' render={ () => <Profile posts={props.state.profilePage.posts}/>}/>	
+					<Route path='/dialogs' render={() => <Dialogs dialogs={props.state.dialogsPage.dialogs}/>}/>
 					<Route path='/news' render={ () => <News/>}/>
 					<Route path='/music' render={ () => <Music/>}/>
 					<Route path='/settings' render={ () => <Settings/>}/>
