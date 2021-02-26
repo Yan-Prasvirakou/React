@@ -3,21 +3,7 @@ import classes from './MyPosts.module.css';
 import Post from './Post/Post';
 
 
-
-
-
 const MyPosts = (props) => {
-
-	
-	// let text = 'My second post My second post My second post My second post My second post My second post My second postMy second post';
-	// const posts = [
-	// 	{ msg: 'Hello world', likes: 4 },
-	// 	{ msg: text, likes: 155 },
-	// 	{ msg: '70 лет полет нормальный', likes: 32 },
-	// 	{ msg: '12345', likes: 0 },
-	// 	{ msg: 'Empty text text text text text', likes: 5 },
-	// 	{ msg: 'lorem ipsum', likes: 3 }
-	// ]
 
 	const PostItem = (props) => {
 		let likesBlock = props.likes ? props.likes : 'like';
@@ -29,15 +15,35 @@ const MyPosts = (props) => {
 
 	let postsElements = props.posts
 		.reverse()
-		.map(post => <PostItem message={post.msg} likes={post.likes} />)	
+		.map(post => <PostItem message={post.msg} likes={post.likes} />)
+
+
+	
+		
+	let newPostEl = React.createRef();
+	
+	let addPost = () => {
+		props.addPost();
+		props.updateNewPostText('');
+	}
+
+	let onPostChange = () => {
+		let text = newPostEl.current.value;
+		props.updateNewPostText(text);
+	}
+
 
 	return (
 		<div className={classes.content}>
 			<div>
 				<div className={classes.addNP}>add new post</div>
 				<div className={classes.addPost}>
-					<textarea className={classes.textarea}></textarea>
-					<button className={classes.addBtn} placeholder={props.placeholder}>Add Post</button>
+					<textarea
+						className={classes.textarea} ref={newPostEl} onChange={onPostChange} value={props.newPostText}
+					/>
+					<button className={classes.addBtn} onClick={addPost}>
+						Add Post
+					</button>
 				</div>
 			</div>
 			<div className={classes.posts}>

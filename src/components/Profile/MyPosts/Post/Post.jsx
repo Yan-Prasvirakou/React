@@ -7,7 +7,7 @@ const Post = (props) => {
 	return (
 		<div className={classes.item}>
 			<div className={classes.item__imgAndText}>
-				<img src="https://www.darkside.ru/band/1732/cover/8922.jpg" />
+				<img className={classes.item__img} src="https://www.darkside.ru/band/1732/cover/8922.jpg" />
 				<div className={classes.item__msg}>
 					{props.message}
 				</div>
