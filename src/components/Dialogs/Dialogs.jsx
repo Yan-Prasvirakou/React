@@ -2,7 +2,7 @@ import React from 'react';
 import classes from './Dialogs.module.css';
 import { NavLink } from 'react-router-dom';
 import { BrowserRouter, Route } from 'react-router-dom';
-import { sendMessageActionCreator, updateNewMsgTextActionCreator } from '../../redux/store';
+import { sendMessageActionCreator, updateNewMsgTextActionCreator } from '../../redux/dialogs-reducer';
 
 
 

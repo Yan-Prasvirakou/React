@@ -5,17 +5,15 @@ import LenaAva from '../components/Dialogs/img/LenaAva.jpg';
 import KristinaAva from '../components/Dialogs/img/KristinaAva.jpg';
 import TanyaAva from '../components/Dialogs/img/TanyaAva.jpg';
 
-let ADD_POST = 'ADD-POST';
-let UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
-let UPDATE_NEW_MESSAGE_BODY = 'UPDATE-NEW-MESSAGE-BODY';
-let SEND_MESSAGE = 'SEND-MESSAGE';
+import profileReducer from "./profile-reducer";
+import dialogsReducer from "./dialogs-reducer";
+
 
 let store = {
 	_state: {
 		profilePage: {
 			newPostText: 'new text for post',
-			posts: [
-				{
+			posts: [{
 					id: 1,
 					msg: 'Hello world',
 					likes: 4
@@ -49,13 +47,11 @@ let store = {
 		},
 		dialogsPage: {
 			newMessageBody: 'text for msg',
-			dialogs: [
-				{
+			dialogs: [{
 					id: 1,
 					name: 'Sasha',
 					ava: SashaAva,
-					msgs: [
-						{
+					msgs: [{
 							id: 1,
 							text: 'Hi, my name is Sasha',
 							out: false
@@ -131,8 +127,7 @@ let store = {
 					id: 2,
 					name: 'Lera',
 					ava: LeraAva,
-					msgs: [
-						{
+					msgs: [{
 							id: 1,
 							text: 'Hi, I want you',
 							out: false
@@ -163,8 +158,7 @@ let store = {
 					id: 3,
 					name: 'Nastya',
 					ava: NastyaAva,
-					msgs: [
-						{
+					msgs: [{
 							id: 1,
 							text: 'Hi, I have waited for you so long',
 							out: false
@@ -180,8 +174,7 @@ let store = {
 					id: 4,
 					name: 'Lena',
 					ava: LenaAva,
-					msgs: [
-						{
+					msgs: [{
 							id: 1,
 							text: 'Hi',
 							out: false
@@ -210,8 +203,7 @@ let store = {
 					id: 5,
 					name: 'Kristina',
 					ava: KristinaAva,
-					msgs: [
-						{
+					msgs: [{
 							id: 1,
 							text: 'Hi, Ian',
 							out: false
@@ -292,8 +284,7 @@ let store = {
 					id: 6,
 					name: 'Tanya',
 					ava: TanyaAva,
-					msgs: [
-						{
+					msgs: [{
 							id: 1,
 							text: 'Hi, I have waited for you so long',
 							out: true
@@ -327,44 +318,13 @@ let store = {
 
 
 	dispatch(action) {
-		if (action.type === ADD_POST) {
-			let newPost = {
-				id: 7,
-				msg: this._state.profilePage.newPostText,
-				likes: 0
-			}
+		this._state.profilePage = profileReducer(this._state.profilePage, action);
+		this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action);
 
-			this._state.profilePage.posts.push(newPost);
-			this._state.profilePage.newPostText = '';
-			this._callSubscriber(this._state);
-		} else if (action.type === UPDATE_NEW_POST_TEXT) {
-			this._state.profilePage.newPostText = action.newText;
-			this._callSubscriber(this._state);
-		} 
-		
-		else if (action.type === UPDATE_NEW_MESSAGE_BODY) {
-			this._state.dialogsPage.newMessageBody = action.msgBody;
-			this._callSubscriber(this._state);
-		} else if (action.type === SEND_MESSAGE) {
-			let body = this._state.dialogsPage.newMessageBody;
-			this._state.dialogsPage.dialogs[0].msgs.push({
-				id: 15,
-				text: body,
-				out: true
-			});
-			this._state.dialogsPage.newMessageBody = '';
-			this._callSubscriber(this._state);
-		}
+		this._callSubscriber(this._state);
 	}
 }
 
-
-export const addPostActionCreator = () => ({type: ADD_POST});
-export const updateNewPostTextActionCreator = (text) => ({type: UPDATE_NEW_POST_TEXT,	newText: text})
-
-export const sendMessageActionCreator = () => ({type: SEND_MESSAGE})
-export const updateNewMsgTextActionCreator = (body) => ({type: UPDATE_NEW_MESSAGE_BODY,	msgBody: body})
-// добавлять только в сообщения одного польщователя, т к они все равно перемешиваются пока что
 
 window.store = store;
 export default store;
