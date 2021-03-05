@@ -25,14 +25,11 @@ const MyPosts = (props) => {
 	let newPostEl = React.createRef();
 	
 	let addPost = () => {
-		// props.addPost();
-		// props.updateNewPostText('');
 		props.dispatch(addPostActionCreator());
 	}
 
 	let onPostChange = () => {
 		let text = newPostEl.current.value;
-		// props.updateNewPostText(text);
 		let action = updateNewPostTextActionCreator(text);
 		props.dispatch(action)
 	}

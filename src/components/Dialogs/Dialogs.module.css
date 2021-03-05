@@ -30,7 +30,7 @@
 	transition: margin-left .5s;
 	display: block;
 	padding: 4px 36px 2px;
-	height: 30px;
+	height: 36px;
 	border-radius: 12px;
 	position: relative;
 }
@@ -39,7 +39,7 @@ a.active {
 	color: #050f3b;
 	background: #ddd;
 	margin-left: 20px;
-	height: 26px;
+	/* height: 32px; */
 	border: 2px solid #050f3b;
 }
 

@@ -1,5 +1,6 @@
 .wrapper {
 	margin: 0 auto;
+	padding: 4px;
 	height: 100vh;
 	max-height: 100vh;
 	/* overflow-y: scroll; */
@@ -25,37 +26,5 @@
 	/* position: relative; */
 	/* height: 100%; */
 }
-
-/* .content-wrapper__img {
-	width: 100%;
-	position: relative;
-	margin-top: -100px;
-} */
-
-
-/* .content-wrapper::-webkit-scrollbar {
-	width: 8px;
-}
-
-.content-wrapper::-webkit-scrollbar-thumb {
-	background: #050f3b;
-	border-radius: 10px;
-	border: 1px solid #fff;
-}
-
-.content-wrapper::-webkit-scrollbar-track {
-	background: none;
-}
-
-.content-wrapper::-webkit-scrollbar-button {
-	background: transparent;
-	height: 0;
-}
-
-.content-wrapper::-webkit-scrollbar-corner {
-	background: transparent;
-} */
-
-
 
 
