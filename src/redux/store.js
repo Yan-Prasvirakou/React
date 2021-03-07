@@ -1,9 +1,4 @@
-import SashaAva from '../components/Dialogs/img/SashaAva.jpg';
-import LeraAva from '../components/Dialogs/img/LeraAva.jpg';
-import NastyaAva from '../components/Dialogs/img/NastyaAva.jpg';
-import LenaAva from '../components/Dialogs/img/LenaAva.jpg';
-import KristinaAva from '../components/Dialogs/img/KristinaAva.jpg';
-import TanyaAva from '../components/Dialogs/img/TanyaAva.jpg';
+
 
 import profileReducer from "./profile-reducer";
 import dialogsReducer from "./dialogs-reducer";
@@ -310,7 +305,6 @@ let store = {
 	getState() {
 		return this._state;
 	},
-
 	subscribe(observer) {
 		this._callSubscriber = observer;
 	},

@@ -9,9 +9,6 @@ import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
 import { BrowserRouter, Route } from 'react-router-dom';
 
-// залить на тигхаб коммит с добавленный стейт
-// добавить в навбар блок с друзьями
-
 
 const App = (props) => {
 
