@@ -19,19 +19,16 @@ const MyPosts = (props) => {
 		.reverse()
 		.map(post => <PostItem message={post.msg} likes={post.likes} />)
 
-
-	
 		
 	let newPostEl = React.createRef();
 	
-	let addPost = () => {
-		props.dispatch(addPostActionCreator());
+	let onAddPost = () => {
+		props.addPost();
 	}
 
 	let onPostChange = () => {
 		let text = newPostEl.current.value;
-		let action = updateNewPostTextActionCreator(text);
-		props.dispatch(action)
+		props.updateNewPostText(text);
 	}
 
 
@@ -41,9 +38,12 @@ const MyPosts = (props) => {
 				<div className={classes.addNP}>add new post</div>
 				<div className={classes.addPost}>
 					<textarea
-						className={classes.textarea} ref={newPostEl} onChange={onPostChange} value={props.newPostText}
+						className={classes.textarea}
+						ref={newPostEl}
+						onChange={onPostChange}
+						value={props.newPostText}
 					/>
-					<button className={classes.addBtn} onClick={addPost}>
+					<button className={classes.addBtn} onClick={onAddPost}>
 						Add Post
 					</button>
 				</div>

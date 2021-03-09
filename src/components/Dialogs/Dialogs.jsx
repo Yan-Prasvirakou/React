@@ -8,8 +8,8 @@ import { sendMessageActionCreator, updateNewMsgTextActionCreator } from '../../r
 
 const Dialogs = (props) => {
 
-	let newMsgBody = props.dialogsPage.newMessageBody;
-	let dialogs = props.dialogsPage.dialogs;
+	// let newMsgBody = props.dialogsPage.newMessageBody;
+	// let dialogs = props.dialogsPage.dialogs;
 
 	const DialogItem = (props) => {
 		let path = `/dialogs/${props.id}`;
@@ -24,7 +24,7 @@ const Dialogs = (props) => {
 		)
 	}
 
-	let dialogsElements = dialogs
+	let dialogsElements = props.dialogs
 		.map(dialog => <DialogItem name={dialog.name} id={dialog.id} ava={dialog.ava}/>)
 
 
@@ -40,7 +40,7 @@ const Dialogs = (props) => {
 	// создать общую переменную из props???
 
 	
-	let MsgElements = dialogs
+	let MsgElements = props.dialogs
 		// .filter(dialog => dialog.name == 'Kristina')
 		.map(dialog => dialog.msgs.map(msg => <Msg msgs={msg.text} style={msg.out}/>))
 	//  я пока не знаю как отфильтровать
@@ -63,20 +63,19 @@ const Dialogs = (props) => {
 		)
 	}
 
-	let messagesElements = dialogs
+	let messagesElements = props.dialogs
 		.map(dialog => <MessageItems path={dialog.id} component={<Messages />} />)
 
 
 	
 	let onMsgChange = (e) => {
 		let text = e.target.value;
-		let action = updateNewMsgTextActionCreator(text);
-		props.dispatch(action)
+		props.onMsgChange(text);
 	}
 	
 
-	let sendMsg = () => {
-		props.dispatch(sendMessageActionCreator());
+	let onSendMsg = () => {
+		props.sendMsg();
 	}
 
 
@@ -90,10 +89,9 @@ const Dialogs = (props) => {
 			<div className={classes.messagesWrap}>
 				{messagesElements}
 				<div className={classes.writeMsg}>
-					<textarea className={classes.writeMsgText} onChange={onMsgChange} value={newMsgBody}>
-
+					<textarea className={classes.writeMsgText} onChange={onMsgChange} value={props.newMsgBody}>
 					</textarea>
-					<button className={classes.writeMsgBtn} onClick={sendMsg}>Send</button>
+					<button className={classes.writeMsgBtn} onClick={onSendMsg}>Send</button>
 				</div>
 			</div>
 		

@@ -7,11 +7,13 @@ import Dialogs from './components/Dialogs/Dialogs';
 import News from './components/News/News';
 import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
+import DialogsContainer from './components/Dialogs/DialogsContainer';
 import { BrowserRouter, Route } from 'react-router-dom';
 
 
 const App = (props) => {
-
+	// props = {state: {…}, dispatch: ƒ}
+	// откуда store, если мы его не прокидываем?
 	return (
 		<BrowserRouter>
 			<div className='wrapper'>
@@ -23,18 +25,18 @@ const App = (props) => {
 					<Route path='/profile'
 						render={() =>
 							<Profile
-								profilePage={props.state.profilePage}
-								dispatch={props.dispatch}
+								store={props.store}
 							/>
 						}
 					/>
 
 					<Route path='/dialogs'
 						render={() =>
-							<Dialogs
-								dialogsPage={props.state.dialogsPage}
-								dispatch={props.dispatch}
-							/>
+							// <Dialogs
+							// 	dialogsPage={props.state.dialogsPage}
+							// 	dispatch={props.dispatch}
+							// />
+							<DialogsContainer store={props.store}/>
 						}
 					/>
 

@@ -10,12 +10,15 @@ import store from './redux/redux-store';
 // залить на git
 
 let renderEntireTree = (state) => {
+	// state = {profilePage: {…}, dialogsPage: {…}}
+	// где dispatch?
 	ReactDOM.render(
 		<React.StrictMode>
 		
 			<App
 				state={state}
 				dispatch={store.dispatch.bind(store)}
+				store={store}
 			/>
 		</React.StrictMode>,
 		document.getElementById('root')
@@ -27,6 +30,7 @@ renderEntireTree(store.getState());
 store.subscribe(() => { 
 	let state = store.getState();
 	renderEntireTree(state);
+	
 });
 
 // If you want to start measuring performance in your app, pass a function
