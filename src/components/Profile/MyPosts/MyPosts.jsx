@@ -6,6 +6,8 @@ import { addPostActionCreator, updateNewPostTextActionCreator } from '../../../r
 
 
 const MyPosts = (props) => {
+	let posts = props.profilePage.posts;
+	let newPostText = props.profilePage.newPostText;
 
 	const PostItem = (props) => {
 		let likesBlock = props.likes ? props.likes : 'like';
@@ -15,7 +17,7 @@ const MyPosts = (props) => {
 		)
 	}
 
-	let postsElements = props.posts
+	let postsElements = posts
 		.reverse()
 		.map(post => <PostItem message={post.msg} likes={post.likes} />)
 
@@ -41,7 +43,7 @@ const MyPosts = (props) => {
 						className={classes.textarea}
 						ref={newPostEl}
 						onChange={onPostChange}
-						value={props.newPostText}
+						value={newPostText}
 					/>
 					<button className={classes.addBtn} onClick={onAddPost}>
 						Add Post

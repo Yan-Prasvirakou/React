@@ -10,13 +10,11 @@ let SEND_MESSAGE = 'SEND-MESSAGE';
 
 let initialState = {
 	newMessageBody: 'text for msg',
-	dialogs: [
-		{
+	dialogs: [{
 			id: 1,
 			name: 'Sasha',
 			ava: SashaAva,
-			msgs: [
-				{
+			msgs: [{
 					id: 1,
 					text: 'Hi, my name is Sasha',
 					out: false
@@ -92,8 +90,7 @@ let initialState = {
 			id: 2,
 			name: 'Lera',
 			ava: LeraAva,
-			msgs: [
-				{
+			msgs: [{
 					id: 1,
 					text: 'Hi, I want you',
 					out: false
@@ -124,8 +121,7 @@ let initialState = {
 			id: 3,
 			name: 'Nastya',
 			ava: NastyaAva,
-			msgs: [
-				{
+			msgs: [{
 					id: 1,
 					text: 'Hi, I have waited for you so long',
 					out: false
@@ -141,8 +137,7 @@ let initialState = {
 			id: 4,
 			name: 'Lena',
 			ava: LenaAva,
-			msgs: [
-				{
+			msgs: [{
 					id: 1,
 					text: 'Hi',
 					out: false
@@ -171,8 +166,7 @@ let initialState = {
 			id: 5,
 			name: 'Kristina',
 			ava: KristinaAva,
-			msgs: [
-				{
+			msgs: [{
 					id: 1,
 					text: 'Hi, Ian',
 					out: false
@@ -253,8 +247,7 @@ let initialState = {
 			id: 6,
 			name: 'Tanya',
 			ava: TanyaAva,
-			msgs: [
-				{
+			msgs: [{
 					id: 1,
 					text: 'Hi, I have waited for you so long',
 					out: true
@@ -277,18 +270,23 @@ let initialState = {
 
 const dialogsReducer = (state = initialState, action) => {
 	switch (action.type) {
-		case UPDATE_NEW_MESSAGE_BODY:
-			state.newMessageBody = action.msgBody;
-			return state;
 		case SEND_MESSAGE:
-			let body = state.newMessageBody;
 			state.dialogs[0].msgs.push({
 				id: 15,
-				text: body,
+				text: state.newMessageBody,
 				out: true
 			});
-			state.newMessageBody = '';
-			return state;
+			// объект с новым сообщением добавлять через спред? я пока хз как
+
+			return {
+				...state,
+				newMessageBody: '',
+			};
+		case UPDATE_NEW_MESSAGE_BODY:
+			return {
+				...state,
+				newMessageBody: action.msgBody
+			};
 		default:
 			return state;
 	}
