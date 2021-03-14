@@ -1,8 +1,5 @@
 import React from 'react';
-import classes from './Dialogs.module.css';
-import { NavLink } from 'react-router-dom';
-import { BrowserRouter, Route } from 'react-router-dom';
-import dialogsReducer, { sendMessageActionCreator, updateNewMsgTextActionCreator } from '../../redux/dialogs-reducer';
+import { sendMessageActionCreator, updateNewMsgTextActionCreator } from '../../redux/dialogs-reducer';
 import Dialogs from './Dialogs';
 import { connect } from 'react-redux';
 

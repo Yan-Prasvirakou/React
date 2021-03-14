@@ -1,8 +1,3 @@
-/* .content {
-	grid-area: cont;
-	background: tomato;
-} */
-
 .profile__content {
 	overflow-y: scroll;
 	border-radius: 10px;
@@ -33,8 +28,6 @@
 }
 
 .content__img {
-	/* width: 200px; */
-
 	width: 100%;
 	margin-top: -100px;
 }
