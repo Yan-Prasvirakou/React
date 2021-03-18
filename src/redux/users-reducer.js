@@ -6,52 +6,14 @@ import InnaAva from '../components/Users/img/InnaAva.jpg';
 let FOLLOW = 'FOLLOW';
 let UNFOLLOW = 'UNFOLLOW';
 let SET_USERS = 'SET-USERS';
+let SET_CURRENT_PAGE = 'SET-CURRENT-PAGE';
+let SET_TOTAL_USERS_COUNT = 'SET-TOTAL-USERS-COUNT'
 
 let initialState = {
 	users: [],
-	// [
-	// 	{ 
-	// 		id: 1, 
-	// 		followed: false, 
-	// 		fullName: 'Pasha', 
-	// 		status: 'i like react', 
-	// 		location: { 
-	// 			city: 'Minsk', country: 'Belarus' 
-	// 		},
-	// 		ava: PashaAva,
-	// 	},
-	// 	{ 
-	// 		id: 2, 
-	// 		followed: true,
-	// 		fullName: 'Dasha',
-	// 		status: 'i\'m from Rovno',
-	// 		location: {
-	// 			city: 'Rovno', country: 'Ukraine'
-	// 		},
-	// 		ava: DashaAva,
-	// 	},
-	// 	{ 
-	// 		id: 3, 
-	// 		followed: false, 
-	// 		fullName: 'Misha', 
-	// 		status: 'Hi everyone',
-	// 		location: {
-	// 			city: 'Vitebsk', country: 'Belarus'
-	// 		},
-	// 		ava: MishaAva,
-	// 	},
-	// 	{ 
-	// 		id: 4, 
-	// 		followed: true,
-	// 		fullName: 'Inna',
-	// 		status: 'Lego forever',
-	// 		location: {
-	// 			city: 'Odessa', country: 'Ukraine'
-	// 		},
-	// 		ava: InnaAva,
-	// 	},
-
-	// ]
+	pageSize: 10,
+	totalUsersCount: 0,
+	currentPage: 1
 };
 
 
@@ -78,7 +40,13 @@ const usersReducer = (state = initialState, action) => {
 				})
 			};
 		case SET_USERS: {
-			return {...state, users: [...state.users, ...action.users]}
+			return {...state, users: action.users}
+		}
+		case SET_CURRENT_PAGE: {
+			return {...state, currentPage: action.currentPage}
+		}
+		case SET_TOTAL_USERS_COUNT: {
+			return {...state, totalUsersCount: action.count}
 		}
 		default:
 			return state;
@@ -89,6 +57,8 @@ const usersReducer = (state = initialState, action) => {
 
 export const followAC = (userId) => ({type: FOLLOW, userId})
 export const unfollowAC = (userId) => ({ type: UNFOLLOW, userId })
-export const setUsersAC = (users) => ({type: SET_USERS, users})
+export const setUsersAC = (users) => ({ type: SET_USERS, users })
+export const setCurrentPageAC = (currentPage) => ({ type: SET_CURRENT_PAGE, currentPage })
+export const setTotalUsersCountAC = (count) => ({type: SET_TOTAL_USERS_COUNT, count})
 
 export default usersReducer;

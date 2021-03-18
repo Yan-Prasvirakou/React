@@ -20,11 +20,7 @@
 	grid-area: cont;
 	background: #ccc;
 	border-radius: 10px;
-	/* border-radius: 10px; */
-	/* overflow: hidden; */
 	overflow-y: hidden;
-	/* position: relative; */
-	/* height: 100%; */
 }
 
 
