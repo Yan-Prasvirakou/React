@@ -1,5 +1,5 @@
 import React from 'react';
-import { sendMessageActionCreator, updateNewMsgTextActionCreator } from '../../redux/dialogs-reducer';
+import { sendMessageAC, updateNewMsgTextAC, setCurrentDialogAC } from '../../redux/dialogs-reducer';
 import Dialogs from './Dialogs';
 import { connect } from 'react-redux';
 
@@ -7,18 +7,22 @@ import { connect } from 'react-redux';
 let mapStateToProps = (state) => {
 	return {
 		dialogsPage: state.dialogsPage.dialogs,
-		newMessageBody: state.dialogsPage.newMessageBody
+		newMessageBody: state.dialogsPage.newMessageBody,
+		currentDialog: state.dialogsPage.currentDialog,
 	}
 }
 
 let mapDispatchToProps = (dispatch) => {
 	return {
 		sendMsg: () => {
-			dispatch(sendMessageActionCreator())
+			dispatch(sendMessageAC())
 		},
 		onMsgChange: (body) => {
-			let msg = updateNewMsgTextActionCreator(body);
+			let msg = updateNewMsgTextAC(body);
 			dispatch(msg)
+		},
+		setCurDlg: (dialog) => {
+			dispatch(setCurrentDialogAC(dialog))
 		}
 	}
 }

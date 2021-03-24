@@ -7,9 +7,11 @@ import TanyaAva from '../components/Dialogs/img/TanyaAva.jpg';
 
 let UPDATE_NEW_MESSAGE_BODY = 'UPDATE-NEW-MESSAGE-BODY';
 let SEND_MESSAGE = 'SEND-MESSAGE';
+let SET_CURRENT_DIALOG = 'SET-CURRENT-DIALOG';
 
 let initialState = {
 	newMessageBody: 'text for msg',
+	currentDialog: null,
 	dialogs: [{
 			id: 1,
 			name: 'Sasha',
@@ -271,12 +273,17 @@ let initialState = {
 const dialogsReducer = (state = initialState, action) => {
 	switch (action.type) {
 		case SEND_MESSAGE:
-			state.dialogs[0].msgs.push({
-				id: 15,
+			let currentDlg = state.dialogs.filter(dialog => dialog.name == state.currentDialog);
+			let msgs = currentDlg[0].msgs;
+			let msgId = msgs.length;
+			// последий элемент - это длина минус 1, а айди - это последний элемент плюс 1
+			// поэтому единицу решил лишний раз не отнимать, чтобы потом не прибавлять
+
+			currentDlg[0].msgs.push({
+				id: msgId,
 				text: state.newMessageBody,
 				out: true
 			});
-			// объект с новым сообщением добавлять через спред? я пока хз как
 
 			return {
 				...state,
@@ -287,19 +294,29 @@ const dialogsReducer = (state = initialState, action) => {
 				...state,
 				newMessageBody: action.msgBody
 			};
-		default:
-			return state;
+		case SET_CURRENT_DIALOG:
+			return {
+				...state,
+				currentDialog: action.dialog
+			}
+			default:
+				return state;
 	}
 
 }
 
 
-export const sendMessageActionCreator = () => ({
+export const sendMessageAC = () => ({
 	type: SEND_MESSAGE
 })
-export const updateNewMsgTextActionCreator = (body) => ({
+export const updateNewMsgTextAC = (body) => ({
 	type: UPDATE_NEW_MESSAGE_BODY,
 	msgBody: body
+})
+
+export const setCurrentDialogAC = (dialog) => ({
+	type: SET_CURRENT_DIALOG,
+	dialog
 })
 
 export default dialogsReducer;

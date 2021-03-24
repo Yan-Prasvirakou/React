@@ -9,16 +9,21 @@ import { sendMessageActionCreator, updateNewMsgTextActionCreator } from '../../r
 const Dialogs = (props) => {
 
 	let dialogs = props.dialogsPage;
+	let curDlg = props.currentDialog;
 
-	// let newMsgBody = props.dialogsPage.newMessageBody;
-	// let dialogs = props.dialogsPage.dialogs;
+
+	let onSetCurDlg = (e) => {
+		let dlg = e.target.textContent;
+		props.setCurDlg(dlg);
+	}
+
 
 	const DialogItem = (props) => {
 		let path = `/dialogs/${props.id}`;
 
 		return (
 			<li className={classes.dialog}>
-				<NavLink to={path} activeClassName={classes.active}>
+				<NavLink to={path} activeClassName={classes.active} onClick={onSetCurDlg}>
 					<img src={props.ava} className={classes.dialog__img}/>
 					{props.name}
 				</NavLink>
@@ -26,32 +31,45 @@ const Dialogs = (props) => {
 		)
 	}
 
+	// обнулять currentDialog при выходе в другой пункт меню
+	// вместо currentDialog фильтровать по айдишнику переписки?
+	// при обнолении страницы активкласс сохраняется, а диалоговое окно очищается
+	// сохранять currentDialog в локал сторадж?
+
 	let dialogsElements = dialogs
 		.map(dialog => <DialogItem name={dialog.name} id={dialog.id} ava={dialog.ava}/>)
 
 
 	let Msg = (props) => {
 		let style = props.style ? classes.outgoing : classes.incoming;
-		// let name
 
 		return (
 			<div className={style}>{props.msgs}</div>
 		)
 	}
 
-	// создать общую переменную из props???
 
 	
 	let MsgElements = dialogs
-		// .filter(dialog => dialog.name == 'Kristina')
+		.filter(dialog => dialog.name == curDlg)
 		.map(dialog => dialog.msgs.map(msg => <Msg msgs={msg.text} style={msg.out}/>))
-	//  я пока не знаю как отфильтровать
 
-	let Messages = (props) => {
+	
+	let Messages = () => {
 		return (
 				<div className={classes.messages}>
 					{MsgElements}
 				</div>
+		)
+	}
+
+	let EmptyMessagesDiv = () => {
+		return (
+			<div className={classes.messages}>
+				<div className={classes.noDlg}>
+					<p>Диалог не выбран</p>
+				</div>
+			</div>
 		)
 	}
 
@@ -65,8 +83,8 @@ const Dialogs = (props) => {
 		)
 	}
 
-	let messagesElements = dialogs
-		.map(dialog => <MessageItems path={dialog.id} component={<Messages />} />)
+	let messagesElements = !curDlg ? <EmptyMessagesDiv/>
+		: dialogs.map(dialog => <MessageItems path={dialog.id} component={<Messages />} />)
 
 
 	
@@ -77,7 +95,7 @@ const Dialogs = (props) => {
 	
 
 	let onSendMsg = () => {
-		props.sendMsg();
+		if (curDlg) props.sendMsg();
 	}
 
 

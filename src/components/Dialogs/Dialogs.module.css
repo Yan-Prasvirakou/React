@@ -194,3 +194,12 @@ a.active {
 	border-width: 10px 15px 9px 0;
 
 }
+
+.noDlg {
+	width: 100%;
+	height: 100%;
+	color: #888;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
