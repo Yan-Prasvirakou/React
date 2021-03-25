@@ -2,7 +2,7 @@ import React from 'react';
 import classes from './Users.module.css';
 import MishaAva from './img/MishaAva.jpg';
 import { NavLink } from 'react-router-dom/cjs/react-router-dom.min';
-import { usersAPI } from '../../api/api';
+
 
 let Users = (props) => {
 	let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize);
@@ -32,27 +32,9 @@ let Users = (props) => {
 
 						{user.followed
 							? <button disabled={props.followingInProgress.some(id => id === user.id)}
-								className={classes.btn} onClick={() => {
-								props.toggleFollowingProgress(true, user.id);
-								usersAPI.unfollowUser(user.id)
-									.then(data => {
-										if (data.resultCode === 0) {
-											props.unfollow(user.id)
-										}
-										props.toggleFollowingProgress(false, user.id);
-									});
-								}}>Unfollow</button>
+								className={classes.btn} onClick={() => props.unfollow(user.id)}>Unfollow</button>
 							: <button disabled={props.followingInProgress.some(id => id === user.id)}
-								className={classes.btn} onClick={() => {
-								props.toggleFollowingProgress(true, user.id);
-								usersAPI.followUser(user.id)
-									.then(data => {
-										if (data.resultCode === 0) {
-											props.follow(user.id)
-										}
-										props.toggleFollowingProgress(false, user.id);
-									});
-								}}>Follow</button>}
+								className={classes.btn} onClick={() => props.follow(user.id)}>Follow</button>}
 					</div>
 					<div className={classes.userInfo}>
 						<h3>{user.name}</h3>

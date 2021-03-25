@@ -2,6 +2,7 @@ import PashaAva from '../components/Users/img/PashaAva.jpg';
 import DashaAva from '../components/Users/img/DashaAva.jpg';
 import MishaAva from '../components/Users/img/MishaAva.jpg';
 import InnaAva from '../components/Users/img/InnaAva.jpg';
+import { usersAPI } from '../api/api';
 
 let FOLLOW = 'FOLLOW';
 let UNFOLLOW = 'UNFOLLOW';
@@ -70,12 +71,52 @@ const usersReducer = (state = initialState, action) => {
 }
 
 
-export const follow = (userId) => ({type: FOLLOW, userId})
-export const unfollow = (userId) => ({ type: UNFOLLOW, userId })
+export const followSuccess= (userId) => ({type: FOLLOW, userId})
+export const unfollowSuccess = (userId) => ({ type: UNFOLLOW, userId })
 export const setUsers = (users) => ({ type: SET_USERS, users })
 export const setCurrentPage = (currentPage) => ({ type: SET_CURRENT_PAGE, currentPage })
 export const setTotalUsersCount = (count) => ({type: SET_TOTAL_USERS_COUNT, count})
 export const toggleIsFetching = (isFetching) => ({type: TOGGLE_IS_FETCHING, isFetching})
 export const toggleFollowingProgress = (isFetching, userId) => ({type: TOGGLE_IS_FOLLOWING_PROGRESS, isFetching, userId})
+
+
+export const getUsers = (currentPage, pageSize) => {
+	return (dispatch) => {
+		dispatch(toggleIsFetching(true));
+
+		usersAPI.getUsers(currentPage, pageSize).then(data => {
+			dispatch(toggleIsFetching(false));
+			dispatch(setUsers(data.items));
+			dispatch(setTotalUsersCount(data.totalCount / 100));
+		})
+	}
+}
+
+export const follow = (userId) => {
+	return (dispatch) => {
+		dispatch(toggleFollowingProgress(true, userId));
+		usersAPI.follow(userId)
+			.then(data => {
+				if (data.resultCode == 0) {
+					dispatch(followSuccess(userId))
+				}
+				dispatch(toggleFollowingProgress(false, userId))
+			});
+	}
+}
+
+export const unfollow = (userId) => {
+	return (dispatch) => {
+		dispatch(toggleFollowingProgress(true, userId));
+		usersAPI.unfollow(userId)
+			.then(data => {
+				if (data.resultCode == 0) {
+					dispatch(unfollowSuccess(userId))
+				}
+				dispatch(toggleFollowingProgress(false, userId))
+			});
+	}
+}
+
 
 export default usersReducer;

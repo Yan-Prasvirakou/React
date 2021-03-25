@@ -15,12 +15,12 @@ export const usersAPI = {
 		// из полученного с сервака ответа возвращаем только data, остальная инфа в данном случае не нужна
 	},
 
-	followUser(id) {
+	follow(id) {
 		return instance.post(`follow/${id}`, null)
 			.then(res => res.data)
 	},
 
-	unfollowUser(id) {
+	unfollow(id) {
 		return instance.delete(`follow/${id}`)
 			.then(res => res.data)
 	}
@@ -34,10 +34,9 @@ export const headerAPI = {
 	}
 }
 
-// export const profileAPI = {
-// 	getAuthData(id) {
-// 		return instance.get(`auth/me`)
-// 			.then(res => res.data)
-// 	}
-// }
+export const profileAPI = {
+	getUserAccountById(id) {
+		return instance.get(`profile/${id}`)
+	}
+}
 
