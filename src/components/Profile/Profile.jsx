@@ -8,7 +8,7 @@ import MishaAva from '../Users/img/MishaAva.jpg';
 
 const Profile = (props) => {
 	// debugger
-	if (!props.profile) return <Preloader/>
+	if (!props.profile) return <Preloader />
 	return (
 		<div className={classes.profile__content}>
 			<img className={classes.content__img} src='https://www.aeroflot.ru/media/aflfiles/by/msq/msq_2.jpg'/>

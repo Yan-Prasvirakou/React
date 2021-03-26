@@ -1,7 +1,7 @@
 import React from 'react';
 import classes from './Dialogs.module.css';
 import { NavLink } from 'react-router-dom';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { Redirect, Route } from 'react-router-dom';
 import { sendMessageActionCreator, updateNewMsgTextActionCreator } from '../../redux/dialogs-reducer';
 
 
@@ -10,6 +10,7 @@ const Dialogs = (props) => {
 
 	let dialogs = props.dialogsPage;
 	let curDlg = props.currentDialog;
+	let isAuth = props.isAuth;
 
 
 	let onSetCurDlg = (e) => {
@@ -97,6 +98,9 @@ const Dialogs = (props) => {
 	let onSendMsg = () => {
 		if (curDlg) props.sendMsg();
 	}
+
+
+	// if (!isAuth) return <Redirect to={'/login'}/>
 
 
 	return (
