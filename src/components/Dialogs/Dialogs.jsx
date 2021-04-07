@@ -3,6 +3,7 @@ import classes from './Dialogs.module.css';
 import { NavLink } from 'react-router-dom';
 import { Redirect, Route } from 'react-router-dom';
 import { sendMessageActionCreator, updateNewMsgTextActionCreator } from '../../redux/dialogs-reducer';
+import { Formik } from 'formik';
 
 
 
@@ -87,20 +88,61 @@ const Dialogs = (props) => {
 	let messagesElements = !curDlg ? <EmptyMessagesDiv/>
 		: dialogs.map(dialog => <MessageItems path={dialog.id} component={<Messages />} />)
 
+	
 
-	
-	let onMsgChange = (e) => {
-		let text = e.target.value;
-		props.onMsgChange(text);
-	}
-	
+	let newMsg = React.createRef();
 
 	let onSendMsg = () => {
-		if (curDlg) props.sendMsg();
+		let msgText = newMsg.current.value;
+
+		if (curDlg) {
+			props.sendMsg(msgText)
+		}
+
+		newMsg.current.value = '';
 	}
 
 
-	// if (!isAuth) return <Redirect to={'/login'}/>
+
+	const DialogForm = (props) => {
+		return (
+			<Formik
+				initialValues={{ msgText: '' }}
+			>
+				{({
+					values,
+					errors,
+					touched,
+					handleChange,
+					handleBlur,
+					handleSubmit,
+					isSubmitting
+				}) => (
+					<form className={classes.writeMsg} onSubmit={handleSubmit} >
+						
+						<textarea
+							name={'msgText'}
+							id={'msgText'}
+							placeholder={"write message text"}
+							onChange={handleChange}
+							onBlur={handleBlur}
+							value={values.msgText}
+							// className={touched.name && errors.name ? classes.test : null}
+							className={classes.writeMsgText}
+							ref={newMsg}
+						/>
+						<button type={'submit'} className={classes.writeMsgBtn}
+							disabled={isSubmitting || JSON.stringify(values.msgText) == `""`}
+							onClick={onSendMsg}
+						>
+							Send
+						</button>
+					</form>
+				)}
+			
+			</Formik>
+		)
+	}
 
 
 	return (
@@ -112,11 +154,7 @@ const Dialogs = (props) => {
 			</div>
 			<div className={classes.messagesWrap}>
 				{messagesElements}
-				<div className={classes.writeMsg}>
-					<textarea className={classes.writeMsgText} onChange={onMsgChange} value={props.newMessageBody}>
-					</textarea>
-					<button className={classes.writeMsgBtn} onClick={onSendMsg}>Send</button>
-				</div>
+				<DialogForm/>
 			</div>
 		
 		</div>

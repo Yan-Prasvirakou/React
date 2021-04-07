@@ -2,7 +2,11 @@ import React from 'react';
 import classes from './Navbar.module.css';
 import { NavLink } from 'react-router-dom';
 
-const Navbar = () => {
+const Navbar = (props) => {
+	let onClearCurDlg = () => {
+		props.clearCurDlg();
+	}
+
 	return (
 		<nav className={classes.nav}>
 			<ul>
@@ -12,7 +16,7 @@ const Navbar = () => {
 					</NavLink>
 				</li>
 				<li className={classes.item}>
-					<NavLink to='/dialogs' activeClassName={classes.active}>
+					<NavLink to='/dialogs' activeClassName={classes.active} onClick={onClearCurDlg}>
 						Messages
 					</NavLink>
 				</li>

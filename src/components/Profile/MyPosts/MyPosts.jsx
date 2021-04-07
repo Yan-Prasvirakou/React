@@ -1,12 +1,12 @@
 import React from 'react';
 import classes from './MyPosts.module.css';
 import Post from './Post/Post';
+import { Formik } from 'formik';
 
 
 
 const MyPosts = (props) => {
 	let posts = props.profilePage.posts;
-	let newPostText = props.profilePage.newPostText;
 
 	const PostItem = (props) => {
 		let likesBlock = props.likes ? props.likes : 'like';
@@ -21,33 +21,63 @@ const MyPosts = (props) => {
 		.map(post => <PostItem message={post.msg} likes={post.likes} />)
 
 		
-	let newPostEl = React.createRef();
+	let newPost = React.createRef();
 	
 	let onAddPost = () => {
-		props.addPost();
+		let postText = newPost.current.value;
+		props.addPost(postText);
 	}
 
-	let onPostChange = () => {
-		let text = newPostEl.current.value;
-		props.updateNewPostText(text);
+
+
+	const PostForm = (props) => {
+		return (
+			<Formik
+				initialValues={{ postText: '' }}
+			>
+				{({
+					values,
+					errors,
+					touched,
+					handleChange,
+					handleBlur,
+					handleSubmit,
+					isSubmitting
+				}) => (
+					<form className={classes.addPost} onSubmit={handleSubmit} >
+						
+						<textarea
+							name={'postText'}
+							id={'postText'}
+							placeholder={"write some text"}
+							onChange={handleChange}
+							onBlur={handleBlur}
+							value={values.postText}
+							// className={touched.name && errors.name ? classes.test : null}
+							className={classes.textarea}
+							ref={newPost}
+						/>
+						<button type={'submit'} className={classes.addPostBtn}
+							disabled={isSubmitting || JSON.stringify(values.postText) == `""`}
+							onClick={onAddPost}
+						>
+							Add Post
+						</button>
+					</form>
+				)}
+			
+			</Formik>
+		)
 	}
+
+
 
 
 	return (
 		<div className={classes.content}>
 			<div>
 				<div className={classes.addNP}>add new post</div>
-				<div className={classes.addPost}>
-					<textarea
-						className={classes.textarea}
-						ref={newPostEl}
-						onChange={onPostChange}
-						value={newPostText}
-					/>
-					<button className={classes.addBtn} onClick={onAddPost}>
-						Add Post
-					</button>
-				</div>
+				<PostForm/>
 			</div>
 			<div className={classes.posts}>
 				<h3 className={classes.newPost}>My posts</h3>

@@ -91,6 +91,10 @@ a.active {
 	border-radius: 5px;
 }
 
+.writeMsgText:focus {
+	background: #383f6e;
+}
+
 .writeMsgText::-webkit-scrollbar {
 	width: 0px;
 }
@@ -115,6 +119,10 @@ a.active {
 	border-radius: 5px;
 	border: none;
 	display: block;
+}
+
+.writeMsgBtn:disabled {
+	background: #ddd;
 }
 
 /* ====================== */

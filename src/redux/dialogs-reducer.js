@@ -5,12 +5,11 @@ import LenaAva from '../components/Dialogs/img/LenaAva.jpg';
 import KristinaAva from '../components/Dialogs/img/KristinaAva.jpg';
 import TanyaAva from '../components/Dialogs/img/TanyaAva.jpg';
 
-let UPDATE_NEW_MESSAGE_BODY = 'UPDATE-NEW-MESSAGE-BODY';
 let SEND_MESSAGE = 'SEND-MESSAGE';
 let SET_CURRENT_DIALOG = 'SET-CURRENT-DIALOG';
+let CLEAR_CURRENT_DIALOG = 'CLEAR_CURRENT_DIALOG';
 
-let initialState = {
-	newMessageBody: 'text for msg',
+export let initialState = {
 	currentDialog: null,
 	dialogs: [{
 			id: 1,
@@ -269,35 +268,42 @@ let initialState = {
 	]
 };
 
+// баг: если при не выбранном диалоге напечатать текст сообщения, а затем выбрать диалог, текст сообщения сотрется
+// баг: при отправке сообщения окно диалогов прокручивается вверх
 
 const dialogsReducer = (state = initialState, action) => {
 	switch (action.type) {
 		case SEND_MESSAGE:
 			let currentDlg = state.dialogs.filter(dialog => dialog.name == state.currentDialog);
-			let msgs = currentDlg[0].msgs;
-			let msgId = msgs.length;
-			// последий элемент - это длина минус 1, а айди - это последний элемент плюс 1
-			// поэтому единицу решил лишний раз не отнимать, чтобы потом не прибавлять
+			let newMsgId = currentDlg[0].msgs.length + 1;
+			let curDlgIndex = state.dialogs.indexOf(currentDlg[0]);
 
-			currentDlg[0].msgs.push({
-				id: msgId,
-				text: state.newMessageBody,
-				out: true
-			});
+			let newMsg = {
+				id: newMsgId,
+				text: action.msgText,
+				out: true,
+			}
+
+			let newMsgs = [...state.dialogs[curDlgIndex].msgs, newMsg]; 
+			let newDialog = {...state.dialogs[curDlgIndex], msgs: newMsgs};
+			let stateDialogsCopy = [...state.dialogs]
+			let changedDialog = stateDialogsCopy.splice(curDlgIndex, 1, newDialog);
+			let newDialogs = stateDialogsCopy
 
 			return {
 				...state,
-				newMessageBody: '',
+				dialogs: [...newDialogs],
 			};
-		case UPDATE_NEW_MESSAGE_BODY:
-			return {
-				...state,
-				newMessageBody: action.msgBody
-			};
+
 		case SET_CURRENT_DIALOG:
 			return {
 				...state,
 				currentDialog: action.dialog
+			}
+		case CLEAR_CURRENT_DIALOG:
+			return {
+				...state,
+				currentDialog: null
 			}
 			default:
 				return state;
@@ -306,17 +312,8 @@ const dialogsReducer = (state = initialState, action) => {
 }
 
 
-export const sendMessageAC = () => ({
-	type: SEND_MESSAGE
-})
-export const updateNewMsgTextAC = (body) => ({
-	type: UPDATE_NEW_MESSAGE_BODY,
-	msgBody: body
-})
-
-export const setCurrentDialogAC = (dialog) => ({
-	type: SET_CURRENT_DIALOG,
-	dialog
-})
+export const sendMessageAC = (msgText) => ({type: SEND_MESSAGE, msgText})
+export const setCurrentDialogAC = (dialog) => ({type: SET_CURRENT_DIALOG,	dialog})
+export const clearCurrentDialogAC = () => ({type: CLEAR_CURRENT_DIALOG});
 
 export default dialogsReducer;

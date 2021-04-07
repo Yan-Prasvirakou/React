@@ -1,7 +1,8 @@
 import React from 'react';
 import './App.css';
 import HeaderContainer from './components/Header/HeaderContainer';
-import Navbar from './components/Navbar/Navbar';
+import NavbarContainer from './components/Navbar/NavbarContainer';
+// import Navbar from './components/Navbar/Navbar';
 import ProfileContainer from './components/Profile/ProfileContainer';
 import UsersContainer from './components/Users/UsersContainer';
 import News from './components/News/News';
@@ -18,7 +19,7 @@ const App = (props) => {
 			<div className='wrapper'>
 
 				<HeaderContainer/>
-				<Navbar />
+				<NavbarContainer />
 
 				<div className='content-wrapper'>
 					< Route path = '/profile/:userId?'
