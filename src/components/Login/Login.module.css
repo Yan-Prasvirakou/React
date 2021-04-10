@@ -23,3 +23,9 @@ input:not([type='checkbox']) {
 	margin: 0 5px;
 	font-size: 10px;
 }
+
+.wrongData {
+	color: red;
+	font-size: 14px;
+	font-weight: 700;
+}
