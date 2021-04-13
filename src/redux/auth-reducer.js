@@ -41,7 +41,7 @@ export const setWrongDataInfo = (wrong) => ({
 
 export const getAuthData = () => {
 	return (dispatch) => {
-		headerAPI.getAuthData()
+		return headerAPI.getAuthData()
 			.then(data => {
 				if (data.resultCode === 0) {
 					let {	id,	email,	login	} = data.data;

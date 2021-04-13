@@ -6,9 +6,9 @@ import { setAuthUserData, getAuthData, logout } from '../../redux/auth-reducer';
 import { headerAPI } from '../../api/api';
 
 class HeaderContainer extends React.Component {
-	componentDidMount() {
-		this.props.getAuthData();
-	}
+	// componentDidMount() {
+	// 	this.props.getAuthData();
+	// }
 	render() {
 		return <Header {...this.props}/>
 	}

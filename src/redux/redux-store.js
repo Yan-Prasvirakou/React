@@ -4,6 +4,7 @@ import dialogsReducer from './dialogs-reducer';
 import usersReducer from './users-reducer';
 // import navbarReducer from './navbar-reducer';
 import authReducer from './auth-reducer';
+import appReducer from './app-reducer';
 import thunkMiddleware from 'redux-thunk';
 
 let reducers = combineReducers({
@@ -11,7 +12,8 @@ let reducers = combineReducers({
 	dialogsPage: dialogsReducer,
 	usersPage: usersReducer,
 	// navbar: dialogsReducer,
-	auth: authReducer
+	auth: authReducer,
+	app: appReducer
 });
 
 let store = createStore(reducers, applyMiddleware(thunkMiddleware));
