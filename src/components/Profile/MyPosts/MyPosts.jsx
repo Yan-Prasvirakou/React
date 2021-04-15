@@ -6,6 +6,8 @@ import { Formik } from 'formik';
 
 
 const MyPosts = (props) => {
+	
+	console.log('RENDER', props);
 	let posts = props.profilePage.posts;
 
 	const PostItem = (props) => {

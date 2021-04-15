@@ -1,13 +1,12 @@
-import React from 'react';
+import React, {PureComponent} from 'react';
 import Profile from './Profile';
 import { connect } from 'react-redux';
 import { setUserProfile, getUserAccountById, getStatus, updateStatus} from '../../redux/profile-reducer';
 import { withRouter, Redirect } from 'react-router-dom';
-import { withAuthRedirect } from '../../hoc/withAuthRedirect';
 import { compose } from 'redux';
 
 
-class ProfileContainer extends React.Component {
+class ProfileContainer extends PureComponent {
 	
 	componentDidMount() {
 		let userId = this.props.match.params.userId;
@@ -19,7 +18,9 @@ class ProfileContainer extends React.Component {
 		this.props.getStatus(userId);
 	}
 
+
 	render() {
+		// console.log('RENDER', this.props);
 		return (
 			<Profile
 				{...this.props}

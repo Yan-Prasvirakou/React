@@ -1,8 +1,7 @@
 import { headerAPI } from '../api/api';
-// import { Formik.setSubmitting } from 'formik';
 
-const SET_USER_DATA = 'SET-USER-DATA';
-const SET_WRONG_DATA_INFO = 'SET-WRONG-DATA-INFO'
+const SET_USER_DATA = 'first-project/auth/SET-USER-DATA';
+const SET_WRONG_DATA_INFO = 'first-project/auth/SET-WRONG-DATA-INFO'
 
 let initialState = {
 	userId: null,
@@ -40,38 +39,32 @@ export const setWrongDataInfo = (wrong) => ({
 })
 
 export const getAuthData = () => {
-	return (dispatch) => {
-		return headerAPI.getAuthData()
-			.then(data => {
-				if (data.resultCode === 0) {
-					let {	id,	email,	login	} = data.data;
-					dispatch(setAuthUserData(id, email, login, true))
-				}
-			})
+	return async (dispatch) => {
+		let res = await headerAPI.getAuthData();
+		if (res.data.resultCode === 0) {
+			let { id, email, login } = res.data.data;
+			dispatch(setAuthUserData(id, email, login, true))
+		}
 	}
 }
 
-export const login = (email, password, rememberMe) => (dispatch) => {
-	headerAPI.login(email, password, rememberMe)
-		.then(res => {
-			if (res.data.resultCode === 0) {
-				dispatch(getAuthData())
-				dispatch(setWrongDataInfo(false))
-			}
-			else {
-				dispatch(setWrongDataInfo(true))
-			}
-		})
+export const login = (email, password, rememberMe) => async (dispatch) => {
+	let res = await headerAPI.login(email, password, rememberMe);
+		if (res.data.resultCode === 0) {
+			dispatch(getAuthData())
+			dispatch(setWrongDataInfo(false))
+		}
+		else {
+			dispatch(setWrongDataInfo(true))
+		}
 }
 
-export const logout = () => (dispatch) => {
-	headerAPI.logout()
-		.then(res => {
-			if (res.data.resultCode === 0) {
-				dispatch(setAuthUserData(null, null, null, false))
-				dispatch(setWrongDataInfo(false))
-			}
-		})
+export const logout = () => async (dispatch) => {
+	let res = await headerAPI.logout()
+		if (res.data.resultCode === 0) {
+			dispatch(setAuthUserData(null, null, null, false))
+			dispatch(setWrongDataInfo(false))
+		}
 }
 
 

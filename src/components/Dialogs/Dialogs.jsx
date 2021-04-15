@@ -2,16 +2,13 @@ import React from 'react';
 import classes from './Dialogs.module.css';
 import { NavLink } from 'react-router-dom';
 import { Redirect, Route } from 'react-router-dom';
-import { sendMessageActionCreator, updateNewMsgTextActionCreator } from '../../redux/dialogs-reducer';
 import { Formik } from 'formik';
-
 
 
 const Dialogs = (props) => {
 
 	let dialogs = props.dialogsPage;
 	let curDlg = props.currentDialog;
-	let isAuth = props.isAuth;
 
 
 	let onSetCurDlg = (e) => {
@@ -33,7 +30,6 @@ const Dialogs = (props) => {
 		)
 	}
 
-	// обнулять currentDialog при выходе в другой пункт меню
 	// вместо currentDialog фильтровать по айдишнику переписки?
 	// при обнолении страницы активкласс сохраняется, а диалоговое окно очищается
 	// сохранять currentDialog в локал сторадж?

@@ -1,8 +1,8 @@
 import { profileAPI } from '../api/api';
 
-let ADD_POST = 'ADD-POST';
-let SET_USER_PROFILE = 'SET-USER-PROFILE';
-let SET_STATUS = 'SET-STATUS';
+let ADD_POST = 'first-project/profile/ADD-POST';
+let SET_USER_PROFILE = 'first-project/profile/SET-USER-PROFILE';
+let SET_STATUS = 'first-project/profile/SET-STATUS';
 
 let initialState = {
 	profile: null,
@@ -76,31 +76,25 @@ export const setUserProfile = (profile) => ({ type: SET_USER_PROFILE, profile })
 export const setStatus = (status) => ({type: SET_STATUS, status})
 
 export const getUserAccountById = (id) => {
-	return (dispatch) => {
-		profileAPI.getUserAccountById(id)
-			.then(res => {
-			dispatch(setUserProfile(res.data))
-		})
+	return async (dispatch) => {
+		let res = await profileAPI.getUserAccountById(id);
+		dispatch(setUserProfile(res.data))
 	}
 }
 
 export const getStatus = (id) => {
-	return (dispatch) => {
-		profileAPI.getStatus(id)
-			.then(res => {
-				dispatch(setStatus(res.data))
-			})
+	return async (dispatch) => {
+		let res = await profileAPI.getStatus(id);
+		dispatch(setStatus(res.data))
 	}
 }
 
 export const updateStatus = (status) => {
-	return (dispatch) => {
-		profileAPI.updateStatus(status)
-			.then(res => {
-				if (res.data.resultCode === 0) {
-					dispatch(setStatus(status))
-				}
-			})
+	return async (dispatch) => {
+		let res = await profileAPI.updateStatus(status);
+			if (res.data.resultCode === 0) {
+				dispatch(setStatus(status))
+			}
 	}
 }
 

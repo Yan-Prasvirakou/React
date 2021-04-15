@@ -11,26 +11,22 @@ const instance = axios.create({
 export const usersAPI = {
 	getUsers(currentPage, pageSize) {
 		return instance.get(`users?page=${currentPage}&count=${pageSize}`) // baseUrl цепляется в начало строки
-			.then(res => res.data)
 		// из полученного с сервака ответа возвращаем только data, остальная инфа в данном случае не нужна
 	},
 
 	follow(id) {
 		return instance.post(`follow/${id}`, null)
-			.then(res => res.data)
 	},
 
 	unfollow(id) {
 		return instance.delete(`follow/${id}`)
-			.then(res => res.data)
 	}
 
 }
 
 export const headerAPI = {
 	getAuthData() {
-		return instance.get(`auth/me`)
-			.then(res => res.data)
+		return instance.get(`auth/me`);
 	},
 	login(email, password, rememberMe = false) {
 		return instance.post(`auth/login`, {email, password, rememberMe})

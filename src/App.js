@@ -9,7 +9,7 @@ import Login from './components/Login/Login';
 import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
 import DialogsContainer from './components/Dialogs/DialogsContainer';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { initializeApp } from './redux/app-reducer';
 import { withRouter } from 'react-router-dom/cjs/react-router-dom.min';
@@ -26,7 +26,6 @@ class App extends React.Component {
 		if (!this.props.initialized) return <Preloader/>
 
 		return (
-			<BrowserRouter>
 				<div className='wrapper'>
 
 					<HeaderContainer/>
@@ -44,7 +43,6 @@ class App extends React.Component {
 					</div>
 					
 				</div>
-			</BrowserRouter>
 		);
 	}
 

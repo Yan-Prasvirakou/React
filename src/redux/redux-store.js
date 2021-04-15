@@ -1,4 +1,4 @@
-import { applyMiddleware, combineReducers, createStore } from 'redux';
+import { applyMiddleware, combineReducers, createStore, compose } from 'redux';
 import profileReducer from './profile-reducer';
 import dialogsReducer from './dialogs-reducer';
 import usersReducer from './users-reducer';
@@ -16,7 +16,9 @@ let reducers = combineReducers({
 	app: appReducer
 });
 
-let store = createStore(reducers, applyMiddleware(thunkMiddleware));
+const composeEnchancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+// ф-ция выше нужна для работы браузерного расширения reduxDevTools, но чета у меня оно по ка не работает
+let store = createStore(reducers, composeEnchancers(applyMiddleware(thunkMiddleware)));
 // 2-й агрумент нужен для обработки санков
 
 window.store = store;

@@ -5,9 +5,9 @@ import LenaAva from '../components/Dialogs/img/LenaAva.jpg';
 import KristinaAva from '../components/Dialogs/img/KristinaAva.jpg';
 import TanyaAva from '../components/Dialogs/img/TanyaAva.jpg';
 
-let SEND_MESSAGE = 'SEND-MESSAGE';
-let SET_CURRENT_DIALOG = 'SET-CURRENT-DIALOG';
-let CLEAR_CURRENT_DIALOG = 'CLEAR_CURRENT_DIALOG';
+let SEND_MESSAGE = 'first-project/dialogs/SEND-MESSAGE';
+let SET_CURRENT_DIALOG = 'first-project/dialogs/SET-CURRENT-DIALOG';
+let CLEAR_CURRENT_DIALOG = 'first-project/dialogs/CLEAR_CURRENT_DIALOG';
 
 export let initialState = {
 	currentDialog: null,
