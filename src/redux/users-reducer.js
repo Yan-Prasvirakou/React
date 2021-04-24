@@ -1,7 +1,3 @@
-import PashaAva from '../components/Users/img/PashaAva.jpg';
-import DashaAva from '../components/Users/img/DashaAva.jpg';
-import MishaAva from '../components/Users/img/MishaAva.jpg';
-import InnaAva from '../components/Users/img/InnaAva.jpg';
 import { usersAPI } from '../api/api';
 
 let FOLLOW = 'first-project/users/FOLLOW';
@@ -14,7 +10,7 @@ let TOGGLE_IS_FOLLOWING_PROGRESS = 'first-project/users/TOGGLE-IS-FOLLOWING-PROG
 
 let initialState = {
 	users: [],
-	pageSize: 10,
+	pageSize: 20,
 	totalUsersCount: 0,
 	currentPage: 1,
 	isFetching: false,
@@ -87,8 +83,9 @@ export const requestUsers = (page, pageSize) => {
 
 		let res = await usersAPI.getUsers(page, pageSize)
 		dispatch(toggleIsFetching(false));
+		// dispatch(setCurrentPage(page));
 		dispatch(setUsers(res.data.items));
-		dispatch(setTotalUsersCount(res.data.totalCount / 100));
+		dispatch(setTotalUsersCount(res.data.totalCount));
 	}
 }
 

@@ -1,8 +1,6 @@
 import React from 'react';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-import { NavLink } from 'react-router-dom';
-import { getUserAccountById } from '../../redux/profile-reducer';
 import { login } from '../../redux/auth-reducer';
 import {connect} from 'react-redux';
 import classes from './Login.module.css';
@@ -40,7 +38,6 @@ const LoginForm = (props) => {
 			initialValues={{ email: '', password: '', confirmPassword: '', remember: false }}
 			validationSchema={loginValidation}
 			onSubmit={(values, {setSubmitting, resetForm}) => {
-				// debugger
 				setSubmitting(true);
 				props.login(values.email, values.password, values.rememberMe)
 				// resetForm({values: ''});

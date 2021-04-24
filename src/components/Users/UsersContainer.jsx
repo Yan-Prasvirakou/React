@@ -17,7 +17,6 @@ import {
 import { connect } from 'react-redux';
 import Users from './Users';
 import Preloader from '../common/Preloader';
-import { withAuthRedirect } from '../../hoc/withAuthRedirect';
 import { compose } from 'redux';
 
 
@@ -33,7 +32,42 @@ class UsersContainer extends React.Component {
 		this.props.requestUsers(pageNumber, this.props.pageSize)
 	}
 
+	renderPagination = () => {
+		let pagesCount = Math.ceil(this.props.totalUsersCount / this.props.pageSize);
+		let pages = [];
+
+		switch (this.props.currentPage) {
+			case 1:
+				for (let i = this.props.currentPage - 2; i <= this.props.currentPage + 4; i++) {
+					if (i > 0) pages.push(i);
+				}
+				break;
+			case 2:
+				for (let i = this.props.currentPage - 2; i <= this.props.currentPage + 3; i++) {
+					if (i > 0) pages.push(i);
+				}
+				break;
+			case pagesCount - 1:
+				for (let i = this.props.currentPage - 3; i <= this.props.currentPage + 1; i++) {
+					if (i <= pagesCount) pages.push(i);
+				}
+				break;
+			case pagesCount:
+				for (let i = this.props.currentPage - 4; i <= this.props.currentPage; i++) {
+					if (i <= pagesCount) pages.push(i);
+				}
+				break;
+			default:
+				for (let i = this.props.currentPage - 2; i <= this.props.currentPage + 2; i++) {
+					pages.push(i);
+				}
+		}
+		// console.log(pages);
+		return pages;
+	}
+
 	render() {
+		
 		return <>
 			{this.props.isFetching ? <Preloader /> : null}
 			<Users
@@ -44,6 +78,8 @@ class UsersContainer extends React.Component {
 				follow={this.props.follow}
 				unfollow={this.props.unfollow}
 				onPageChanged={this.onPageChanged}
+				renderPagination={this.renderPagination}
+				setCurrentPage={this.props.setCurrentPage}
 				isFetching={this.props.isFetching}
 				followingInProgress={this.props.followingInProgress}
 			/>

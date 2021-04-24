@@ -1,14 +1,24 @@
 import React from 'react';
 import classes from './Users.module.css';
-import Paginator from '../common/Paginator';
+import Paginator from './UsersPaginator';
 import User from './User';
-import MishaAva from './img/MishaAva.jpg';
-import { NavLink } from 'react-router-dom/cjs/react-router-dom.min';
-
+import { Route } from 'react-router-dom';
 
 let Users = ({
 	totalUsersCount, pageSize, currentPage, onPageChanged,
-	users, follow, followingInProgress, unfollow, ...props }) => {
+	users, follow, followingInProgress, unfollow, setCurrentPage, renderPagination
+}) => {
+
+	let path = currentPage == 1 ? `/users` : `/users/pages/${currentPage}`;
+
+	let CurrentUsers = () => {
+		return users.map(user =>
+			<User
+				key={user.id} user={user} follow={follow}
+				followingInProgress={followingInProgress} unfollow={unfollow}
+			/>
+		)
+	}
 
 	return (
 		<div className={classes.usersWrap}>
@@ -17,16 +27,12 @@ let Users = ({
 				onPageChanged={onPageChanged}
 				totalUsersCount={totalUsersCount}
 				pageSize={pageSize}
+				setCurrentPage={setCurrentPage}
+				renderPagination={renderPagination}
 			/>
-			<h2>Users-list</h2>
-			{
-				users.map(user =>
-					<User
-						key={user.id} user={user} follow={follow} 
-						followingInProgress={followingInProgress} unfollow={unfollow}
-					/>
-				)
-			}
+			<div className={classes.usersPagesWrap}>
+				<Route path={path} render={() => <CurrentUsers />} />
+			</div>
 		</div>
 	)
 }

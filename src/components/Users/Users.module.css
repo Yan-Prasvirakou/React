@@ -1,7 +1,5 @@
 .usersWrap {
 	width: 100%;
-	/* height: 400px; */
-	/* border: 1px solid #000; */
 	overflow-y: scroll;
 	border-radius: 10px;
 	height: 100%;
@@ -9,11 +7,17 @@
 	justify-content: center;
 	flex-wrap: wrap;
 	padding: 4px;
+	padding-top: 10px;
 	box-sizing: border-box;
 	position: relative;
 }
 
 h2 {width: 100%;}
+
+.usersPagesWrap {
+	border: 2px solid olive;
+	width: 100%;
+}
 
 .userItem {
 	width: 600px;
@@ -37,9 +41,6 @@ h2 {width: 100%;}
 	display: inline-block;
 	width: 100%;
 	overflow: hidden;
-	/* position: absolute;
-	top: 0;
-	left: 0; */
 }
 
 .ava img {
@@ -84,17 +85,54 @@ h2 {width: 100%;}
 }
 
 .pagesCountWrap {
-	/* border: 1px solid #000; */
 	color: green
 }
 
-.pagesCountWrap span {
-	/* border: 1px solid #000; */
+/* .pagesCountWrap span {
 	margin: 0 2px;
+} */
+
+.notSelectedPage {
+	color: #000;
+	text-decoration: none;
+	border: 2px solid #000;
+	padding: 2px 3px;
+	margin: 1px;
+	border-radius: 4px;
+	background: #ccc;
+	transition: .4s;
+}
+
+.notSelectedPage:hover, .pagBtn:hover {
+	background: #aaa;
 }
 
 .selectedPage {
-	color: red;
+	color: #fff;
 	font-weight: bold;
-
+	background: #777;
 }
+
+.pagBtn {
+	/* box-sizing: border-box; */
+	/* padding: 1px 3px 3px 3px; */
+	padding: 2px 3px;
+	margin: 1px;
+	text-decoration: none;
+	color: #fff;
+	background: #f75e16;
+	border: 2px solid #fff;
+	border-radius: 4px;
+	transition: .4s;
+	/* display: table-cell; */
+	/* vertical-align: middle; */
+}
+
+.pagBtn:hover {
+	background: #f59416;
+}
+/* 
+.pagBtn a {
+	display: table-cell;
+	vertical-align: middle;
+} */
