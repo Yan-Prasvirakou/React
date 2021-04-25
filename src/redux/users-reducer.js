@@ -86,6 +86,7 @@ export const requestUsers = (page, pageSize) => {
 		// dispatch(setCurrentPage(page));
 		dispatch(setUsers(res.data.items));
 		dispatch(setTotalUsersCount(res.data.totalCount));
+		console.log(res.data);
 	}
 }
 

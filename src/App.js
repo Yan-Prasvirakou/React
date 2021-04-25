@@ -2,19 +2,21 @@ import React from 'react';
 import './App.css';
 import HeaderContainer from './components/Header/HeaderContainer';
 import NavbarContainer from './components/Navbar/NavbarContainer';
-import ProfileContainer from './components/Profile/ProfileContainer';
+// import ProfileContainer from './components/Profile/ProfileContainer';
 import UsersContainer from './components/Users/UsersContainer';
 import News from './components/News/News';
 import Login from './components/Login/Login';
 import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
-import DialogsContainer from './components/Dialogs/DialogsContainer';
+// import DialogsContainer from './components/Dialogs/DialogsContainer';
 import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { initializeApp } from './redux/app-reducer';
 import { withRouter } from 'react-router-dom/cjs/react-router-dom.min';
 import { compose } from 'redux';
 import Preloader from './components/common/Preloader';
+const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer'));
+const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'));
 
 
 class App extends React.Component {
@@ -29,11 +31,19 @@ class App extends React.Component {
 				<div className='wrapper'>
 
 					<HeaderContainer/>
-					<NavbarContainer />
+					<NavbarContainer/>
 
 					<div className='content-wrapper'>
-						<Route path='/profile/:userId?' render = {() => <ProfileContainer/>}/>
-						<Route path='/dialogs' render={() => <DialogsContainer/>}/>
+						<Route path='/profile/:userId?' render={() => {
+							return <React.Suspense fallback={<Preloader/>}> 
+								<ProfileContainer/>
+							</React.Suspense>
+						}}/>
+						<Route path='/dialogs' render={() => {
+							return <React.Suspense fallback={<Preloader/>}> 
+								<DialogsContainer/>
+							</React.Suspense>
+						}}/>
 						<Route path='/news' render={ () => <News/>}/>
 						<Route path='/music' render={ () => <Music/>}/>
 						<Route path='/settings' render={() => <Settings />} />
