@@ -9,10 +9,10 @@ let Users = ({
 	users, follow, followingInProgress, unfollow, setCurrentPage, renderPagination
 }) => {
 
-	let path = currentPage == 1 ? `/users` : `/users/pages/${currentPage}`;
+	// let path = currentPage == 1 ? `/users` : `/users/pages/${currentPage}`;
 
 	let CurrentUsers = () => {
-		return users.map(user =>
+		return users.map((user) =>
 			<User
 				key={user.id} user={user} follow={follow}
 				followingInProgress={followingInProgress} unfollow={unfollow}
@@ -31,7 +31,8 @@ let Users = ({
 				renderPagination={renderPagination}
 			/>
 			<div className={classes.usersPagesWrap}>
-				<Route path={path} render={() => <CurrentUsers />} />
+				{/* <Route path={path} render={() => <CurrentUsers />} /> */}
+				<CurrentUsers/>
 			</div>
 		</div>
 	)

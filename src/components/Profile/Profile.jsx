@@ -1,8 +1,9 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import classes from './Profile.module.css';
 import MyPostsContainer from './MyPosts/MyPostsContainer';
 import ProfileStatusWithHooks from './ProfileStatusWithHooks';
-import Preloader from '../common/Preloader'
+import Preloader from '../common/Preloader';
+import ProfileInfo from './ProfileInfo';
 import MishaAva from '../Users/img/MishaAva.jpg';
 
 
@@ -11,14 +12,13 @@ const Profile = (props) => {
 	// debugger
 	if (!props.profile) return <Preloader />
 
+
 	return (
 		<div className={classes.profile__content}>
-			<img className={classes.content__img} src='https://www.aeroflot.ru/media/aflfiles/by/msq/msq_2.jpg'/>
-			<img className={classes.userAva} src={props.profile.photos.large ? props.profile.photos.large : MishaAva} />
-			<ProfileStatusWithHooks status={props.status} updateStatus={props.updateStatus}/>
-			<div>about user: {props.profile.aboutMe}</div>
-			<div>full name: {props.profile.fullName}</div>
-			<div>looking for a job: {props.profile.lookingForAJob? 'yes' : 'no'}</div>
+			<ProfileInfo
+				profile={props.profile} isOwner={props.isOwner} savePhoto={props.savePhoto}
+				status={props.status} updateStatus={props.updateStatus} saveProfile={props.saveProfile}
+			/>
 			<MyPostsContainer store={props.store}/>
 		</div>
 	)

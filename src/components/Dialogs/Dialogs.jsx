@@ -5,7 +5,7 @@ import { Formik } from 'formik';
 
 
 const Dialogs = (props) => {
-
+	// debugger
 	let dialogs = props.dialogsPage;
 	let curDlg = props.currentDialog;
 
@@ -13,6 +13,11 @@ const Dialogs = (props) => {
 	let onSetCurDlg = (e) => {
 		let dlg = e.target.textContent;
 		props.setCurDlg(dlg);
+
+		// 	let test = dialogs.filter(dialog => dialog.name == curDlg)[0]
+		// // [0].msgs.map(msg => <Msg msgs={msg.text} style={msg.out}/>)
+		// 	console.log(test.name
+		
 	}
 
 
@@ -34,7 +39,7 @@ const Dialogs = (props) => {
 	// сохранять currentDialog в локал сторадж?
 
 	let dialogsElements = dialogs
-		.map(dialog => <DialogItem name={dialog.name} id={dialog.id} ava={dialog.ava}/>)
+		.map((dialog, i) => <DialogItem name={dialog.name} id={dialog.id} ava={dialog.ava} key={dialog.id}/>)
 
 
 	let Msg = (props) => {
@@ -45,18 +50,18 @@ const Dialogs = (props) => {
 		)
 	}
 
-
 	
-	let MsgElements = dialogs
-		.filter(dialog => dialog.name == curDlg)
-		.map(dialog => dialog.msgs.map(msg => <Msg msgs={msg.text} style={msg.out}/>))
-
+	let MsgElements = curDlg ?
+		dialogs
+			.filter(dialog => dialog.name == curDlg)[0].msgs
+			.map(msg => <Msg msgs={msg.text} style={msg.out} key={msg.id} />)
+		: null;
 	
 	let Messages = () => {
 		return (
-				<div className={classes.messages}>
-					{MsgElements}
-				</div>
+			<div className={classes.messages}>
+				{MsgElements}
+			</div>
 		)
 	}
 
@@ -81,7 +86,7 @@ const Dialogs = (props) => {
 	}
 
 	let messagesElements = !curDlg ? <EmptyMessagesDiv/>
-		: dialogs.map(dialog => <MessageItems path={dialog.id} component={<Messages />} />)
+		: dialogs.map((dialog) => <MessageItems path={dialog.id} component={<Messages />} key={dialog.id}/>)
 
 	
 

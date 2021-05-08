@@ -12,8 +12,6 @@
 	position: relative;
 }
 
-h2 {width: 100%;}
-
 .usersPagesWrap {
 	border: 2px solid olive;
 	width: 100%;
@@ -26,13 +24,13 @@ h2 {width: 100%;}
 	margin: 4px;
 	border-radius: 8px;
 }
+
 .avaAndBtn {
 	width: 20%;
 	height: 100%;
 	border: 2px solid orange;
 	display: inline-block;
 	border-radius: 8px;
-	/* position: relative; */
 }
 
 .ava {
@@ -88,11 +86,8 @@ h2 {width: 100%;}
 	color: green
 }
 
-/* .pagesCountWrap span {
-	margin: 0 2px;
-} */
 
-.notSelectedPage {
+.notSelectedPage, .selectedPage {
 	color: #000;
 	text-decoration: none;
 	border: 2px solid #000;
@@ -101,10 +96,7 @@ h2 {width: 100%;}
 	border-radius: 4px;
 	background: #ccc;
 	transition: .4s;
-}
-
-.notSelectedPage:hover, .pagBtn:hover {
-	background: #aaa;
+	cursor: pointer;
 }
 
 .selectedPage {
@@ -113,9 +105,11 @@ h2 {width: 100%;}
 	background: #777;
 }
 
+.notSelectedPage:hover, .pagBtn:hover {
+	background: #aaa;
+}
+
 .pagBtn {
-	/* box-sizing: border-box; */
-	/* padding: 1px 3px 3px 3px; */
 	padding: 2px 3px;
 	margin: 1px;
 	text-decoration: none;
@@ -124,15 +118,9 @@ h2 {width: 100%;}
 	border: 2px solid #fff;
 	border-radius: 4px;
 	transition: .4s;
-	/* display: table-cell; */
-	/* vertical-align: middle; */
+	cursor: pointer;
 }
 
 .pagBtn:hover {
 	background: #f59416;
 }
-/* 
-.pagBtn a {
-	display: table-cell;
-	vertical-align: middle;
-} */

@@ -18,9 +18,9 @@ const MyPosts = (props) => {
 		)
 	}
 
+
 	let postsElements = posts
-		.reverse()
-		.map(post => <PostItem message={post.msg} likes={post.likes} />)
+		.map((post) => <PostItem message={post.msg} likes={post.likes} key={post.id}/>)
 
 		
 	let newPost = React.createRef();
