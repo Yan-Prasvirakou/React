@@ -5,7 +5,6 @@
 }
 
 .dialogsWrap {
-	background: #fff;
 	border-radius: 12px;
 	margin: 10px 5px;
 	width: 30%;
@@ -17,10 +16,11 @@
 }
 
 .dialog {
-	border: 2px solid #fff;
-	cursor: pointer;
+	border: 2px solid transparent;
+	max-width: 200px;
 	transition: .5s;
 	border-radius: 12px;
+	margin-left: auto;
 }
 
 .dialog a {
@@ -33,18 +33,19 @@
 	height: 36px;
 	border-radius: 12px;
 	position: relative;
+	cursor: pointer;
 }
 
 a.active {
 	color: #050f3b;
-	background: #ddd;
+	background: #fff;
 	margin-left: 20px;
 	/* height: 32px; */
 	border: 2px solid #050f3b;
 }
 
 .dialog:hover a:not(.active) {
-	background: #ddd;
+	background: #fff;
 	color: #050f3b;
 	margin-left: 20px;
 }
@@ -72,7 +73,6 @@ a.active {
 	border-radius: 8px;
 	/* height: 25%; */
 	background: #050f3b;
-	
 	padding: 5px;
 	position: relative;
 	bottom: 5px;
@@ -81,6 +81,7 @@ a.active {
 .writeMsgText {
 	min-height: 80px;
 	max-height: 200px;
+	max-width: 400px;
 	resize: none;
 	width: 94%;
 	color: #fff;
@@ -127,7 +128,8 @@ a.active {
 
 /* ====================== */
 
-.messages {
+.messages,
+.fullHeightMessages {
 	display: flex;
 	align-items: flex-end;
 	flex-direction: column;
@@ -136,6 +138,14 @@ a.active {
 	height: 75%;
 	overflow-y: scroll;
 	box-sizing: border-box;
+	border: 6px solid #050f3b;
+	border-radius: 12px;
+	/* position: fixed; */
+}
+
+.fullHeightMessages {
+	height: 100%;
+	overflow: hidden;
 }
 
 .messages::-webkit-scrollbar {

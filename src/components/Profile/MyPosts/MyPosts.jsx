@@ -4,23 +4,28 @@ import Post from './Post/Post';
 import { Formik } from 'formik';
 
 
-
 const MyPosts = (props) => {
 	
-	console.log('RENDER', props);
 	let posts = props.profilePage.posts;
+	let profile = props.profilePage.profile;
 
 	const PostItem = (props) => {
 		let likesBlock = props.likes ? props.likes : 'like';
 
 		return (
-			<Post message={props.message} likes={likesBlock} />
+			<Post
+				message={props.message} likes={likesBlock} ava={props.ava}
+				isLiked={props.isLiked} addLike={props.addLike} id={props.id}
+			/>
 		)
 	}
 
 
 	let postsElements = posts
-		.map((post) => <PostItem message={post.msg} likes={post.likes} key={post.id}/>)
+		.map((post) => <PostItem
+			message={post.msg} likes={post.likes} ava={profile.photos.small}
+			key={post.id} id={post.id} isLiked={post.likedByMe} addLike={props.addLike}
+		/>)
 
 		
 	let newPost = React.createRef();
@@ -29,7 +34,6 @@ const MyPosts = (props) => {
 		let postText = newPost.current.value;
 		props.addPost(postText);
 	}
-
 
 
 	const PostForm = (props) => {
@@ -46,7 +50,7 @@ const MyPosts = (props) => {
 					handleSubmit,
 					isSubmitting
 				}) => (
-					<form className={classes.addPost} onSubmit={handleSubmit} >
+					<form className={classes.addPost}>
 						
 						<textarea
 							name={'postText'}
@@ -59,8 +63,8 @@ const MyPosts = (props) => {
 							className={classes.textarea}
 							ref={newPost}
 						/>
-						<button type={'submit'} className={classes.addPostBtn}
-							disabled={isSubmitting || JSON.stringify(values.postText) == `""`}
+						<button className={classes.addPostBtn}
+							disabled={values.postText == '' || !(values.postText).match(/\S/g)}
 							onClick={onAddPost}
 						>
 							Add Post
@@ -71,7 +75,6 @@ const MyPosts = (props) => {
 			</Formik>
 		)
 	}
-
 
 
 

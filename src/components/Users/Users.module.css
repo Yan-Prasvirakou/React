@@ -12,33 +12,49 @@
 	position: relative;
 }
 
+.usersPagesWrapFetching,
 .usersPagesWrap {
-	border: 2px solid olive;
+	/* border: 2px solid olive; */
 	width: 100%;
+	margin: 10px;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	/* min-height: 1500px; */
+}
+
+.usersPagesWrapFetching {
+	/* min-height: 1200px; */
+	height: 100%;
 }
 
 .userItem {
 	width: 600px;
-	min-height: 100px;
-	border: 2px solid red;
+	/* min-height: 100px; */
+	height: 150px;
+	border: 3px solid #050f3b;
+	background: #050f3b;
+	color: #fff;
 	margin: 4px;
 	border-radius: 8px;
+	padding: 4px;
 }
 
 .avaAndBtn {
 	width: 20%;
 	height: 100%;
-	border: 2px solid orange;
+	/* border: 2px solid orange; */
 	display: inline-block;
 	border-radius: 8px;
 }
 
 .ava {
 	height: 70%;
-	border: 1px solid #000;
+	/* border: 1px solid #000; */
 	display: inline-block;
 	width: 100%;
 	overflow: hidden;
+	border-radius: 50%;
 }
 
 .ava img {
@@ -48,15 +64,33 @@
 
 .btn {
 	width: 100%;
+	background: #fff;
+	color: #050f3b;
+	border: 2px solid #fff;
+	border-radius: 4px;
+	font-weight: 700;
+	cursor: pointer;
+	transition: .4s;
+}
+
+.btn:hover {
+	background: #050f3b;
+	color: #fff;
+	/* border: 2px solid #fff; */
 }
 
 .userInfo {
 	display: inline-block;
 	width: 80%;
 	height: 100%;
-	border: 2px solid olive;
+	/* border: 2px solid #fff; */
+	padding: 6px 16px;
 	border-radius: 8px;
 	vertical-align: top;
+}
+
+.userInfo h3 {
+	margin: 6px 0;
 }
 
 .usersWrap::-webkit-scrollbar {
@@ -88,25 +122,30 @@
 
 
 .notSelectedPage, .selectedPage {
-	color: #000;
+	color: #fff;
 	text-decoration: none;
-	border: 2px solid #000;
+	border: 2px solid #050f3b;
 	padding: 2px 3px;
 	margin: 1px;
-	border-radius: 4px;
-	background: #ccc;
+	border-radius: 6px;
+	font-weight: bold;
+	background: #050f3b;
 	transition: .4s;
 	cursor: pointer;
 }
 
 .selectedPage {
-	color: #fff;
-	font-weight: bold;
-	background: #777;
+	color: #050f3b;
+	background: #fff;
+	border: 2px solid #050f3b;
 }
 
-.notSelectedPage:hover, .pagBtn:hover {
-	background: #aaa;
+.notSelectedPage:hover,
+.pagBtn:hover,
+.pagBtn:hover {
+	background: #fff;
+	color: #050f3b;
+	border: 2px solid #050f3b;
 }
 
 .pagBtn {
@@ -114,13 +153,14 @@
 	margin: 1px;
 	text-decoration: none;
 	color: #fff;
-	background: #f75e16;
-	border: 2px solid #fff;
+	background: #050f3b;
+	border: 2px solid #050f3b;
+	font-weight: bold;
 	border-radius: 4px;
 	transition: .4s;
 	cursor: pointer;
 }
 
-.pagBtn:hover {
-	background: #f59416;
-}
+/* .pagBtn:hover {
+	background: #aaa;
+} */

@@ -4,7 +4,11 @@ import { NavLink } from 'react-router-dom';
 
 const Navbar = (props) => {
 	let onClearCurDlg = () => {
-		props.clearCurDlg();
+		props.clearCurrentDialogAC();
+	}
+
+	let onClearUsersPage = () => {
+		props.setCurrentPage(1);
 	}
 
 	return (
@@ -36,7 +40,7 @@ const Navbar = (props) => {
 					</NavLink>
 				</li>
 				<li className={classes.item}>
-					<NavLink to='/users' activeClassName={classes.active}>
+					<NavLink to='/users' activeClassName={classes.active} onClick={onClearUsersPage}>
 						Users
 					</NavLink>
 				</li>

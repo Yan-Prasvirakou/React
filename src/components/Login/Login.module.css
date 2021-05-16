@@ -1,9 +1,18 @@
-input:not([type='checkbox']) {
-	display: inline-block;
+
+.formInput {
 	margin: 4px;
+	border: 2px solid #050f3b;
+	border-radius: 12px;
+	padding: 5px;
+	color: #050f3b;
+	outline: none;
+	transition: .4s;
 }
 
-/* form div {border: 1px solid orange;} */
+.formInput:focus {
+	background: #ccc;
+	border: 2px solid #050f3b;
+}
 
 .right {
 	color: green;
@@ -12,8 +21,10 @@ input:not([type='checkbox']) {
 	display: inline-block;
 	width: 20px;
 	height: 20px;
-	position: relative;
-	top: 3px;
+	position: absolute;
+	left: 240px;
+	top: 8px;
+	z-index: 5;
 }
 
 .right img {width: 100%; height: 100%	}
@@ -21,11 +32,109 @@ input:not([type='checkbox']) {
 .error {
 	color: red;
 	margin: 0 5px;
+	display: inline-block;
+	position: absolute;
 	font-size: 10px;
+	left: 240px;
+	top: 10px;
+	min-width: 130px;
 }
 
 .wrongData {
 	color: red;
 	font-size: 14px;
 	font-weight: 700;
+	display: block;
+	border: 1px solid #000;
+	width: 100%;
+	text-align: center;
+	margin: 5px 5px 15px;
+}
+
+.commonWrapper {
+	border: 2px solid #000;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+	align-items: flex-start;
+	align-content: flex-start;
+}
+
+.formHeader {
+	height: 30px;
+	width: 100%;
+	text-align: center;
+	color: #050f3b;
+	display: block;
+	margin-bottom: 40px;
+}
+
+.form {
+	display: inline-block;
+	margin: 0;
+	width: 300px;
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+}
+
+.formItemWrap {
+	width: 100%;
+	position: relative;
+	display: flex;
+	justify-content: center;
+}
+
+.formCaptchaWrap {
+	width: 100%;
+	position: relative;
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+}
+
+.capthaImg {
+	width: 100%;
+}
+
+.capthaImg img {
+	width: 160px;
+	height: 80px;
+	display: block;
+	margin: 0 auto;
+}
+
+.capthaInput {
+	width: 100%;
+	position: relative;
+}
+
+.capthaInput input {
+	display: block;
+	margin: 4px auto 8px;
+}
+
+.loginBtn {
+	display: block;
+	border: 2px solid #fff;
+	color: #fff;
+	background: #050f3b;
+	cursor: pointer;
+	font-weight: 500;
+	font-size: 14px;
+	padding: 5px 8px;
+	transition: .5s;
+	border-radius: 12px;
+	margin: 5px 5px 15px 5px;
+}
+
+.loginBtn:disabled {
+	opacity: .4;
+}
+
+.loginBtn:not(:disabled):hover {
+	background: #fff;
+	color: #050f3b;
+	border: 2px solid #050f3b;
 }

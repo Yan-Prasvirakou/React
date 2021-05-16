@@ -1,19 +1,65 @@
 .header {
 	grid-area: header;
-	background: #aaa;
-	/* position: sticky; */
-	/* width: 100%; */
-	/* height: 111px; */
+	background: #ccc;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 5px 10px;
+	border-radius: 10px;
+	border: 2px solid #fff;
 }
-
-/* .header__img {
-	width: 50px;
-} */
 
 .header img {
 	width: 50px;
+	height: 50px;
 }
 
-.loginBlock {
-	float: right;
+/* .loginBlock {
+	border: 1px solid red;
+	width: 100px;
+	height: 50px;
+	display: flex;
+	flex-wrap: nowrap;
+	align-items: center;
+	justify-content: center;
+	align-content: center;
+} */
+
+.userName {
+	font-size: 18px;
+	color: #050f3b;
+	font-weight: 700;
+	margin: 0 15px;
+}
+
+.logOutBtn {
+	color: #fff;
+	background: #050f3b;
+	font-weight: 600;
+	font-size: 12px;
+	padding: 6px 10px;
+	border: 2px solid #fff;
+	border-radius: 12px;
+	cursor: pointer;
+	transition: .4s;
+}
+
+.logOutBtn:hover {
+	background: #fff;
+	color: #050f3b;
+	border: 2px solid #050f3b;
+}
+
+.login {
+	display: block;
+	border: 2px solid #fff;
+	text-decoration: none;
+	color: #fff;
+	background: #050f3b;
+	cursor: pointer;
+	font-weight: 500;
+	font-size: 14px;
+	padding: 5px 8px;
+	transition: .5s;
+	border-radius: 12px;
 }

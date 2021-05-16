@@ -26,37 +26,21 @@ let Paginator = (props) => {
 		)
 	
 
+	let createBtn = (condition, PageNum, textContent) => {
+		return condition
+			&& <span onClick={() => { props.onPageChanged(PageNum) }} className={classes.pagBtn}>
+					{textContent}
+				</span>
+	}
+	
 
 	return (
 		<div className={classes.pagesCountWrap}>
-			{
-				curPage >= 4
-				&& <span onClick={() => { props.onPageChanged(1) }} className={classes.pagBtn}>
-					FIRST
-				</span>
-			}
-			{
-				curPage > 1
-				&& <span onClick={() => { props.onPageChanged(curPage - 1) }} className={classes.pagBtn}>
-					PREV
-				</span>
-			}
-
+			{createBtn(curPage > 5, 1, 'FIRST')}
+			{createBtn(curPage > 1, curPage - 1, 'PREV')}
 			{CurrentPagesNums}
-			
-			{
-				curPage < pagesCount
-				&& <span onClick={() => { props.onPageChanged(curPage + 1) }} className={classes.pagBtn}>
-					NEXT
-				</span>
-			}
-			{
-				props.totalUsersCount > 0
-				&& curPage <= pagesCount - 3
-				&& <span onClick={() => { props.onPageChanged(pagesCount) }} className={classes.notSelectedPage}>
-					{pagesCount}
-				</span>
-			}
+			{createBtn(curPage < pagesCount, curPage + 1, 'NEXT')}
+			{createBtn(curPage < pagesCount - 4, pagesCount, pagesCount)}
 		</div>
 	)
 }

@@ -62,13 +62,13 @@ const LoginForm = (props) => {
 				handleSubmit,
 				isSubmitting
 			}) => (
-				<form onSubmit={handleSubmit}>
+					<form onSubmit={handleSubmit} className={classes.form}>
 					<>
-					<div>values: {JSON.stringify(values)}</div>
+					{/* <div>values: {JSON.stringify(values)}</div>
 					<div>errors: {JSON.stringify(errors)}</div>
-					<div>touched: {JSON.stringify(touched)}</div>
+					<div>touched: {JSON.stringify(touched)}</div> */}
 					</>
-					<div>
+					<div className={classes.formItemWrap}>
 						<input
 							name={'email'}
 							id={'email'}
@@ -77,13 +77,13 @@ const LoginForm = (props) => {
 							onChange={handleChange}
 							onBlur={handleBlur}
 							value={values.email}
-							className={touched.email && errors.email ? classes.test : null}
+							className={classes.formInput}
 							// вместо теста задать норм класс для инпутов
 						/>
 						<Error touched={touched.email} msg={errors.email}/>
 					</div>
 					
-					<div>
+					<div className={classes.formItemWrap}>
 						<input
 							name={'password'}
 							id={'password'}
@@ -92,12 +92,12 @@ const LoginForm = (props) => {
 							onChange={handleChange}
 							onBlur={handleBlur}
 							value={values.password}
-							className={touched.password && errors.password ? classes.test : null}
+							className={classes.formInput}
 						/>
 						<Error touched={touched.password} msg={errors.password} />
 					</div>
 
-					<div>
+					<div className={classes.formItemWrap}>
 						<input
 							name={'confirmPassword'}
 							id={'confirmPassword'}
@@ -106,30 +106,37 @@ const LoginForm = (props) => {
 							onChange={handleChange}
 							onBlur={handleBlur}
 							value={values.confirmPassword}
-							className={touched.password && errors.password ? classes.test : null}
+							className={classes.formInput}
 						/>
 						<Error touched={touched.confirmPassword} msg={errors.confirmPassword} />
 					</div>
+
+					{props.isWrongDataEntered && <WrongData />}
 					
-					<div>
-					{/* <p>enter symbols from picture</p> */}
-						{props.captchaUrl && <img src={props.captchaUrl}/>}
+					<div className={classes.formCaptchaWrap}>
+						{props.captchaUrl && <div className={classes.capthaImg}><img src={props.captchaUrl} /></div>}
+						{/* {props.captchaUrl && <img className={classes.capthaImg} src={props.captchaUrl} />} */}
 						{
 							props.captchaUrl
-							&& <input
+							&& <div className={classes.capthaInput}> <input
 								name={'captcha'}
 								id={'captcha'}
 								type={'text'}
 								onChange={handleChange}
 								onBlur={handleBlur}
 								value={values.captcha}
+								className={classes.formInput}
 							/>
+								<Error touched={touched.captcha} msg={errors.captcha} />
+							</div>
+							
 						}
-						{props.captchaUrl && <Error touched={touched.captcha} msg={errors.captcha} />}
 					</div>
 
+
 					<button 
-						type={'submit'} 
+						type={'submit'}
+						className={classes.loginBtn}
 						disabled={
 							isSubmitting || !dirty || values.confirmPassword != values.password
 							|| errors.password || errors.confirmPassword || errors.email
@@ -139,8 +146,11 @@ const LoginForm = (props) => {
 					>
 						Login
 					</button>
+{/* 
+					{props.isWrongDataEntered && errors.email != ''
+						&& values.confirmPassword != '' && values.password != '' && <WrongData />} */}
 
-					{props.isWrongDataEntered && <WrongData />}
+					
 					
 				</form>
 			)}
@@ -149,9 +159,7 @@ const LoginForm = (props) => {
 	)
 }
 
-// вынести формы в отдельные компоненты?
-// зарефакторить при необходимости формы передав через пропс дочерние компоненты
-
+// убрать сверху ссылку на логин если открыта страница с логин
 
 const Login = ({ isAuth, isWrongDataEntered, login, captchaUrl}) => {
 
@@ -160,10 +168,13 @@ const Login = ({ isAuth, isWrongDataEntered, login, captchaUrl}) => {
 	}
 
 	return (
-		<div>
-			<h2>LOGIN</h2>
-			<LoginForm isWrongDataEntered={isWrongDataEntered} login={login}
-				captchaUrl={captchaUrl}/>
+		<div className={classes.commonWrapper}>
+			<h2 className={classes.formHeader}>LOGIN</h2>
+			{/* <div className={classes.formWrapper}> */}
+				<LoginForm
+					isWrongDataEntered={isWrongDataEntered} login={login}	captchaUrl={captchaUrl}
+				/>
+			{/* </div> */}
 		</div>
 	)
 }

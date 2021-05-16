@@ -1,9 +1,10 @@
 import SashaAva from '../components/Dialogs/img/SashaAva.jpg';
 import LeraAva from '../components/Dialogs/img/LeraAva.jpg';
 import NastyaAva from '../components/Dialogs/img/NastyaAva.jpg';
-import LenaAva from '../components/Dialogs/img/LenaAva.jpg';
+import DivanychAva from '../components/Dialogs/img/DivanychAva.jpg';
 import KristinaAva from '../components/Dialogs/img/KristinaAva.jpg';
-import TanyaAva from '../components/Dialogs/img/TanyaAva.jpg';
+import PashaAva from '../components/Dialogs/img/PashaAva.jpg';
+import VovaAva from '../components/Dialogs/img/VovaAva.jpg';
 
 let SEND_MESSAGE = 'first-project/dialogs/SEND-MESSAGE';
 let SET_CURRENT_DIALOG = 'first-project/dialogs/SET-CURRENT-DIALOG';
@@ -93,17 +94,17 @@ export let initialState = {
 			ava: LeraAva,
 			msgs: [{
 					id: 1,
-					text: 'Hi, I want you',
+					text: 'Hi',
 					out: false
 				},
 				{
 					id: 2,
-					text: 'I want you too',
+					text: 'Hi',
 					out: true
 				},
 				{
 					id: 3,
-					text: 'I wanna be tohether with you',
+					text: 'I wanna becoma a reacr-developer',
 					out: false
 				},
 				{
@@ -113,7 +114,7 @@ export let initialState = {
 				},
 				{
 					id: 5,
-					text: 'Can we meet one another tomorrow?',
+					text: 'samuraj js',
 					out: false
 				}
 			]
@@ -124,20 +125,20 @@ export let initialState = {
 			ava: NastyaAva,
 			msgs: [{
 					id: 1,
-					text: 'Hi, I have waited for you so long',
+					text: 'Hi, I\'ve created a new social-network',
 					out: false
 				},
 				{
 					id: 2,
-					text: 'I miss you',
+					text: 'Are you glad?',
 					out: false
 				},
 			]
 		},
 		{
 			id: 4,
-			name: 'Lena',
-			ava: LenaAva,
+			name: 'Divanych',
+			ava: DivanychAva,
 			msgs: [{
 					id: 1,
 					text: 'Hi',
@@ -145,16 +146,21 @@ export let initialState = {
 				},
 				{
 					id: 2,
-					text: 'My name is Lena',
+					text: 'Certainly officially',
 					out: false
 				},
 				{
 					id: 3,
-					text: 'HRU',
+					text: 'Do u need a sofa?',
 					out: false
 				},
 				{
 					id: 4,
+					text: 'Do u need a sofa?',
+					out: false
+				},
+				{
+					id: 5,
 					text: `Lorem ipsum dolor sit, amet consectetur adipisicing elit. 
 								Ea eum necessitatibus impedit qui aperiam pariatur 
 								repudiandae nisi error facilis? Provident possimus nisi, nostrum, 
@@ -179,32 +185,32 @@ export let initialState = {
 				},
 				{
 					id: 3,
-					text: 'Let\'s go walking outside ',
+					text: 'Let\'s go',
 					out: true
 				},
 				{
 					id: 4,
 					text: `
-										Lorem ipsum dolor sit, amet consectetur adipisicing elit. 
-										Ea eum necessitatibus impedit qui aperiam pariatur 
-										repudiandae nisi error facilis? Provident possimus nisi, nostrum, 
-										voluptatum ratione itaque nemo ut officia aut odit fuga quisquam.
-									`,
+									Lorem ipsum dolor sit, amet consectetur adipisicing elit. 
+									Ea eum necessitatibus impedit qui aperiam pariatur 
+									repudiandae nisi error facilis? Provident possimus nisi, nostrum, 
+									voluptatum ratione itaque nemo ut officia aut odit fuga quisquam.
+								`,
 					out: false
 				},
 				{
 					id: 5,
-					text: 'U have good name',
+					text: 'U have good skills',
 					out: false
 				},
 				{
 					id: 6,
-					text: 'I like it',
+					text: 'I like js',
 					out: false
 				},
 				{
 					id: 7,
-					text: 'I like it',
+					text: 'I like react',
 					out: false
 				},
 				{
@@ -246,30 +252,48 @@ export let initialState = {
 		},
 		{
 			id: 6,
-			name: 'Tanya',
-			ava: TanyaAva,
+			name: 'Pasha',
+			ava: PashaAva,
 			msgs: [{
 					id: 1,
-					text: 'Hi, I have waited for you so long',
+					text: 'Hi, I have waited for yesterday so long',
 					out: true
 				},
 				{
 					id: 2,
-					text: 'I wanna see u',
+					text: 'I wanna be web-developer',
 					out: true
 				},
 				{
 					id: 3,
-					text: 'I wanna see u',
+					text: 'Goodbye',
+					out: true
+				},
+			]
+		},
+		{
+			id: 7,
+			name: 'Vova',
+			ava: VovaAva,
+			msgs: [{
+					id: 1,
+					text: 'Message',
+					out: false
+				},
+				{
+					id: 2,
+					text: 'One more',
+					out: false
+				},
+				{
+					id: 3,
+					text: 'Ok ok i am ok',
 					out: true
 				},
 			]
 		}
 	]
 };
-
-// баг: если при не выбранном диалоге напечатать текст сообщения, а затем выбрать диалог, текст сообщения сотрется
-// баг: при отправке сообщения окно диалогов прокручивается вверх
 
 const dialogsReducer = (state = initialState, action) => {
 	switch (action.type) {

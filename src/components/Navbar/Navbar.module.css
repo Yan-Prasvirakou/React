@@ -1,28 +1,51 @@
 .nav {
 	grid-area: nav;
-	background: #aaa;
-	border: 2px solid #000;
+	background: #ccc;
+	border: 2px solid #fff;
 	border-radius: 10px;
 	list-style-type: none;
-	/* height: 88vh; */
-	/* position: fixed;
-	top: 10vh;
-	width: 200px; */
-	/* потом с позицией разюберусь */
-
+	display: flex;
+	justify-content: flex-start;
 }
 
 .nav ul{
 	list-style-type: none;
-	
+	padding: 0 12px;
+	width: 100%;
+}
+
+.item {
+	margin: 6px 0;
+	width: 100%;
 }
 
 .item a {
+	display: block;
 	text-decoration: none;
 	color: #fff;
-	/* margin: 8px 0; */
+	height: 100%;
+	margin-left: 6px;
+	border: 1px solid #050f3b;
+	background: #050f3b;
+	padding: 6px 8px 6px 8px;
+	border-radius: 12px;
+	transition: .4s;
+}
+
+.item a:hover:not(a.active) {
+	background: #fff;
+	border: 2px solid #050f3b;
+	color: #050f3b;
+	font-weight: 700;
+	padding: 5px 8px 5px 8px;
 }
 
 .item a.active{
-	color: red;
+	display: inline-block;
+	color: #050f3b;
+	font-weight: 700;
+	background: #fff;
+	border: 2px solid #050f3b;
+	border-radius: 12px;
+	padding: 5px 8px 5px 8px;
 }

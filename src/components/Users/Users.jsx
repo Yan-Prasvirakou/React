@@ -2,14 +2,12 @@ import React from 'react';
 import classes from './Users.module.css';
 import Paginator from './UsersPaginator';
 import User from './User';
-import { Route } from 'react-router-dom';
 
 let Users = ({
-	totalUsersCount, pageSize, currentPage, onPageChanged,
+	totalUsersCount, pageSize, currentPage, onPageChanged, isFetching,
 	users, follow, followingInProgress, unfollow, setCurrentPage, renderPagination
 }) => {
 
-	// let path = currentPage == 1 ? `/users` : `/users/pages/${currentPage}`;
 
 	let CurrentUsers = () => {
 		return users.map((user) =>
@@ -30,10 +28,18 @@ let Users = ({
 				setCurrentPage={setCurrentPage}
 				renderPagination={renderPagination}
 			/>
-			<div className={classes.usersPagesWrap}>
-				{/* <Route path={path} render={() => <CurrentUsers />} /> */}
-				<CurrentUsers/>
+			{/* this.props.isFetching */}
+			<div className={isFetching ? classes.usersPagesWrapFetching : classes.usersPagesWrap}>
+				{isFetching ? null : <CurrentUsers/>}
 			</div>
+			<Paginator
+				currentPage={currentPage}
+				onPageChanged={onPageChanged}
+				totalUsersCount={totalUsersCount}
+				pageSize={pageSize}
+				setCurrentPage={setCurrentPage}
+				renderPagination={renderPagination}
+			/>
 		</div>
 	)
 }

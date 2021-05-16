@@ -4,6 +4,7 @@ let ADD_POST = 'first-project/profile/ADD-POST';
 let SET_USER_PROFILE = 'first-project/profile/SET-USER-PROFILE';
 let SET_STATUS = 'first-project/profile/SET-STATUS';
 let SAVE_PHOTO_SUCCESS = 'first-project/profile/SAVE-PHOTO-SUCCESS';
+let CHANGE_LIKE = 'CHANGE-LIKE';
 
 let initialState = {
 	profile: null,
@@ -12,32 +13,38 @@ let initialState = {
 		{
 			id: 6,
 			msg: 'Hello world',
-			likes: 4
+			likes: 4,
+			likedByMe: false
 		},
 		{
 			id: 5,
 			msg: 'My second post My second post My second post My second post My second post My second post My second postMy second post',
-			likes: 155
+			likes: 155,
+			likedByMe: false
 		},
 		{
 			id: 4,
 			msg: '70 лет полет нормальный',
-			likes: 32
+			likes: 32,
+			likedByMe: false
 		},
 		{
 			id: 3,
 			msg: '12345',
-			likes: 0
+			likes: 0,
+			likedByMe: false
 		},
 		{
 			id: 2,
 			msg: 'Empty text text text text text',
-			likes: 5
+			likes: 5,
+			likedByMe: false
 		},
 		{
 			id: 1,
 			msg: 'lorem ipsum',
-			likes: 3
+			likes: 3,
+			likedByMe: false
 		}
 	],
 };
@@ -50,13 +57,27 @@ const profileReducer = (state = initialState, action) => {
 			let newPost = {
 				id: newPostId,
 				msg: action.postText,
-				likes: 0
+				likes: 0,
+				likedByMe: false
 			};
 
 			return {
 				...state,
 				posts: [newPost, ...state.posts],
 			};
+		case CHANGE_LIKE:
+			let likedPostId = action.likedPostId;
+			let likedPost = state.posts.filter(post => post.id == likedPostId)[0];
+			let likes = likedPost.likes;
+
+			let posts = !likedPost.likedByMe
+				? state.posts.map(post => post.id == likedPostId ? { ...post, likedByMe: true, likes: ++likes } : { ...post })
+				:	state.posts.map(post => post.id == likedPostId ? { ...post, likedByMe: false, likes: --likes } : { ...post })
+
+			return {
+				...state,
+				posts: [ ...posts ],
+			}
 		case SET_USER_PROFILE:
 			return {
 				...state,
@@ -78,7 +99,8 @@ const profileReducer = (state = initialState, action) => {
 
 }
 
-export const addPostActionCreator = (postText) => ({type: ADD_POST, postText});
+export const addPostActionCreator = (postText) => ({ type: ADD_POST, postText });
+export const addLikeAC = (likedPostId) => ({ type: CHANGE_LIKE, likedPostId });
 export const setUserProfile = (profile) => ({ type: SET_USER_PROFILE, profile })
 export const setStatus = (status) => ({type: SET_STATUS, status})
 export const savePhotoSuccess = (photos) => ({type: SAVE_PHOTO_SUCCESS, photos})

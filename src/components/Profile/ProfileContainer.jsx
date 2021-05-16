@@ -33,7 +33,6 @@ class ProfileContainer extends PureComponent {
 
 
 	render() {
-		// console.log('RENDER', this.props);
 		return (
 			<Profile
 				{...this.props}

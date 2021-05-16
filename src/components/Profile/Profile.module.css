@@ -27,22 +27,172 @@
 	background: transparent;
 }
 
-.content__img {
+.infoWrapper {
+	/* border: 2px solid orange; */
+	display: flex;
+	/* flex-wrap: wrap; */
+}
+
+.userContacts {
+	/* border: 2px solid red; */
+	width: 65%;
+	padding: 5px;
+}
+
+.userAvaAndStatus {
+	width: 35%;
+	padding: 5px;
+	/* border: 2px solid #000; */
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+	align-items: flex-start;
+	align-content: flex-start;
+	/* border: 2px solid green; */
+}
+
+.userAvaWrap {
 	width: 100%;
-	margin-top: -100px;
+	/* text-align: center; */
 }
 
 .userAva {
-	margin: 5px;
+	display: block;
+	margin: 5px auto;
 	width: 150px;
+	height: 150px;
+	border-radius: 50%;
 }
 
+.changeInfo,
+.changePhoto {
+	display: block;
+	border: 2px solid #fff;
+	color: #fff;
+	background: #050f3b;
+	cursor: pointer;
+	font-weight: 500;
+	font-size: 10px;
+	padding: 5px;
+	transition: .5s;
+	border-radius: 12px;
+	margin: 5px 5px 20px 5px;
+}
+
+/* .changePhoto {
+	border: 2px solid red;
+} */
+
+.changeInfo {
+	width: 50px;
+}
+
+.changeInfo:hover,
+.changePhoto:hover {
+	background: #fff;
+	color: #050f3b;
+	border: 2px solid #050f3b;
+}
+
+.changePhoto input {
+	position: absolute;
+	overflow: hidden;
+	z-index: -1;
+	width: 1px;
+	height: 1px;
+	opacity: 0;
+	left: 50%;
+}
+
+.ProfileDataForm {
+	color: #050f3b;
+}
+
+.statusTextarea {
+	width: 100%;
+	height: 60px;
+	resize: none;
+	border: 2px solid #050f3b;
+	border-radius: 12px;
+	padding: 5px;
+	color: #050f3b;
+	
+	/* transition: .4s; */
+}
+
+.ProfileDataFormTextarea {
+	width: 100%;
+	height: 60px;
+	resize: none;
+	border: 2px solid #050f3b;
+	border-radius: 12px;
+	padding: 5px;
+	color: #050f3b;
+	transition: .4s;
+}
+
+.ProfileDataFormTextarea:focus, 
+.statusTextarea:focus {
+	background: #ccc;
+	border: 2px solid #050f3b;
+	border-radius: 12px;
+	outline: none;
+}
+
+.statusTextarea:focus {
+	background: #fff;
+}
+
+.ProfileDataFormHead {
+	margin: 10px 0 0 0;
+	text-align: center;
+}
+
+.ProfileDataFormInput {
+
+	width: 200px;
+	/* height: 80px; */
+	/* resize: none; */
+	border: 2px solid #050f3b;
+	border-radius: 4px;
+	padding: 2px;
+	color: #050f3b;
+	transition: .4s;
+}
+
+.ProfileDataFormInput:focus {
+	background: #ccc;
+	border: 2px solid #050f3b;
+	/* border-radius: 12px; */
+	outline: none;
+}
+
+
 input:not([type='checkbox']) {
-	display: inline-block;
+	/* display: inline-block; */
 	margin: 4px;
 }
 
-/* form div {border: 1px solid orange;} */
+.aboutUser {
+	color: #050f3b;
+}
+
+.aboutUserContactsTitle {
+	text-align: center;
+	margin: 20px 0 5px 0;
+}
+
+/* ====================== profileStatusWithHooks ================== */
+
+.status {
+	color: #050f3b;
+	font-size: 16px;
+	/* font-weight: 700; */
+	text-align: center;
+	width: 100%;
+	/* border: 2px solid navy; */
+
+}
 
 /* =================  profileDataForm =================== */
 

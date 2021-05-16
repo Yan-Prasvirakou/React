@@ -4,15 +4,13 @@
 	border: 2px solid #050f3b;
 	display: flex;
 	flex-wrap: wrap;
-	border-radius: 5px;
+	border-radius: 12px;
 	justify-content: flex-end;
-	max-width: 650px;
-	/* justify-content: space-between; */
-	/* сделать навбар фиксированным */
+	max-width: 500px;
+	padding: 4px;
 }
 
 .item__imgAndText {
-	/* border: 1px solid red; */
 	width: 100%;
 	display: flex;
 	flex-wrap: nowrap;
@@ -27,22 +25,32 @@
 }
 
 .item__msg {
-	/* border: 1px solid green; */
 	width: 70%;
 	padding: 12px 5px;
 	overflow-wrap: break-word;
+	color: #050f3b;
 }
 
-.likeSymbol {
+.likedSymbol,
+.notLikedSymbol {
 	color: #050f3b;
-	font-size: 24px;
-	/* padding-top: 8px; */
+	font-size: 18px;
 	position: relative;
 	top: 3px;
 }
 
+.notLikedSymbol {
+	color: #5a5f8f;
+	transition: .4s;
+	opacity: .5
+}
+
+.item__likes:hover .notLikedSymbol {
+	color: #050f3b;
+	opacity: 1
+}
+
 .item__likes {
-	/* border: 1px solid #000; */
 	padding-right: 8px;
 	cursor: pointer
 }

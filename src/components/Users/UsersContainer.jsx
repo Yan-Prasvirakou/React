@@ -24,7 +24,6 @@ import { compose } from 'redux';
 
 class UsersContainer extends React.Component {
 
-	//стандартный метод классовой компоненты, который срабатывает после того, как в браузерной строке появляется ее урл
 	componentDidMount() {
 		this.props.requestUsers(this.props.currentPage, this.props.pageSize);
 	}
@@ -36,39 +35,49 @@ class UsersContainer extends React.Component {
 	renderPagination = () => {
 		let pagesCount = Math.ceil(this.props.totalUsersCount / this.props.pageSize);
 		let pages = [];
+		
+		let renderPages = (prevPages, nextPages) => {
+			for (let i = this.props.currentPage - prevPages; i <= this.props.currentPage + nextPages; i++) {
+				pages.push(i);
+			}
+		}
+		
 
 		switch (this.props.currentPage) {
 			case 1:
-				for (let i = this.props.currentPage - 2; i <= this.props.currentPage + 4; i++) {
-					if (i > 0) pages.push(i);
-				}
+				renderPages(0, 8) 
 				break;
 			case 2:
-				for (let i = this.props.currentPage - 2; i <= this.props.currentPage + 3; i++) {
-					if (i > 0) pages.push(i);
-				}
+				renderPages(1, 7)
+				break;
+			case 3:
+				renderPages(2, 6)
+				break;
+			case 4:
+				renderPages(3, 5) //2, 8
+				break;
+			case pagesCount - 3:
+				renderPages(6, 3)
+				break;
+			case pagesCount - 2:
+				renderPages(7, 2)
 				break;
 			case pagesCount - 1:
-				for (let i = this.props.currentPage - 3; i <= this.props.currentPage + 1; i++) {
-					if (i <= pagesCount) pages.push(i);
-				}
+				renderPages(8, 1)
 				break;
 			case pagesCount:
-				for (let i = this.props.currentPage - 4; i <= this.props.currentPage; i++) {
-					if (i <= pagesCount) pages.push(i);
-				}
+				renderPages(9, 0)//10, 0
 				break;
 			default:
-				for (let i = this.props.currentPage - 2; i <= this.props.currentPage + 2; i++) {
-					pages.push(i);
-				}
+				renderPages(4, 4) // 0, 10
 		}
-		// console.log(pages);
 		return pages;
 	}
 
 	render() {
 		
+		// переместить пагинатор в отдельный компонент, чтобы он не исчезал во время загрузки пользователей
+		// занулять текущую страницу пользователей при клике на пункт менб юзерс
 		return <>
 			{this.props.isFetching ? <Preloader /> : null}
 			<Users

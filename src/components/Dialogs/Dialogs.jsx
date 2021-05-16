@@ -1,23 +1,65 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import classes from './Dialogs.module.css';
-import { Redirect, Route, NavLink} from 'react-router-dom';
+import { Redirect, Route, NavLink } from 'react-router-dom';
 import { Formik } from 'formik';
 
 
 const Dialogs = (props) => {
-	// debugger
+
 	let dialogs = props.dialogsPage;
 	let curDlg = props.currentDialog;
+	let curDlgBlock = React.useRef();
+	let sendMsgBtn = React.createRef();
+	let newMsgField = React.useRef();
+	let enterKeyDown = false;
+
+	let onSendMsg = () => {
+		let msgText = newMsgField.current.value;
+		props.sendMsg(msgText);
+
+		newMsgField.current.value = '';
+		newMsgField.current.focus();
+	}
+
+	let onEnterKeyDown = (e) => {
+		if (e.code == 'Enter' && sendMsgBtn.current
+			&& !sendMsgBtn.current.disabled && !enterKeyDown
+			&& document.activeElement == newMsgField.current) {
+				e.preventDefault();
+				enterKeyDown = true;
+				setTimeout(() => {
+					onSendMsg();
+				}, 60);	
+			// onSendMsg();
+		}
+	}
+
+	let onEnterKeyUp = (e) => {
+		if (e.code == 'Enter' && sendMsgBtn.current && !sendMsgBtn.current.disabled
+			&& enterKeyDown && document.activeElement == newMsgField.current) {
+			enterKeyDown = false;
+		}
+	}
+
+
+	useEffect(() => {
+		document.addEventListener('keydown', onEnterKeyDown)
+	});
+
+	useEffect(() => {
+		document.addEventListener('keyup', onEnterKeyUp)
+	});
+
+	useEffect(() => {
+		if (curDlg) {
+			curDlgBlock.current.scrollTop = curDlgBlock.current.scrollHeight;
+		}
+	})
 
 
 	let onSetCurDlg = (e) => {
-		let dlg = e.target.textContent;
+		let dlg = e.currentTarget.textContent;
 		props.setCurDlg(dlg);
-
-		// 	let test = dialogs.filter(dialog => dialog.name == curDlg)[0]
-		// // [0].msgs.map(msg => <Msg msgs={msg.text} style={msg.out}/>)
-		// 	console.log(test.name
-		
 	}
 
 
@@ -25,21 +67,18 @@ const Dialogs = (props) => {
 		let path = `/dialogs/${props.id}`;
 
 		return (
-			<li className={classes.dialog}>
+			<li className={classes.dialog} >
 				<NavLink to={path} activeClassName={classes.active} onClick={onSetCurDlg}>
-					<img src={props.ava} className={classes.dialog__img}/>
+					<img src={props.ava} className={classes.dialog__img} />
 					{props.name}
 				</NavLink>
 			</li>
 		)
 	}
 
-	// вместо currentDialog фильтровать по айдишнику переписки?
-	// при обнолении страницы активкласс сохраняется, а диалоговое окно очищается
-	// сохранять currentDialog в локал сторадж?
 
-	let dialogsElements = dialogs
-		.map((dialog, i) => <DialogItem name={dialog.name} id={dialog.id} ava={dialog.ava} key={dialog.id}/>)
+	let dialogsBlock = dialogs
+		.map((dialog, i) => <DialogItem name={dialog.name} id={dialog.id} ava={dialog.ava} key={dialog.id} />)
 
 
 	let Msg = (props) => {
@@ -50,16 +89,17 @@ const Dialogs = (props) => {
 		)
 	}
 
-	
+
 	let MsgElements = curDlg ?
 		dialogs
 			.filter(dialog => dialog.name == curDlg)[0].msgs
 			.map(msg => <Msg msgs={msg.text} style={msg.out} key={msg.id} />)
 		: null;
-	
+
+
 	let Messages = () => {
 		return (
-			<div className={classes.messages}>
+			<div className={classes.messages} ref={curDlgBlock}>
 				{MsgElements}
 			</div>
 		)
@@ -67,7 +107,7 @@ const Dialogs = (props) => {
 
 	let EmptyMessagesDiv = () => {
 		return (
-			<div className={classes.messages}>
+			<div className={classes.fullHeightMessages}>
 				<div className={classes.noDlg}>
 					<p>Диалог не выбран</p>
 				</div>
@@ -81,27 +121,12 @@ const Dialogs = (props) => {
 		let component = () => props.component;
 
 		return (
-			<Route path={path} render={component}	/>
+			<Route path={path} render={component} />
 		)
 	}
 
-	let messagesElements = !curDlg ? <EmptyMessagesDiv/>
-		: dialogs.map((dialog) => <MessageItems path={dialog.id} component={<Messages />} key={dialog.id}/>)
-
-	
-
-	let newMsg = React.createRef();
-
-	let onSendMsg = () => {
-		let msgText = newMsg.current.value;
-
-		if (curDlg) {
-			props.sendMsg(msgText)
-		}
-
-		newMsg.current.value = '';
-	}
-
+	let messagesBlock = !curDlg ? <EmptyMessagesDiv />
+		: dialogs.map((dialog) => <MessageItems path={dialog.id} component={<Messages />} key={dialog.id} />)
 
 
 	const DialogForm = (props) => {
@@ -118,28 +143,28 @@ const Dialogs = (props) => {
 					handleSubmit,
 					isSubmitting
 				}) => (
-					<form className={classes.writeMsg} onSubmit={handleSubmit} >
-						
+					<form className={classes.writeMsg}>
+
 						<textarea
 							name={'msgText'}
 							id={'msgText'}
 							placeholder={"write message text"}
 							onChange={handleChange}
 							onBlur={handleBlur}
-							value={values.msgText}
+							value={(values.msgText).startsWith('\n') ? '' : values.msgText}
 							// className={touched.name && errors.name ? classes.test : null}
 							className={classes.writeMsgText}
-							ref={newMsg}
+							ref={newMsgField}
+							autoFocus
 						/>
-						<button type={'submit'} className={classes.writeMsgBtn}
-							disabled={isSubmitting || JSON.stringify(values.msgText) == `""`}
+						<button type={'submit'} className={classes.writeMsgBtn} ref={sendMsgBtn}
+							disabled={isSubmitting || values.msgText == '' || !(values.msgText).match(/\S/g)}
 							onClick={onSendMsg}
 						>
 							Send
 						</button>
 					</form>
 				)}
-			
 			</Formik>
 		)
 	}
@@ -149,14 +174,13 @@ const Dialogs = (props) => {
 		<div className={classes.commonWrap}>
 			<div className={classes.dialogsWrap}>
 				<ul className={classes.dialogs}>
-					{dialogsElements}
+					{dialogsBlock}
 				</ul>
 			</div>
 			<div className={classes.messagesWrap}>
-				{messagesElements}
-				<DialogForm/>
+				{messagesBlock}
+				{curDlg && <DialogForm />}
 			</div>
-		
 		</div>
 	)
 }
