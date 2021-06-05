@@ -1,3 +1,4 @@
+import { UserType } from './types/types';
 import { usersAPI } from '../api/api';
 
 let FOLLOW = 'first-project/users/FOLLOW';
@@ -8,17 +9,21 @@ let SET_TOTAL_USERS_COUNT = 'first-project/users/SET-TOTAL-USERS-COUNT';
 let TOGGLE_IS_FETCHING = 'first-project/users/TOGGLE-IS-FETCHING';
 let TOGGLE_IS_FOLLOWING_PROGRESS = 'first-project/users/TOGGLE-IS-FOLLOWING-PROGRESS';
 
+
+
 let initialState = {
-	users: [],
+	users: [] as Array<UserType>,
 	pageSize: 20,
 	totalUsersCount: 0,
 	currentPage: 1,
 	isFetching: false,
-	followingInProgress: []
+	followingInProgress: [] as Array<number>
 };
 
+type InitialStateType = typeof initialState
 
-const usersReducer = (state = initialState, action) => {
+
+const usersReducer = (state = initialState, action: any): InitialStateType => {
 	switch (action.type) {
 		case FOLLOW:
 			return {
@@ -66,18 +71,27 @@ const usersReducer = (state = initialState, action) => {
 
 }
 
+type FollowSuccessType =  { type: typeof FOLLOW, userId: number }
+type UnfollowSuccessType =  { type: typeof UNFOLLOW, userId: number }
+type SetUsersType = { type: typeof SET_USERS, users: Array<UserType> }
+type SetCurrentPageType = { type: typeof SET_CURRENT_PAGE, currentPage: number }
+type SetTotalUsersCountType = { type: typeof SET_TOTAL_USERS_COUNT, count: number }
+type ToggleIsFetchingType = { type: typeof TOGGLE_IS_FETCHING, isFetching: boolean }
+type ToggleFollowingProgressType = { type: typeof TOGGLE_IS_FOLLOWING_PROGRESS, isFetching: boolean, userId: number }
 
-export const followSuccess= (userId) => ({type: FOLLOW, userId})
-export const unfollowSuccess = (userId) => ({ type: UNFOLLOW, userId })
-export const setUsers = (users) => ({ type: SET_USERS, users })
-export const setCurrentPage = (currentPage) => ({ type: SET_CURRENT_PAGE, currentPage })
-export const setTotalUsersCount = (count) => ({type: SET_TOTAL_USERS_COUNT, count})
-export const toggleIsFetching = (isFetching) => ({type: TOGGLE_IS_FETCHING, isFetching})
-export const toggleFollowingProgress = (isFetching, userId) => ({type: TOGGLE_IS_FOLLOWING_PROGRESS, isFetching, userId})
+
+export const followSuccess = (userId: number): FollowSuccessType => ({type: FOLLOW, userId})
+export const unfollowSuccess = (userId: number): UnfollowSuccessType => ({ type: UNFOLLOW, userId })
+export const setUsers = (users: Array<UserType>): SetUsersType => ({ type: SET_USERS, users })
+export const setCurrentPage = (currentPage: number): SetCurrentPageType => ({ type: SET_CURRENT_PAGE, currentPage })
+export const setTotalUsersCount = (count: number): SetTotalUsersCountType => ({type: SET_TOTAL_USERS_COUNT, count})
+export const toggleIsFetching = (isFetching: boolean): ToggleIsFetchingType => ({type: TOGGLE_IS_FETCHING, isFetching})
+export const toggleFollowingProgress = (isFetching: boolean, userId: number): ToggleFollowingProgressType =>
+	({ type: TOGGLE_IS_FOLLOWING_PROGRESS, isFetching, userId })
 
 
-export const requestUsers = (page, pageSize) => {
-	return async (dispatch) => {
+export const requestUsers = (page: number, pageSize: number) => {
+	return async (dispatch: any) => {
 		dispatch(toggleIsFetching(true));
 		dispatch(setCurrentPage(page));
 
@@ -90,7 +104,7 @@ export const requestUsers = (page, pageSize) => {
 	}
 }
 
-const followUnfollowFlow = async (dispatch, userId, apiMethod, actionCreator) => {
+const followUnfollowFlow = async (dispatch: any, userId: number, apiMethod: any, actionCreator: any) => {
 	dispatch(toggleFollowingProgress(true, userId));
 	let res = await apiMethod(userId);
 
@@ -100,15 +114,15 @@ const followUnfollowFlow = async (dispatch, userId, apiMethod, actionCreator) =>
 	dispatch(toggleFollowingProgress(false, userId))
 }
 
-export const follow = (userId) => {
-	return async (dispatch) => {
+export const follow = (userId: number) => {
+	return async (dispatch: any) => {
 		let apiMethod = usersAPI.follow.bind(usersAPI);
 		followUnfollowFlow(dispatch, userId, apiMethod, followSuccess);
 	}
 }
 
-export const unfollow = (userId) => {
-	return async (dispatch) => {
+export const unfollow = (userId: number) => {
+	return async (dispatch: any) => {
 		let apiMethod = usersAPI.unfollow.bind(usersAPI);
 		followUnfollowFlow(dispatch, userId, apiMethod, unfollowSuccess);
 	}

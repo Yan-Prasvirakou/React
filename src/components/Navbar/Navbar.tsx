@@ -2,7 +2,13 @@ import React from 'react';
 import classes from './Navbar.module.css';
 import { NavLink } from 'react-router-dom';
 
-const Navbar = (props) => {
+type PropsType = {
+	currentDialog: string | null
+	clearCurrentDialogAC: () => void
+	setCurrentPage: (currentPage: number) => void
+}
+
+const Navbar: React.FC<PropsType> = (props) => {
 	let onClearCurDlg = () => {
 		props.clearCurrentDialogAC();
 	}

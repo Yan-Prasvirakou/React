@@ -6,8 +6,14 @@ import {connect} from 'react-redux';
 import classes from './Login.module.css';
 import ok from './ok.png';
 import { Redirect } from 'react-router-dom';
+import { AppStateType } from '../../redux/redux-store';
 
-const Error = ({touched, msg}) => {
+type ErrorPropsType = {
+	touched: boolean | undefined
+	msg: string | undefined
+}
+
+const Error: React.FC<ErrorPropsType> = ({touched, msg}) => {
 	if (!touched) return null;
 	if (msg) return <span className={classes.error}>{msg}</span>;
 	return <div className={classes.right}><img src={ok} /></div>;
@@ -17,8 +23,14 @@ const WrongData = () => {
 	return <div className={classes.wrongData}>wrong email or password</div>
 }
 
+type LoginFormPropsType = {
+	isWrongDataEntered: boolean
+	login: (email: string, password: string, captcha: any) => void
+	captchaUrl: any
+}
 
-const LoginForm = (props) => {
+
+const LoginForm: React.FC<LoginFormPropsType> = (props) => {
 
 	const loginValidation = Yup.object().shape({
 		email: Yup.string().email('Enter right email')
@@ -35,7 +47,8 @@ const LoginForm = (props) => {
 			.max(30, 'Must be shorter than 30 characters')
 			.required('Must enter a password'),
 		captcha: props.captchaUrl && Yup.string().required('enter symbols from picture'),
-		// captcha: Yup.string().min(1, 'enter symbols from picture'),
+		// если каптча есть, отправлять каптчу, если нет, то без каптчи отправлять
+		// но это вряд ли прокатит, т.к. ошибка во время валидации происходит, то есть до момента отправки
 	})
 
 
@@ -46,7 +59,8 @@ const LoginForm = (props) => {
 			validationSchema={loginValidation}
 			onSubmit={(values, {setSubmitting, resetForm}) => {
 				setSubmitting(true);
-				props.login(values.email, values.password, values.rememberMe, values.captcha)
+				props.captchaUrl ? props.login(values.email, values.password, values.captcha)
+					: props.login(values.email, values.password, null)
 				// resetForm({values: ''});
 				// resetForm();
 				setSubmitting(false);
@@ -62,6 +76,7 @@ const LoginForm = (props) => {
 				handleSubmit,
 				isSubmitting
 			}) => (
+
 					<form onSubmit={handleSubmit} className={classes.form}>
 					<>
 					{/* <div>values: {JSON.stringify(values)}</div>
@@ -159,9 +174,14 @@ const LoginForm = (props) => {
 	)
 }
 
-// убрать сверху ссылку на логин если открыта страница с логин
+type LoginPropsType = {
+	isAuth: boolean
+	isWrongDataEntered: boolean
+	login: (email: string, password: string, captcha: any) => void
+	captchaUrl: string | null
+}
 
-const Login = ({ isAuth, isWrongDataEntered, login, captchaUrl}) => {
+const Login: React.FC<LoginPropsType> = ({ isAuth, isWrongDataEntered, login, captchaUrl}) => {
 
 	if (isAuth) {
 		return <Redirect to={'/profile'}/>
@@ -179,7 +199,7 @@ const Login = ({ isAuth, isWrongDataEntered, login, captchaUrl}) => {
 	)
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: AppStateType) => ({
 	captchaUrl: state.auth.captchaUrl,
 	isAuth: state.auth.isAuth,
 	isWrongDataEntered: state.auth.isWrongDataEntered

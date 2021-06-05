@@ -28,8 +28,8 @@ export const headerAPI = {
 	getAuthData() {
 		return instance.get(`auth/me`);
 	},
-	login(email, password, rememberMe = false, captcha = '') {
-		return instance.post(`auth/login`, {email, password, rememberMe, captcha})
+	login(email, password, captcha = '') {
+		return instance.post(`auth/login`, {email, password, captcha})
 	},
 	logout() {
 		return instance.delete(`auth/login`)

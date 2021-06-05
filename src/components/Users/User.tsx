@@ -1,10 +1,21 @@
 import React from 'react';
 import classes from './Users.module.css';
 import MishaAva from './img/MishaAva.jpg';
-import { NavLink } from 'react-router-dom/cjs/react-router-dom.min';
+// import { NavLink } from 'react-router-dom/cjs/react-router-dom.min';
+import { NavLink } from 'react-router-dom';
+import { UserType } from '../../redux/types/types';
+
+type CurrentUserPropsType = {
+
+	follow: (userId: number) => void
+	followingInProgress: Array<number>
+	unfollow: (userId: number) => void
+	user: UserType
+	// type: any
+}
 
 
-let User = ({ user, followingInProgress, unfollow, follow, ...props}) => {
+let User: React.FC<CurrentUserPropsType> = ({ user, followingInProgress, unfollow, follow, ...props}) => {
 
 	return (
 		<div className={classes.userItem}>

@@ -1,12 +1,13 @@
 import React from 'react';
-import { sendMessageAC, updateNewMsgTextAC, setCurrentDialogAC } from '../../redux/dialogs-reducer';
+import { sendMessageAC, setCurrentDialogAC } from '../../redux/dialogs-reducer';
 import Dialogs from './Dialogs';
 import { connect } from 'react-redux';
 import { withAuthRedirect } from '../../hoc/withAuthRedirect';
 import { compose } from 'redux';
+import { AppStateType } from '../../redux/redux-store';
 
 
-let mapStateToProps = (state) => {
+let mapStateToProps = (state: AppStateType) => {
 	
 	return {
 		dialogsPage: state.dialogsPage.dialogs,
@@ -14,12 +15,12 @@ let mapStateToProps = (state) => {
 	}
 }
 
-let mapDispatchToProps = (dispatch) => {
+let mapDispatchToProps = (dispatch: any) => {
 	return {
-		sendMsg: (msgText) => {
+		sendMsg: (msgText: string) => {
 			dispatch(sendMessageAC(msgText))
 		},
-		setCurDlg: (dialog) => {
+		setCurDlg: (dialog: string) => {
 			dispatch(setCurrentDialogAC(dialog))
 		},
 	}

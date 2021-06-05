@@ -1,19 +1,36 @@
 import React from 'react';
 import classes from './Users.module.css';
 
-let Paginator = (props) => {
+
+type PropsType = {
+	currentPage: number
+	onPageChanged: (pageNumber: number) => void
+	totalUsersCount: number
+	pageSize: number
+	renderPagination: () => Array<number>
+}
+
+
+let Paginator: React.FC<PropsType> = (props) => {// React.FC - Reacr functional component
 
 	let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize);
 	let curPage = props.currentPage;
 
 
-	let PageLink = (props) => {
+	type PropsPageLinkType = {
+		currentPage: number
+		page: number
+		onPageChanged: (pageNumber: number) => void
+		key: number
+	}
+
+	let PageLink: React.FC<PropsPageLinkType> = (props) => {
 
 		return (
 			<span
 				className={props.page == curPage ? classes.selectedPage : classes.notSelectedPage}
 				onClick={() => { props.onPageChanged(props.page) }}
-				exact={true}
+				// exact={true}
 			>
 				{props.page}
 			</span>
@@ -26,7 +43,7 @@ let Paginator = (props) => {
 		)
 	
 
-	let createBtn = (condition, PageNum, textContent) => {
+	let createBtn = (condition: any, PageNum: number, textContent: string) => {
 		return condition
 			&& <span onClick={() => { props.onPageChanged(PageNum) }} className={classes.pagBtn}>
 					{textContent}
@@ -40,7 +57,7 @@ let Paginator = (props) => {
 			{createBtn(curPage > 1, curPage - 1, 'PREV')}
 			{CurrentPagesNums}
 			{createBtn(curPage < pagesCount, curPage + 1, 'NEXT')}
-			{createBtn(curPage < pagesCount - 4, pagesCount, pagesCount)}
+			{createBtn(curPage < pagesCount - 4, pagesCount, `${pagesCount}`)}
 		</div>
 	)
 }

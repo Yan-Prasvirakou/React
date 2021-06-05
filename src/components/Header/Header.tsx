@@ -5,7 +5,13 @@ import logo from './logo.png';
 import { Redirect } from 'react-router-dom';
 // import Login from '../Login/Login'
 
-const Header = (props) => {
+type PropsType = {
+	isAuth: boolean
+	login: string | null
+	logout: () => void
+}
+
+const Header: React.FC<PropsType> = (props) => {
 
 	return (
 		<header className={classes.header}>

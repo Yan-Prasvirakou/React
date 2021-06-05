@@ -7,7 +7,7 @@ import authReducer from './auth-reducer';
 import appReducer from './app-reducer';
 import thunkMiddleware from 'redux-thunk';
 
-let reducers = combineReducers({
+let rootReducer = combineReducers({
 	profilePage: profileReducer,
 	dialogsPage: dialogsReducer,
 	usersPage: usersReducer,
@@ -16,9 +16,13 @@ let reducers = combineReducers({
 	app: appReducer
 });
 
-let store = createStore(reducers, applyMiddleware(thunkMiddleware));
+type RootReducerType = typeof rootReducer
+export type AppStateType = ReturnType<RootReducerType>
+
+let store = createStore(rootReducer, applyMiddleware(thunkMiddleware));
 // 2-й агрумент нужен для обработки санков
 
+// @ts-ignore
 window.store = store;
 
 export default store;

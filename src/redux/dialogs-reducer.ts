@@ -1,3 +1,5 @@
+import { DialogType } from './types/types';
+
 import SashaAva from '../components/Dialogs/img/SashaAva.jpg';
 import LeraAva from '../components/Dialogs/img/LeraAva.jpg';
 import NastyaAva from '../components/Dialogs/img/NastyaAva.jpg';
@@ -10,82 +12,85 @@ let SEND_MESSAGE = 'first-project/dialogs/SEND-MESSAGE';
 let SET_CURRENT_DIALOG = 'first-project/dialogs/SET-CURRENT-DIALOG';
 let CLEAR_CURRENT_DIALOG = 'first-project/dialogs/CLEAR_CURRENT_DIALOG';
 
+
 export let initialState = {
 	currentDialog: null,
 	dialogs: [{
+		id: 1,
+		// ask: 'tkgj',
+		name: 'Sasha',
+		ava: SashaAva,
+		msgs: [{
 			id: 1,
-			name: 'Sasha',
-			ava: SashaAva,
-			msgs: [{
-					id: 1,
-					text: 'Hi, my name is Sasha',
-					out: false
-				},
-				{
-					id: 2,
-					text: 'Short Message',
-					out: true
-				},
-				{
-					id: 3,
-					text: 'Can I meet you?',
-					out: false
-				},
-				{
-					id: 4,
-					text: 'Short Message',
-					out: true
-				},
-				{
-					id: 5,
-					text: 'Can I meet you?',
-					out: false
-				},
-				{
-					id: 6,
-					text: 'Short Message',
-					out: true
-				},
-				{
-					id: 7,
-					text: 'Can I meet you?',
-					out: false
-				},
-				{
-					id: 8,
-					text: 'Short Message',
-					out: true
-				},
-				{
-					id: 9,
-					text: 'Can I meet you?',
-					out: false
-				},
-				{
-					id: 10,
-					text: 'Short Message',
-					out: true
-				},
-				{
-					id: 11,
-					text: 'Can I meet you?',
-					out: false
-				},
-				{
-					id: 12,
-					text: 'I don\'t know',
-					out: true
-				},
-				{
-					id: 13,
-					text: 'Lorem ipsum pipsum blablabla',
-					out: false
-				},
-				{
-					id: 14,
-					text: 'Ok',
-					out: false
-				},
+			text: 'Hi, my name is Sasha',
+			out: false
+		},
+		{
+			id: 2,
+				text: 'Short Message',
+				out: true
+			},
+			{
+				id: 3,
+				text: 'Can I meet you?',
+				out: false,
+				// a: 22
+			},
+			{
+				id: 4,
+				text: 'Short Message',
+				out: true
+			},
+			{
+				id: 5,
+				text: 'Can I meet you?',
+				out: false
+			},
+			{
+				id: 6,
+				text: 'Short Message',
+				out: true
+			},
+			{
+				id: 7,
+				text: 'Can I meet you?',
+				out: false
+			},
+			{
+				id: 8,
+				text: 'Short Message',
+				out: true
+			},
+			{
+				id: 9,
+				text: 'Can I meet you?',
+				out: false
+			},
+			{
+				id: 10,
+				text: 'Short Message',
+				out: true
+			},
+			{
+				id: 11,
+				text: 'Can I meet you?',
+				out: false
+			},
+			{
+				id: 12,
+				text: 'I don\'t know',
+				out: true
+			},
+			{
+				id: 13,
+				text: 'Lorem ipsum pipsum blablabla',
+				out: false
+			},
+			{
+				id: 14,
+				text: 'Ok',
+				out: false
+			},
 			]
 		},
 		{
@@ -292,10 +297,12 @@ export let initialState = {
 				},
 			]
 		}
-	]
+	] as Array<DialogType>
 };
 
-const dialogsReducer = (state = initialState, action) => {
+export type InitialStateType = typeof initialState
+
+const dialogsReducer = (state = initialState, action: any): InitialStateType => {
 	switch (action.type) {
 		case SEND_MESSAGE:
 			let currentDlg = state.dialogs.filter(dialog => dialog.name == state.currentDialog);
@@ -335,9 +342,18 @@ const dialogsReducer = (state = initialState, action) => {
 
 }
 
+type SendMessageACType = {
+	type: typeof SEND_MESSAGE
+	msgText: string
+}
 
-export const sendMessageAC = (msgText) => ({type: SEND_MESSAGE, msgText})
-export const setCurrentDialogAC = (dialog) => ({type: SET_CURRENT_DIALOG,	dialog})
+type SetCurrentDialogACType = {
+	type: typeof SET_CURRENT_DIALOG
+	dialog: string
+}
+
+export const sendMessageAC = (msgText: string): SendMessageACType => ({type: SEND_MESSAGE, msgText})
+export const setCurrentDialogAC = (dialog: string): SetCurrentDialogACType => ({type: SET_CURRENT_DIALOG,	dialog})
 export const clearCurrentDialogAC = () => ({type: CLEAR_CURRENT_DIALOG});
 
 export default dialogsReducer;

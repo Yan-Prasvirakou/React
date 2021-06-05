@@ -2,19 +2,45 @@ import React from 'react';
 import classes from './MyPosts.module.css';
 import Post from './Post/Post';
 import { Formik } from 'formik';
+import { ProfileType, PostType } from '../../../redux/types/types';
+
+type ProfilePagePropsType = {
+	// profile?: ProfileType 
+	// profile: ProfileType | null
+	profile: any
+	status: string
+	posts: Array<PostType>
+}
 
 
-const MyPosts = (props) => {
+type PropsType = {
+	profilePage: ProfilePagePropsType
+	addPost: (postText: string) => void
+	addLike: (likedPostId: number) => void
+}
+
+const MyPosts: React.FC<PropsType> = (props) => {
 	
 	let posts = props.profilePage.posts;
 	let profile = props.profilePage.profile;
 
-	const PostItem = (props) => {
-		let likesBlock = props.likes ? props.likes : 'like';
+	type PostItemPropsType = {
+		message: string
+		likes: number
+		ava: any
+		key: number
+		id: number
+		isLiked: boolean
+		// likedByMe: boolean
+		addLike: (likedPostId: number) => void
+	}
+
+	const PostItem: React.FC<PostItemPropsType> = (props) => {
+		// let likesBlock = props.likes ? props.likes : 'like';
 
 		return (
 			<Post
-				message={props.message} likes={likesBlock} ava={props.ava}
+				message={props.message} likes={props.likes} ava={props.ava} key={props.id}
 				isLiked={props.isLiked} addLike={props.addLike} id={props.id}
 			/>
 		)
@@ -28,18 +54,26 @@ const MyPosts = (props) => {
 		/>)
 
 		
-	let newPost = React.createRef();
-	
+	let newPost = React.createRef<HTMLTextAreaElement>();
+
 	let onAddPost = () => {
-		let postText = newPost.current.value;
-		props.addPost(postText);
+		let newPostCurrent = newPost.current;
+		if (newPostCurrent) {
+			props.addPost(newPostCurrent.value);
+		}
+
+		// let postText = newPost.current.value;
+		// props.addPost(postText);
 	}
 
 
-	const PostForm = (props) => {
+	const PostForm = () => {
 		return (
 			<Formik
 				initialValues={{ postText: '' }}
+				onSubmit={(values, { setSubmitting, resetForm }) => {
+					console.log('submit')
+				}}
 			>
 				{({
 					values,

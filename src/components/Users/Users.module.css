@@ -12,6 +12,16 @@
 	position: relative;
 }
 
+.usersWrap h2 {
+	/* border: 1px solid #000; */
+	display: block;
+	width: 100%;
+	text-align: center;
+	color: #050f3b;
+	padding-bottom: 8px;
+	font-size: 28px;
+}
+
 .usersPagesWrapFetching,
 .usersPagesWrap {
 	/* border: 2px solid olive; */

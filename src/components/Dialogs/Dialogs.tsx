@@ -1,40 +1,49 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, MouseEvent, useLayoutEffect } from 'react';
 import classes from './Dialogs.module.css';
 import { Redirect, Route, NavLink } from 'react-router-dom';
 import { Formik } from 'formik';
+import { DialogType } from '../../redux/types/types';
 
 
-const Dialogs = (props) => {
+type PropsType = {
+	dialogsPage: Array<DialogType>
+	currentDialog: string | null
+	sendMsg: (msgText: string) => void
+	setCurDlg: (dialog: string | null) => void
+}
+
+const Dialogs: React.FC<PropsType> = (props) => {
 
 	let dialogs = props.dialogsPage;
 	let curDlg = props.currentDialog;
-	let curDlgBlock = React.useRef();
-	let sendMsgBtn = React.createRef();
-	let newMsgField = React.useRef();
+	let curDlgBlock = React.useRef<HTMLDivElement>(null);
+	let sendMsgBtn = React.createRef<HTMLButtonElement>();
+	let newMsgField = React.useRef<HTMLTextAreaElement>(null);
 	let enterKeyDown = false;
 
 	let onSendMsg = () => {
-		let msgText = newMsgField.current.value;
-		props.sendMsg(msgText);
-
-		newMsgField.current.value = '';
-		newMsgField.current.focus();
+		let msgTextField = newMsgField.current;
+		if (msgTextField) {
+			props.sendMsg(msgTextField.value);
+			msgTextField.value = '';
+			msgTextField.focus();
+		}
 	}
 
-	let onEnterKeyDown = (e) => {
+	let onEnterKeyDown = (e: KeyboardEvent) => {
 		if (e.code == 'Enter' && sendMsgBtn.current
 			&& !sendMsgBtn.current.disabled && !enterKeyDown
 			&& document.activeElement == newMsgField.current) {
-				e.preventDefault();
-				enterKeyDown = true;
-				setTimeout(() => {
-					onSendMsg();
-				}, 60);	
+			e.preventDefault();
+			enterKeyDown = true;
+			setTimeout(() => {
+				onSendMsg();
+			}, 3);
 			// onSendMsg();
 		}
 	}
 
-	let onEnterKeyUp = (e) => {
+	let onEnterKeyUp = (e: KeyboardEvent) => {
 		if (e.code == 'Enter' && sendMsgBtn.current && !sendMsgBtn.current.disabled
 			&& enterKeyDown && document.activeElement == newMsgField.current) {
 			enterKeyDown = false;
@@ -50,20 +59,26 @@ const Dialogs = (props) => {
 		document.addEventListener('keyup', onEnterKeyUp)
 	});
 
-	useEffect(() => {
-		if (curDlg) {
+	useLayoutEffect(() => {
+		if (curDlg && curDlgBlock.current) {
 			curDlgBlock.current.scrollTop = curDlgBlock.current.scrollHeight;
 		}
 	})
 
-
-	let onSetCurDlg = (e) => {
-		let dlg = e.currentTarget.textContent;
+	let onSetCurDlg = (e: MouseEvent<HTMLAnchorElement>) => {
+		let dlg = (e.currentTarget as HTMLAnchorElement).textContent;
 		props.setCurDlg(dlg);
 	}
 
+	type DialogItemProps = {
+		name: string
+		id: number
+		ava: any
+		key: number
+	}
 
-	const DialogItem = (props) => {
+
+	const DialogItem: React.FC<DialogItemProps> = (props) => {
 		let path = `/dialogs/${props.id}`;
 
 		return (
@@ -78,10 +93,16 @@ const Dialogs = (props) => {
 
 
 	let dialogsBlock = dialogs
-		.map((dialog, i) => <DialogItem name={dialog.name} id={dialog.id} ava={dialog.ava} key={dialog.id} />)
+		.map((dialog) => <DialogItem name={dialog.name} id={dialog.id} ava={dialog.ava} key={dialog.id} />)
 
 
-	let Msg = (props) => {
+	type MsgProps = {
+		msgs: string
+		style: boolean
+		key: number
+	}
+	
+	let Msg: React.FC<MsgProps> = (props) => {
 		let style = props.style ? classes.outgoing : classes.incoming;
 
 		return (
@@ -116,7 +137,13 @@ const Dialogs = (props) => {
 	}
 
 
-	let MessageItems = (props) => {
+	type MessageItemsProps = {
+		path: number
+		component: any
+		key: number
+	}
+
+	let MessageItems: React.FC<MessageItemsProps> = (props) => {
 		let path = `/dialogs/${props.path}`;
 		let component = () => props.component;
 
@@ -129,10 +156,13 @@ const Dialogs = (props) => {
 		: dialogs.map((dialog) => <MessageItems path={dialog.id} component={<Messages />} key={dialog.id} />)
 
 
-	const DialogForm = (props) => {
+	const DialogForm = () => {
 		return (
 			<Formik
 				initialValues={{ msgText: '' }}
+				onSubmit={(values, { setSubmitting, resetForm }) => {
+					console.log('msg sent')
+				}}
 			>
 				{({
 					values,
