@@ -1,14 +1,16 @@
 import { PostType } from './types/types';
 import { PhotosType } from './types/types';
 import { ProfileType } from './types/types';
-
 import { profileAPI } from '../api/api';
+import { AppStateType } from './redux-store';
+import { Dispatch } from 'redux';
+import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 
-let ADD_POST = 'first-project/profile/ADD-POST';
-let SET_USER_PROFILE = 'first-project/profile/SET-USER-PROFILE';
-let SET_STATUS = 'first-project/profile/SET-STATUS';
-let SAVE_PHOTO_SUCCESS = 'first-project/profile/SAVE-PHOTO-SUCCESS';
-let CHANGE_LIKE = 'CHANGE-LIKE';
+const ADD_POST = 'first-project/profile/ADD-POST';
+const SET_USER_PROFILE = 'first-project/profile/SET-USER-PROFILE';
+const SET_STATUS = 'first-project/profile/SET-STATUS';
+const SAVE_PHOTO_SUCCESS = 'first-project/profile/SAVE-PHOTO-SUCCESS';
+const CHANGE_LIKE = 'CHANGE-LIKE';
 
 
 let initialState = {
@@ -17,13 +19,14 @@ let initialState = {
 	posts: [
 		{
 			id: 6,
+			// test: 55,
 			msg: 'Hello world',
 			likes: 4,
 			likedByMe: false
 		},
 		{
 			id: 5,
-			msg: 'My second post My second post My second post My second post My second post My second post My second postMy second post',
+			msg: 'My favourite post My favourite post My favourite post My favourite post My favourite post My favourite post My favourite',
 			likes: 155,
 			likedByMe: false
 		},
@@ -56,8 +59,10 @@ let initialState = {
 
 export type InitialStateType = typeof initialState
 
+type ActionsTypes = AddPostActionCreatorType | AddLikeACType | SetUserProfileType |
+	SetStatusType | SavePhotoSuccessType
 	
-const profileReducer = (state = initialState, action: any): InitialStateType => {
+const profileReducer = (state = initialState, action: ActionsTypes): InitialStateType => {
 	switch (action.type) {
 		case ADD_POST:
 			let newPostId = state.posts.length + 1;
@@ -138,23 +143,23 @@ export const savePhotoSuccess = (photos: PhotosType): SavePhotoSuccessType => ({
 
 
 
-export const getUserAccountById = (id: number) => {
-	return async (dispatch: any) => {
+export const getUserAccountById = (id: number): ThunkAction<Promise<void>, AppStateType, unknown, ActionsTypes> => {
+	return async (dispatch: ThunkDispatch<AppStateType, unknown, ActionsTypes>) => {
 		let res = await profileAPI.getUserAccountById(id);
 		// console.log(res.data)
 		dispatch(setUserProfile(res.data))
 	}
 }
 
-export const getStatus = (id: number) => {
-	return async (dispatch: any) => {
+export const getStatus = (id: number): ThunkAction<Promise<void>, AppStateType, unknown, ActionsTypes> => {
+	return async (dispatch: ThunkDispatch<AppStateType, unknown, ActionsTypes>) => {
 		let res = await profileAPI.getStatus(id);
 		dispatch(setStatus(res.data))
 	}
 }
 
-export const updateStatus = (status: string) => {
-	return async (dispatch: any) => {
+export const updateStatus = (status: string): ThunkAction<Promise<void>, AppStateType, unknown, ActionsTypes> => {
+	return async (dispatch: ThunkDispatch<AppStateType, unknown, ActionsTypes>) => {
 		let res = await profileAPI.updateStatus(status);
 			if (res.data.resultCode === 0) {
 				dispatch(setStatus(status))
@@ -162,8 +167,8 @@ export const updateStatus = (status: string) => {
 	}
 }
 
-export const savePhoto = (file: any) => {
-	return async (dispatch: any) => {
+export const savePhoto = (file: any): ThunkAction<Promise<void>, AppStateType, unknown, ActionsTypes> => {
+	return async (dispatch: ThunkDispatch<AppStateType, unknown, ActionsTypes>) => {
 		let res = await profileAPI.savePhoto(file);
 			if (res.data.resultCode === 0) {
 				dispatch(savePhotoSuccess(res.data.data.photos))
@@ -171,8 +176,8 @@ export const savePhoto = (file: any) => {
 	}
 }
 
-export const saveProfile = (profile: ProfileType) => {
-	return async (dispatch: any, getState: any) => {
+export const saveProfile = (profile: ProfileType): ThunkAction<Promise<void>, AppStateType, unknown, ActionsTypes> => {
+	return async (dispatch: ThunkDispatch<AppStateType, unknown, ActionsTypes>, getState: any) => {
 		const userId = getState().auth.userId;
 		const res = await profileAPI.saveProfile(profile);
 		if (res.data.resultCode === 0) {

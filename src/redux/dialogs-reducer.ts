@@ -1,4 +1,4 @@
-import { DialogType } from './types/types';
+import { DialogType, MsgType } from './types/types';
 
 import SashaAva from '../components/Dialogs/img/SashaAva.jpg';
 import LeraAva from '../components/Dialogs/img/LeraAva.jpg';
@@ -8,13 +8,13 @@ import KristinaAva from '../components/Dialogs/img/KristinaAva.jpg';
 import PashaAva from '../components/Dialogs/img/PashaAva.jpg';
 import VovaAva from '../components/Dialogs/img/VovaAva.jpg';
 
-let SEND_MESSAGE = 'first-project/dialogs/SEND-MESSAGE';
-let SET_CURRENT_DIALOG = 'first-project/dialogs/SET-CURRENT-DIALOG';
-let CLEAR_CURRENT_DIALOG = 'first-project/dialogs/CLEAR_CURRENT_DIALOG';
+const SEND_MESSAGE = 'first-project/dialogs/SEND-MESSAGE';
+const SET_CURRENT_DIALOG = 'first-project/dialogs/SET-CURRENT-DIALOG';
+const CLEAR_CURRENT_DIALOG = 'first-project/dialogs/CLEAR_CURRENT_DIALOG';
 
 
 export let initialState = {
-	currentDialog: null,
+	currentDialog: null as string | null,
 	dialogs: [{
 		id: 1,
 		// ask: 'tkgj',
@@ -34,7 +34,6 @@ export let initialState = {
 				id: 3,
 				text: 'Can I meet you?',
 				out: false,
-				// a: 22
 			},
 			{
 				id: 4,
@@ -302,7 +301,9 @@ export let initialState = {
 
 export type InitialStateType = typeof initialState
 
-const dialogsReducer = (state = initialState, action: any): InitialStateType => {
+type ActionsTypes = SendMessageACType | SetCurrentDialogACType | clearCurrentDialogACType
+
+const dialogsReducer = (state = initialState, action: ActionsTypes): InitialStateType => {
 	switch (action.type) {
 		case SEND_MESSAGE:
 			let currentDlg = state.dialogs.filter(dialog => dialog.name == state.currentDialog);
@@ -352,8 +353,10 @@ type SetCurrentDialogACType = {
 	dialog: string
 }
 
+type clearCurrentDialogACType = { type: typeof CLEAR_CURRENT_DIALOG}
+
 export const sendMessageAC = (msgText: string): SendMessageACType => ({type: SEND_MESSAGE, msgText})
 export const setCurrentDialogAC = (dialog: string): SetCurrentDialogACType => ({type: SET_CURRENT_DIALOG,	dialog})
-export const clearCurrentDialogAC = () => ({type: CLEAR_CURRENT_DIALOG});
+export const clearCurrentDialogAC = (): clearCurrentDialogACType => ({type: CLEAR_CURRENT_DIALOG});
 
 export default dialogsReducer;
