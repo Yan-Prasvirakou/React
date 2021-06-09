@@ -1,9 +1,8 @@
 import { PostType } from './types/types';
 import { PhotosType } from './types/types';
 import { ProfileType } from './types/types';
-import { profileAPI } from '../api/api';
+import { profileAPI, ResultCodesEnum } from '../api/api';
 import { AppStateType } from './redux-store';
-import { Dispatch } from 'redux';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 
 const ADD_POST = 'first-project/profile/ADD-POST';
@@ -145,23 +144,23 @@ export const savePhotoSuccess = (photos: PhotosType): SavePhotoSuccessType => ({
 
 export const getUserAccountById = (id: number): ThunkAction<Promise<void>, AppStateType, unknown, ActionsTypes> => {
 	return async (dispatch: ThunkDispatch<AppStateType, unknown, ActionsTypes>) => {
-		let res = await profileAPI.getUserAccountById(id);
+		let data = await profileAPI.getUserAccountById(id);
 		// console.log(res.data)
-		dispatch(setUserProfile(res.data))
+		dispatch(setUserProfile(data))
 	}
 }
 
 export const getStatus = (id: number): ThunkAction<Promise<void>, AppStateType, unknown, ActionsTypes> => {
 	return async (dispatch: ThunkDispatch<AppStateType, unknown, ActionsTypes>) => {
-		let res = await profileAPI.getStatus(id);
-		dispatch(setStatus(res.data))
+		let data = await profileAPI.getStatus(id);
+		dispatch(setStatus(data))
 	}
 }
 
 export const updateStatus = (status: string): ThunkAction<Promise<void>, AppStateType, unknown, ActionsTypes> => {
 	return async (dispatch: ThunkDispatch<AppStateType, unknown, ActionsTypes>) => {
-		let res = await profileAPI.updateStatus(status);
-			if (res.data.resultCode === 0) {
+		let data = await profileAPI.updateStatus(status);
+			if (data.resultCode === ResultCodesEnum.Success) {
 				dispatch(setStatus(status))
 			}
 	}
@@ -169,9 +168,9 @@ export const updateStatus = (status: string): ThunkAction<Promise<void>, AppStat
 
 export const savePhoto = (file: any): ThunkAction<Promise<void>, AppStateType, unknown, ActionsTypes> => {
 	return async (dispatch: ThunkDispatch<AppStateType, unknown, ActionsTypes>) => {
-		let res = await profileAPI.savePhoto(file);
-			if (res.data.resultCode === 0) {
-				dispatch(savePhotoSuccess(res.data.data.photos))
+		let data = await profileAPI.savePhoto(file);
+			if (data.resultCode === ResultCodesEnum.Success) {
+				dispatch(savePhotoSuccess(data.data.photos))
 			}
 	}
 }
@@ -179,8 +178,8 @@ export const savePhoto = (file: any): ThunkAction<Promise<void>, AppStateType, u
 export const saveProfile = (profile: ProfileType): ThunkAction<Promise<void>, AppStateType, unknown, ActionsTypes> => {
 	return async (dispatch: ThunkDispatch<AppStateType, unknown, ActionsTypes>, getState: any) => {
 		const userId = getState().auth.userId;
-		const res = await profileAPI.saveProfile(profile);
-		if (res.data.resultCode === 0) {
+		const data = await profileAPI.saveProfile(profile);
+		if (data.resultCode === 0) {
 			dispatch(getUserAccountById(userId))
 		} else {
 			console.log('something wrong')

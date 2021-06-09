@@ -1,7 +1,7 @@
 import { AppStateType } from './redux-store';
 import { getStatus } from './profile-reducer';
 import { UserType } from './types/types';
-import { usersAPI } from '../api/api';
+import { usersAPI, ResultCodesEnum } from '../api/api';
 import { Dispatch } from 'redux';
 import {ThunkAction, ThunkDispatch} from 'redux-thunk';
 
@@ -104,11 +104,11 @@ export const requestUsers = (page: number, pageSize: number) => {
 		dispatch(toggleIsFetching(true));
 		dispatch(setCurrentPage(page));
 
-		let res = await usersAPI.getUsers(page, pageSize)
+		let data = await usersAPI.getUsers(page, pageSize)
 		dispatch(toggleIsFetching(false));
-		dispatch(setUsers(res.data.items));
-		dispatch(setTotalUsersCount(res.data.totalCount));
-		console.log(res.data);
+		dispatch(setUsers(data.items));
+		dispatch(setTotalUsersCount(data.totalCount));
+		console.log(data);
 	}
 }
 
@@ -118,9 +118,9 @@ const followUnfollowFlow = async (
 	actionCreator: (userId: number) => FollowSuccessType | UnfollowSuccessType
 ) => {
 	dispatch(toggleFollowingProgress(true, userId));
-	let res = await apiMethod(userId);
+	let data = await apiMethod(userId);
 
-	if (res.data.resultCode == 0) {
+	if (data.resultCode === ResultCodesEnum.Success) {
 		dispatch(actionCreator(userId))
 	}
 	dispatch(toggleFollowingProgress(false, userId))

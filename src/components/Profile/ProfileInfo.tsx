@@ -16,27 +16,14 @@ type PropsType = {
 }
 
 
-
-
 const ProfileInfo: React.FC<PropsType> = (props) => {
 
 	const onMainPhotoSelected = (e: ChangeEvent<HTMLInputElement>) => {
-		// const target = e.target as HTMLInputElement;
-		// if (!e.target.files) return;
 		if (e.target.files) {
 			props.savePhoto(e.target.files[0]);
 		}
-		// if (target.files.length) {
-		// 	props.savePhoto(target.files[0]);
-		// }
 	}
 
-	// const onMainPhotoSelected = (e: Event) => {
-	// 	let file = (<HTMLInputElement>e.target).files[0];
-	// 	if (file) {
-	// 		props.savePhoto(e.target.files[0]);
-	// 	}
-	// }
 
 	let [editMode, setEditMode] = useState(false);
 
@@ -48,12 +35,6 @@ const ProfileInfo: React.FC<PropsType> = (props) => {
 		setEditMode(false);
 	}
 
-	// let [inputFileInnerText, changeInputFileInnerText] = useState('Change photo');
-	// let fileName = React.createRef();
-	// let onFileChange = (e) => {
-	// 	console.log(fileName.current.value);
-	// }
-
 	type ContactPropsType = {
 		key: string
 		contactTitle: string
@@ -61,16 +42,10 @@ const ProfileInfo: React.FC<PropsType> = (props) => {
 		// store: any
 	}
 
-	// type Contacts = ContactsType
-	// declare const 
 	
 	const Contact: React.FC<ContactPropsType> = (props)  => {
 		return <div><b><i>{props.contactTitle}:</i></b> {props.contactValue}</div>
 	}
-
-	// const Contacts = Object.keys(props.profile.contacts).map((key, value) => {
-	// 	return <Contact key={key} contactTitle={key} contactValue={props.profile.contacts[key]}/>
-	// })
 
 	const Contacts = Object.entries(props.profile.contacts).map(([key, value]) => {
 		return <Contact key={key} contactTitle={key} contactValue={value} />

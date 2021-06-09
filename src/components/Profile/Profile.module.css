@@ -168,10 +168,9 @@
 }
 
 
-input:not([type='checkbox']) {
-	/* display: inline-block; */
+/* input:not([type='checkbox']) {
 	margin: 4px;
-}
+} */
 
 .aboutUser {
 	color: #050f3b;
