@@ -73,7 +73,7 @@ const Dialogs: React.FC<PropsType> = (props) => {
 	type DialogItemProps = {
 		name: string
 		id: number
-		ava: any
+		ava: string
 		key: number
 	}
 
@@ -139,7 +139,7 @@ const Dialogs: React.FC<PropsType> = (props) => {
 
 	type MessageItemsProps = {
 		path: number
-		component: any
+		component: ReturnType<React.FC>
 		key: number
 	}
 

@@ -4,7 +4,7 @@ import classes from './Post.module.css';
 type PropsType = {
 	message: string
 	likes: number
-	ava: any
+	ava: string
 	key: number
 	id: number
 	isLiked: boolean

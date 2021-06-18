@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import {
 	setUserProfile, getUserAccountById, getStatus, updateStatus, savePhoto, saveProfile
 } from '../../redux/profile-reducer';
-import { withRouter, Redirect } from 'react-router-dom';
+import { withRouter, Redirect, RouteComponentProps } from 'react-router-dom';
 import { compose } from 'redux';
 import { ProfileType } from '../../redux/types/types';
 import { AppStateType } from '../../redux/redux-store';
@@ -15,37 +15,32 @@ type MapStateToPropsType = {
 	status: string
 	authorizedUserId: number | null
 	isAuth: boolean
-	// history: any
-	// match: any
-	// store: any
 }
 
 type LocalPropsType = {
-	history: any
-	match: any
-	store: any
+	userId: string
 }
 
 type MapDispatchToPropsType = {
 	getUserAccountById: (id: number) => void
 	getStatus: (id: number) => void
 	updateStatus: (status: string) => void
-	savePhoto: (file: any) => void
+	savePhoto: (file: File) => void
 	saveProfile: (profile: ProfileType) => void
 }
 
-type PropsType = MapStateToPropsType & MapDispatchToPropsType & LocalPropsType & AppStateType
+type PropsType = MapStateToPropsType & MapDispatchToPropsType & AppStateType & RouteComponentProps<LocalPropsType>
 
 class ProfileContainer extends PureComponent<PropsType> {
 
 	renderProfile() {
-			let userId = this.props.match.params.userId;
+			let userId: number | null = +this.props.match.params.userId;
 			if (!userId) {
 				userId = this.props.authorizedUserId;
 				if (!userId) this.props.history.push('/login')
 			}
-			this.props.getUserAccountById(userId)
-			this.props.getStatus(userId);
+			this.props.getUserAccountById(userId as number)
+			this.props.getStatus(userId as number);
 	}
 	
 	componentDidMount() {
@@ -83,7 +78,7 @@ let mapStatetoProps = (state: AppStateType): MapStateToPropsType => ({
 	isAuth: state.auth.isAuth
 })
 
-export default compose(
+export default compose<React.ComponentType>(
 	connect<MapStateToPropsType, MapDispatchToPropsType, LocalPropsType, AppStateType>(mapStatetoProps, {
 		getUserAccountById, getStatus, updateStatus, savePhoto, saveProfile
 	}),

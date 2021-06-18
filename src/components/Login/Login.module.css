@@ -50,8 +50,7 @@
 	margin: 5px 5px 15px;
 }
 
-.commonWrapper {
-	border: 2px solid #000;
+.formWrapper {
 	height: 100%;
 	display: flex;
 	justify-content: center;
@@ -83,6 +82,14 @@
 	position: relative;
 	display: flex;
 	justify-content: center;
+}
+
+.standartPassword {
+	font-size: 12px;
+	color: #050f3b;
+	width: 300px;
+	margin: 0 auto;
+	text-align: center;
 }
 
 .formCaptchaWrap {

@@ -43,7 +43,7 @@ let Paginator: React.FC<PropsType> = (props) => {// React.FC - Reacr functional 
 		)
 	
 
-	let createBtn = (condition: any, PageNum: number, textContent: string) => {
+	let createBtn = (condition: boolean, PageNum: number, textContent: string) => {
 		return condition
 			&& <span onClick={() => { props.onPageChanged(PageNum) }} className={classes.pagBtn}>
 					{textContent}

@@ -2,10 +2,11 @@ import React from 'react';
 import {
 	follow,
 	unfollow,
-	setCurrentPage,
-	toggleFollowingProgress,
-	requestUsers
+	requestUsers,
+	actions
 } from '../../redux/users-reducer';
+// import setCurrentPage from '../../redux/users-reducer';
+// import toggleFollowingProgress from '../../redux/users-reducer';
 import {
 	getUsers,
 	getPageSize,
@@ -28,8 +29,6 @@ type MapStateToPropsType = {
 	isFetching: boolean
 	users: Array<UserType>
 	followingInProgress: Array<number>
-	// follow: (userId: number) => void
-	// unfollow: (userId: number) => void
 }
 
 type MapDispatchToPropsType = {
@@ -103,8 +102,6 @@ class UsersContainer extends React.Component<PropsType> {
 		
 		return (
 			<>
-				{/* <h2>{this.props.pageTitle}</h2>  - летит верстка из-за этого*/}
-				{/* передать вниз название и поместить его в блок юзеров */}
 				{this.props.isFetching ? <Preloader /> : null}
 				<Users
 					pageTitle={this.props.pageTitle}
@@ -142,11 +139,9 @@ let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
 
 export default compose(
 	connect<MapStateToPropsType, MapDispatchToPropsType, OwnPropsType, AppStateType>(mapStateToProps, {
-	// connect<MapStateToPropsType, MapDispatchToPropsType, OwnPropsType, AppStateType>(mapStateToProps, {
-		// видимо не состыкуются requestUsers и getUsers
 		follow,
 		unfollow,
-		setCurrentPage,
+		setCurrentPage: actions.setCurrentPage,
 		// toggleFollowingProgress,
 		requestUsers
 	}),

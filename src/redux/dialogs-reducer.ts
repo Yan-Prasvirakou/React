@@ -1,4 +1,4 @@
-import { DialogType, MsgType } from './types/types';
+import { DialogType } from './types/types';
 
 import SashaAva from '../components/Dialogs/img/SashaAva.jpg';
 import LeraAva from '../components/Dialogs/img/LeraAva.jpg';
@@ -12,12 +12,15 @@ const SEND_MESSAGE = 'first-project/dialogs/SEND-MESSAGE';
 const SET_CURRENT_DIALOG = 'first-project/dialogs/SET-CURRENT-DIALOG';
 const CLEAR_CURRENT_DIALOG = 'first-project/dialogs/CLEAR_CURRENT_DIALOG';
 
+type DialogsStateType = {
+	currentDialog: string | null,
+	dialogs: Array<DialogType>
+}
 
-export let initialState = {
-	currentDialog: null as string | null,
+let initialState: DialogsStateType = {
+	currentDialog: null,
 	dialogs: [{
 		id: 1,
-		// ask: 'tkgj',
 		name: 'Sasha',
 		ava: SashaAva,
 		msgs: [{
@@ -296,12 +299,13 @@ export let initialState = {
 				},
 			]
 		}
-	] as Array<DialogType>
+	]
 };
 
 export type InitialStateType = typeof initialState
 
 type ActionsTypes = SendMessageACType | SetCurrentDialogACType | clearCurrentDialogACType
+// для наглядности оставлю здесь старый, более громоздкий вариант типизации
 
 const dialogsReducer = (state = initialState, action: ActionsTypes): InitialStateType => {
 	switch (action.type) {

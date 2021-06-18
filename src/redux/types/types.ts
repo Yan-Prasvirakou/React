@@ -49,7 +49,7 @@ export type MsgType = {
 export type DialogType = {
 	id: number
 	name: string
-	ava: any //как типизироват импортируемую пикчу?
+	ava: string //как типизироват импортируемую пикчу?
 	msgs: Array<MsgType>
 }
 

@@ -8,7 +8,7 @@ import { ProfileType, PostType } from '../../../redux/types/types';
 
 // type MapStateToPropsType = {
 // 	profilePage: ProfileType
-	// profile: ProfileType | null
+// 	profile: ProfileType | null
 // }
 
 
@@ -27,19 +27,20 @@ let mapStateToProps = (state: AppStateType) => {
 	}
 }
 
-let mapDispatchToProps = (dispatch: any) => {
-	return {
-		addPost: (postText: string) => {
-			let action = addPostActionCreator(postText);
-			dispatch(action)
-		},
-		addLike: (likedPostId: number) => {
-			dispatch(addLikeAC(likedPostId))
-		}
-	}
-}
+// let mapDispatchToProps = (dispatch: any) => {
+// 	return {
+// 		addPost: (postText: string) => {
+// 			let action = addPostActionCreator(postText);
+// 			dispatch(action)
+// 		},
+// 		addLike: (likedPostId: number) => {
+// 			dispatch(addLikeAC(likedPostId))
+// 		}
+// 	}
+// }
 
-const MyPostsContainer = connect(mapStateToProps, mapDispatchToProps)(MyPosts);
-
+const MyPostsContainer = connect(mapStateToProps, {
+	addPost: addPostActionCreator, addLike: addLikeAC
+})(MyPosts);
 
 export default MyPostsContainer;

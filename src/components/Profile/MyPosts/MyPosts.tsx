@@ -5,9 +5,7 @@ import { Formik } from 'formik';
 import { ProfileType, PostType } from '../../../redux/types/types';
 
 type ProfilePagePropsType = {
-	// profile?: ProfileType 
-	// profile: ProfileType | null
-	profile: any
+	profile: ProfileType
 	status: string
 	posts: Array<PostType>
 }
@@ -27,16 +25,14 @@ const MyPosts: React.FC<PropsType> = (props) => {
 	type PostItemPropsType = {
 		message: string
 		likes: number
-		ava: any
+		ava: string
 		key: number
 		id: number
 		isLiked: boolean
-		// likedByMe: boolean
 		addLike: (likedPostId: number) => void
 	}
 
 	const PostItem: React.FC<PostItemPropsType> = (props) => {
-		// let likesBlock = props.likes ? props.likes : 'like';
 
 		return (
 			<Post
@@ -49,7 +45,7 @@ const MyPosts: React.FC<PropsType> = (props) => {
 
 	let postsElements = posts
 		.map((post) => <PostItem
-			message={post.msg} likes={post.likes} ava={profile.photos.small}
+			message={post.msg} likes={post.likes} ava={profile.photos.small as string}
 			key={post.id} id={post.id} isLiked={post.likedByMe} addLike={props.addLike}
 		/>)
 
@@ -61,9 +57,6 @@ const MyPosts: React.FC<PropsType> = (props) => {
 		if (newPostCurrent) {
 			props.addPost(newPostCurrent.value);
 		}
-
-		// let postText = newPost.current.value;
-		// props.addPost(postText);
 	}
 
 
@@ -126,4 +119,4 @@ const MyPosts: React.FC<PropsType> = (props) => {
 	)
 }
 
-export default MyPosts;
+export default MyPosts as React.FC;

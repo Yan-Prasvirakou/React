@@ -10,9 +10,8 @@ type PropsType = {
 	status: string
 	updateStatus: (status: string) => void
 	isOwner: boolean
-	savePhoto: (file: any) => void
+	savePhoto: (file: File) => void
 	saveProfile: (profile: ProfileType) => void
-	// store: any
 }
 
 
@@ -39,7 +38,6 @@ const ProfileInfo: React.FC<PropsType> = (props) => {
 		key: string
 		contactTitle: string
 		contactValue: string
-		// store: any
 	}
 
 	

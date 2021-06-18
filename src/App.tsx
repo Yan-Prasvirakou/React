@@ -4,20 +4,26 @@ import HeaderContainer from './components/Header/HeaderContainer';
 import NavbarContainer from './components/Navbar/NavbarContainer';
 import UsersContainer from './components/Users/UsersContainer';
 import News from './components/News/News';
-import Login from './components/Login/Login';
+import LoginContainer from './components/Login/LoginContainer';
 import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { initializeApp } from './redux/app-reducer';
-import { withRouter } from 'react-router-dom/cjs/react-router-dom.min';
+import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 import Preloader from './components/common/Preloader';
+import { AppStateType } from './redux/redux-store';
+
 const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer'));
 const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'));
 
+type AppMapPropsType = ReturnType<typeof mapStateToProps>
+type DispatchPropsType = {
+	initializeApp: () => void
+}
 
-class App extends React.Component {
+class App extends React.Component<AppMapPropsType & DispatchPropsType> {
 	componentDidMount() {
 		this.props.initializeApp();
 	}
@@ -47,7 +53,7 @@ class App extends React.Component {
 							<Route path='/music' render={ () => <Music/>}/>
 							<Route path='/settings' render={() => <Settings />} />
 							<Route path='/users' render={() => <UsersContainer pageTitle={'Самураи'}/>} />
-							<Route path='/login' render={() => <Login />} />
+							<Route path='/login' render={() => <LoginContainer />} />
 							<Route path='/' exact render={() => <Redirect to={'/profile'} />} />
 							<Route path='/React' exact render={() => <Redirect to={'/profile'}/>} />
 							<Route path='*' render={() => <div className='notFound'><p>404 NOT FOUND</p></div>} />
@@ -63,12 +69,12 @@ class App extends React.Component {
 
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: AppStateType) => ({
 	initialized: state.app.initialized
 })
 
 
-export default compose(
+export default compose<React.ComponentType>(
 	withRouter,
 	connect(mapStateToProps, {initializeApp}))(App);
 
