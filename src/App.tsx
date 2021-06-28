@@ -3,7 +3,7 @@ import './App.css';
 import HeaderContainer from './components/Header/HeaderContainer';
 import NavbarContainer from './components/Navbar/NavbarContainer';
 import UsersContainer from './components/Users/UsersContainer';
-import News from './components/News/News';
+import NewsContainer from './components/News/NewsContainer';
 import LoginContainer from './components/Login/LoginContainer';
 import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
@@ -49,7 +49,7 @@ class App extends React.Component<AppMapPropsType & DispatchPropsType> {
 									<DialogsContainer/>
 								</React.Suspense>
 							}}/>
-							<Route path='/news' render={ () => <News/>}/>
+							<Route path='/news' render={ () => <NewsContainer/>}/>
 							<Route path='/music' render={ () => <Music/>}/>
 							<Route path='/settings' render={() => <Settings />} />
 							<Route path='/users' render={() => <UsersContainer pageTitle={'Самураи'}/>} />
@@ -59,6 +59,7 @@ class App extends React.Component<AppMapPropsType & DispatchPropsType> {
 							<Route path='*' render={() => <div className='notFound'><p>404 NOT FOUND</p></div>} />
 							<Route path='/' render={() => <Redirect to={'/profile'} />} />
 							{/* <Redirect from="/" to="/profile"/> */}
+							{/* {FullScreenEvents} */}
 						</Switch>
 						
 					</div>

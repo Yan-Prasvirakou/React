@@ -4,9 +4,7 @@ import Dialogs from './Dialogs';
 import { connect } from 'react-redux';
 import { withAuthRedirect } from '../../hoc/withAuthRedirect';
 import { compose } from 'redux';
-import { AppStateType, InferActionsTypes } from '../../redux/redux-store';
-import { Dispatch } from 'redux';
-// import redux from 'redux'
+import { AppStateType } from '../../redux/redux-store';
 
 
 let mapStateToProps = (state: AppStateType) => {
@@ -17,25 +15,6 @@ let mapStateToProps = (state: AppStateType) => {
 	}
 }
 
-// type MapDispatchToPropsType = {
-// 	sendMsg: (msgText: string) => void
-// 	setCurDlg: (dialog: string) => void
-// }
-
-// export interface Dispatch<A extends Action = AnyAction> {
-// 	<T extends A>(action: T): T
-// }
-
-// let mapDispatchToProps = (dispatch: Dispatch<InferActionsTypes<typeof actions>>) => {
-// 	return {
-// 		sendMsg: (msgText: string) => {
-// 			dispatch(sendMessageAC(msgText))
-// 		},
-// 		setCurDlg: (dialog: string) => {
-// 			dispatch(setCurrentDialogAC(dialog))
-// 		},
-// 	}
-// }
 
 export default compose(
 	connect(mapStateToProps, {

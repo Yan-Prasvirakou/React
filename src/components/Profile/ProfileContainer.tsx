@@ -2,9 +2,9 @@ import React, {PureComponent} from 'react';
 import Profile from './Profile';
 import { connect } from 'react-redux';
 import {
-	setUserProfile, getUserAccountById, getStatus, updateStatus, savePhoto, saveProfile
+	getUserAccountById, getStatus, updateStatus, savePhoto, saveProfile
 } from '../../redux/profile-reducer';
-import { withRouter, Redirect, RouteComponentProps } from 'react-router-dom';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { compose } from 'redux';
 import { ProfileType } from '../../redux/types/types';
 import { AppStateType } from '../../redux/redux-store';

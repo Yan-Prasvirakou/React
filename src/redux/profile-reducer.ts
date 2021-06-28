@@ -7,7 +7,7 @@ const ADD_POST = 'first-project/profile/ADD-POST';
 const SET_USER_PROFILE = 'first-project/profile/SET-USER-PROFILE';
 const SET_STATUS = 'first-project/profile/SET-STATUS';
 const SAVE_PHOTO_SUCCESS = 'first-project/profile/SAVE-PHOTO-SUCCESS';
-const CHANGE_LIKE = 'CHANGE-LIKE';
+const CHANGE_LIKE = 'first-project/profile/CHANGE-LIKE';
 
 type ProfileStateType = {
 	profile: ProfileType | null
@@ -120,8 +120,7 @@ export const actions = {
 }
 
 
-export const addPostActionCreator = (postText: string) =>
-	({ type: ADD_POST, postText });
+export const addPostActionCreator = (postText: string) => ({ type: ADD_POST, postText });
 export const addLikeAC = (likedPostId: number) => ({ type: CHANGE_LIKE, likedPostId });
 export const setUserProfile = (profile: ProfileType) => ({ type: SET_USER_PROFILE, profile })
 export const setStatus = (status: string) => ({type: SET_STATUS, status})

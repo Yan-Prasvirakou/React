@@ -5,8 +5,6 @@ import {
 	requestUsers,
 	actions
 } from '../../redux/users-reducer';
-// import setCurrentPage from '../../redux/users-reducer';
-// import toggleFollowingProgress from '../../redux/users-reducer';
 import {
 	getUsers,
 	getPageSize,

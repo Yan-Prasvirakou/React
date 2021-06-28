@@ -4,12 +4,14 @@ import dialogsReducer from './dialogs-reducer';
 import usersReducer from './users-reducer';
 import authReducer from './auth-reducer';
 import appReducer from './app-reducer';
+import newsReducer from './news-reducer';
 import thunkMiddleware from 'redux-thunk';
 
 let rootReducer = combineReducers({
 	profilePage: profileReducer,
 	dialogsPage: dialogsReducer,
 	usersPage: usersReducer,
+	NewsPage: newsReducer,
 	auth: authReducer,
 	app: appReducer
 });

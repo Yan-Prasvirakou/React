@@ -5,6 +5,8 @@ import { Formik } from 'formik';
 import { DialogType } from '../../redux/types/types';
 
 
+// curDlg обнулять через useEffect
+
 type PropsType = {
 	dialogsPage: Array<DialogType>
 	currentDialog: string | null
