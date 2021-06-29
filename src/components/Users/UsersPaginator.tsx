@@ -30,7 +30,6 @@ let Paginator: React.FC<PropsType> = (props) => {// React.FC - Reacr functional 
 			<span
 				className={props.page == curPage ? classes.selectedPage : classes.notSelectedPage}
 				onClick={() => { props.onPageChanged(props.page) }}
-				// exact={true}
 			>
 				{props.page}
 			</span>
@@ -55,9 +54,9 @@ let Paginator: React.FC<PropsType> = (props) => {// React.FC - Reacr functional 
 		<div className={classes.pagesCountWrap}>
 			{createBtn(curPage > 5, 1, 'FIRST')}
 			{createBtn(curPage > 1, curPage - 1, 'PREV')}
-			{CurrentPagesNums}
+			{pagesCount > 1 && CurrentPagesNums}
 			{createBtn(curPage < pagesCount, curPage + 1, 'NEXT')}
-			{createBtn(curPage < pagesCount - 4, pagesCount, `${pagesCount}`)}
+			{createBtn((curPage < pagesCount - 4) && pagesCount > 9, pagesCount, `${pagesCount}`)}
 		</div>
 	)
 }

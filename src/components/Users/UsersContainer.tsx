@@ -3,7 +3,8 @@ import {
 	follow,
 	unfollow,
 	requestUsers,
-	actions
+	actions,
+	FilterType
 } from '../../redux/users-reducer';
 import {
 	getUsers,
@@ -11,7 +12,8 @@ import {
 	getTotalUsersCount,
 	getCurrentPage,
 	getIsFetching,
-	getFollowingInProgress
+	getFollowingInProgress,
+	getUsersFilter
 } from '../../redux/users-selectors';
 import { connect } from 'react-redux';
 import Users from './Users';
@@ -27,12 +29,13 @@ type MapStateToPropsType = {
 	isFetching: boolean
 	users: Array<UserType>
 	followingInProgress: Array<number>
+	filter: FilterType
 }
 
 type MapDispatchToPropsType = {
 	follow: (userId: number) => void
 	unfollow: (userId: number) => void
-	requestUsers: (page: number, pageSize: number) => void
+	requestUsers: (page: number, pageSize: number, filter: FilterType) => void
 	setCurrentPage: (currentPage: number) => void
 }
 
@@ -47,11 +50,15 @@ type PropsType = MapStateToPropsType & MapDispatchToPropsType & OwnPropsType
 class UsersContainer extends React.Component<PropsType> {
 
 	componentDidMount() {
-		this.props.requestUsers(this.props.currentPage, this.props.pageSize);
+		this.props.requestUsers(this.props.currentPage, this.props.pageSize, this.props.filter);
 	}
 
 	onPageChanged = (pageNumber: number) => {
-		this.props.requestUsers(pageNumber, this.props.pageSize)
+		this.props.requestUsers(pageNumber, this.props.pageSize, this.props.filter)
+	}
+
+	onFilterChanged = (filter: FilterType) => {
+		this.props.requestUsers(1, this.props.pageSize, filter)
 	}
 
 	renderPagination = () => {
@@ -59,11 +66,19 @@ class UsersContainer extends React.Component<PropsType> {
 		let pages: Array<number> = [];
 		
 		let renderPageNums = (prevPages: number, nextPages: number) => {
-			for (let i = this.props.currentPage - prevPages; i <= this.props.currentPage + nextPages; i++) {
-				pages.push(i);
+			if (pagesCount > this.props.pageSize * (prevPages + nextPages)) {
+				for (let i = this.props.currentPage - prevPages; i <= this.props.currentPage + nextPages; i++) {
+					pages.push(i);
+				}
+			} else {
+				for (let i = 1; i <= pagesCount; i++) {
+					pages.push(i);
+				}
 			}
+			// for (let i = this.props.currentPage - prevPages; i <= this.props.currentPage + nextPages; i++) {
+			// 	pages.push(i);
+			// }
 		}
-		
 
 		switch (this.props.currentPage) {
 			case 1:
@@ -109,6 +124,7 @@ class UsersContainer extends React.Component<PropsType> {
 					users={this.props.users}
 					follow={this.props.follow}
 					unfollow={this.props.unfollow}
+					onFilterChanged={this.onFilterChanged}
 					onPageChanged={this.onPageChanged}
 					renderPagination={this.renderPagination}
 					setCurrentPage={this.props.setCurrentPage}
@@ -132,6 +148,7 @@ let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
 		currentPage: getCurrentPage(state),
 		isFetching: getIsFetching(state),
 		followingInProgress: getFollowingInProgress(state),
+		filter: getUsersFilter(state)
 	}
 }
 

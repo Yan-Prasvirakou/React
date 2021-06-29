@@ -1,5 +1,4 @@
 import { AppStateType, InferActionsTypes } from './redux-store';
-import { getStatus } from './profile-reducer';
 import { UserType } from './types/types';
 import { usersAPI, ResultCodesEnum } from '../api/api';
 import { FollowUnfollowResType } from '../api/usersApi';
@@ -13,7 +12,7 @@ const SET_CURRENT_PAGE = 'first-project/users/SET-CURRENT-PAGE';
 const SET_TOTAL_USERS_COUNT = 'first-project/users/SET-TOTAL-USERS-COUNT';
 const TOGGLE_IS_FETCHING = 'first-project/users/TOGGLE-IS-FETCHING';
 const TOGGLE_IS_FOLLOWING_PROGRESS = 'first-project/users/TOGGLE-IS-FOLLOWING-PROGRESS';
-
+const SET_FILTER = 'first-project/users/SET-FIlTER';
 
 
 let initialState = {
@@ -22,10 +21,15 @@ let initialState = {
 	totalUsersCount: 0,
 	currentPage: 1,
 	isFetching: false,
-	followingInProgress: [] as Array<number>
+	followingInProgress: [] as Array<number>,
+	filter: {
+		term: '',
+		friend: null as null | boolean
+	}	
 };
 
 type InitialStateType = typeof initialState
+export type FilterType = typeof initialState.filter
 
 type ActionsTypes = InferActionsTypes<typeof actions>
 
@@ -55,6 +59,9 @@ const usersReducer = (state = initialState, action: ActionsTypes): InitialStateT
 		case SET_USERS: {
 			return { ...state, users: action.users }
 		}
+		case SET_FILTER: {
+			return { ...state, filter: action.payload }
+		}
 		case SET_CURRENT_PAGE: {
 			return { ...state, currentPage: action.currentPage }
 		}
@@ -83,6 +90,7 @@ export const actions = {
 	unfollowSuccess: (userId: number) => ({ type: UNFOLLOW, userId } as const),
 	setUsers: (users: Array<UserType>) => ({ type: SET_USERS, users } as const),
 	setCurrentPage: (currentPage: number) => ({ type: SET_CURRENT_PAGE, currentPage } as const),
+	setFilter: (filter: FilterType) => ({ type: SET_FILTER, payload: filter } as const),
 	setTotalUsersCount: (count: number) => ({ type: SET_TOTAL_USERS_COUNT, count } as const),
 	toggleIsFetching: (isFetching: boolean) => ({ type: TOGGLE_IS_FETCHING, isFetching } as const),
 	toggleFollowingProgress: (isFetching: boolean, userId: number) => (
@@ -90,13 +98,14 @@ export const actions = {
 	)
 }
 
-export const requestUsers = (page: number, pageSize: number) => {
+export const requestUsers = (page: number, pageSize: number, filter: FilterType) => {
 	return async (dispatch: Dispatch<ActionsTypes>, getState: () => AppStateType) => {
 		// первый вариант типизиции санков (через аргументы в скобках, что выше)
 		dispatch(actions.toggleIsFetching(true));
 		dispatch(actions.setCurrentPage(page));
+		dispatch(actions.setFilter(filter));
 
-		let data = await usersAPI.getUsers(page, pageSize)
+		let data = await usersAPI.getUsers(page, pageSize, filter.term, filter.friend)
 		dispatch(actions.toggleIsFetching(false));
 		dispatch(actions.setUsers(data.items));
 		dispatch(actions.setTotalUsersCount(data.totalCount));

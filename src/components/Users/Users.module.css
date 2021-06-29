@@ -174,3 +174,9 @@
 /* .pagBtn:hover {
 	background: #aaa;
 } */
+
+
+.userSearchForm {
+	width: 100%;
+	border: 1px solid #000;
+}
