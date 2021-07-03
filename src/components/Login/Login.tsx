@@ -2,8 +2,11 @@ import React from 'react';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import classes from './Login.module.css';
+import { useSelector, useDispatch } from 'react-redux';
 import ok from './ok.png';
 import { Redirect } from 'react-router-dom';
+import { AppStateType } from '../../redux/redux-store';
+import { login } from '../../redux/auth-reducer';
 
 type ErrorPropsType = {
 	touched: boolean | undefined
@@ -22,7 +25,7 @@ const WrongData = () => {
 
 type LoginFormPropsType = {
 	isWrongDataEntered: boolean
-	login: (email: string, password: string, captcha?: string | null) => void
+	login: (email: string, password: string, captcha: string) => void
 	captchaUrl: string | null
 }
 
@@ -55,13 +58,12 @@ const LoginForm: React.FC<LoginFormPropsType> = (props) => {
 
 	return (
 		<Formik
-			initialValues={props.captchaUrl ? { email: '', password: '', confirmPassword: '', captcha: '' }
-				: { email: '', password: '', confirmPassword: '' }}
+			initialValues={{ email: '', password: '', confirmPassword: '', captcha: '' }}
 			validationSchema={loginValidation}
 			onSubmit={(values, { setSubmitting, resetForm }) => {
 				setSubmitting(true);
 				props.captchaUrl ? props.login(values.email, values.password, values.captcha)
-					: props.login(values.email, values.password, null)
+					: props.login(values.email, values.password, '')
 				setSubmitting(false);
 			}}
 		>
@@ -161,16 +163,21 @@ const LoginForm: React.FC<LoginFormPropsType> = (props) => {
 	)
 }
 
-type LoginPropsType = {
-	isAuth: boolean
-	isWrongDataEntered: boolean
-	login: (email: string, password: string, captcha?: string | null) => void
-	captchaUrl: string | null
-}
 
+const Login: React.FC = () => {
 
+	const dispatch = useDispatch();
 
-const Login: React.FC<LoginPropsType> = ({ isAuth, isWrongDataEntered, login, captchaUrl }) => {
+	const onLogin = ((email: string, password: string, captcha: string) => {
+
+		captchaUrl ? dispatch(login(email, password, captcha))
+			: dispatch(login(email, password, ''))
+	})
+	
+	const isAuth = useSelector((state: AppStateType) => state.auth.isAuth)
+	const isWrongDataEntered = useSelector((state: AppStateType) => state.auth.isWrongDataEntered)
+	const captchaUrl = useSelector((state: AppStateType) => state.auth.captchaUrl)
+
 
 	if (isAuth) {
 		return <Redirect to={'/profile'} />
@@ -181,7 +188,7 @@ const Login: React.FC<LoginPropsType> = ({ isAuth, isWrongDataEntered, login, ca
 			<h2 className={classes.formHeader}>LOGIN</h2>
 			<div className={classes.formWrapper}>
 				<LoginForm
-					isWrongDataEntered={isWrongDataEntered} login={login} captchaUrl={captchaUrl}
+					isWrongDataEntered={isWrongDataEntered} login={onLogin} captchaUrl={captchaUrl}
 				/>
 			</div>
 			<div className={classes.standartPassword}>

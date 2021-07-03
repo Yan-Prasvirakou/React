@@ -55,17 +55,17 @@ const Dialogs: React.FC<PropsType> = (props) => {
 
 	useEffect(() => {
 		document.addEventListener('keydown', onEnterKeyDown)
-	});
+	}, []);
 
 	useEffect(() => {
 		document.addEventListener('keyup', onEnterKeyUp)
-	});
+	}, []);
 
 	useLayoutEffect(() => {
 		if (curDlg && curDlgBlock.current) {
 			curDlgBlock.current.scrollTop = curDlgBlock.current.scrollHeight;
 		}
-	})
+	}, [])
 
 	let onSetCurDlg = (e: MouseEvent<HTMLAnchorElement>) => {
 		let dlg = (e.currentTarget as HTMLAnchorElement).textContent;

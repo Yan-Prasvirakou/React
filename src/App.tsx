@@ -2,9 +2,9 @@ import React from 'react';
 import './App.css';
 import HeaderContainer from './components/Header/HeaderContainer';
 import NavbarContainer from './components/Navbar/NavbarContainer';
-import UsersContainer from './components/Users/UsersContainer';
+import {UsersPage} from './components/Users/UsersContainer';
 import NewsContainer from './components/News/NewsContainer';
-import LoginContainer from './components/Login/LoginContainer';
+import Login from './components/Login/Login';
 import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
 import { Route, Switch, Redirect } from 'react-router-dom';
@@ -52,8 +52,8 @@ class App extends React.Component<AppMapPropsType & DispatchPropsType> {
 							<Route path='/news' render={ () => <NewsContainer/>}/>
 							<Route path='/music' render={ () => <Music/>}/>
 							<Route path='/settings' render={() => <Settings />} />
-							<Route path='/users' render={() => <UsersContainer pageTitle={'Самураи'}/>} />
-							<Route path='/login' render={() => <LoginContainer />} />
+							<Route path='/users' render={() => <UsersPage pageTitle={'Самураи'}/>} />
+						<Route path='/login' render={() => <Login />} />
 							<Route path='/' exact render={() => <Redirect to={'/profile'} />} />
 							<Route path='/React' exact render={() => <Redirect to={'/profile'}/>} />
 							<Route path='*' render={() => <div className='notFound'><p>404 NOT FOUND</p></div>} />
