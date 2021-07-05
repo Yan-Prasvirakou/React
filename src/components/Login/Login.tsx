@@ -192,7 +192,7 @@ const Login: React.FC = () => {
 				/>
 			</div>
 			<div className={classes.standartPassword}>
-				If you want to log in as a guest enter email "free@samiraijs.com" and password "free"
+				If you want to log in as a guest enter email "free@samuraijs.com" and password "free"
 			</div>
 		</div>
 	)

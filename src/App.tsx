@@ -14,6 +14,11 @@ import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 import Preloader from './components/common/Preloader';
 import { AppStateType } from './redux/redux-store';
+// import 'antd/dist/antd.css'
+// import {Button} from 'antd'
+
+// стилизовать форму поиска юзеров через ant design
+// пофиксить ссылки в диалогах через usehistory
 
 const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer'));
 const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'));
@@ -56,7 +61,12 @@ class App extends React.Component<AppMapPropsType & DispatchPropsType> {
 						<Route path='/login' render={() => <Login />} />
 							<Route path='/' exact render={() => <Redirect to={'/profile'} />} />
 							<Route path='/React' exact render={() => <Redirect to={'/profile'}/>} />
-							<Route path='*' render={() => <div className='notFound'><p>404 NOT FOUND</p></div>} />
+						<Route path='*' render={() =>
+							<div className='notFound'>
+								<p>404 NOT FOUND</p>
+								{/* <Button>OK</Button> */}
+							</div>
+						} />
 							<Route path='/' render={() => <Redirect to={'/profile'} />} />
 							{/* <Redirect from="/" to="/profile"/> */}
 							{/* {FullScreenEvents} */}
